@@ -19,7 +19,7 @@
             android:id="@+id/kyles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rename Antagonist:" />
+            android:text="@string/rename_antagonist" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,8 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="33dp"
                 android:layout_weight="0"
-                android:text="TextView"
-                tools:text="insertFirstKyleName" />
+                android:text="@string/current_antag_name" />
 
             <EditText
                 android:id="@+id/newKyleName"
@@ -41,7 +40,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Rename" />
+                android:text="@string/rename" />
 
         </LinearLayout>
 
@@ -50,12 +49,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="Update" />
+            android:text="@string/update" />
 
         <Button
             android:id="@+id/chngKyleToMainBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Return to Home" />
+            android:text="@string/home_button_text" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

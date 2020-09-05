@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:ems="10"
-            android:hint="New Email: "
+            android:hint="@string/new_email"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -33,27 +33,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Confirm New Email:"
-            android:inputType="textEmailAddress" />
+            android:hint="@string/confirm_email"
+            android:inputType="textEmailAddress"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/changeEmailPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Password:"
-            android:inputType="textPassword" />
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+            android:autofillHints="" />
 
         <Button
             android:id="@+id/changeEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Change Email" />
+            android:text="@string/change_email" />
 
         <Button
             android:id="@+id/chngEMtoMainBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Return to Home" />
+            android:text="@string/home_button_text" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
