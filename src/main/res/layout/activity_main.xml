@@ -4,39 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Progress">
-
-    <TextView
-        android:id="@+id/userWkPr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="@string/weekly_progress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.282"
-        tools:layout_editor_absoluteX="0dp" />
+    tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/progToMainBtn"
+        android:id="@+id/startWorkout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:text="@string/home_button_text"
+        android:text="@string/start_workout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userWkPr"
-        app:layout_constraintVertical_bias="0.641" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/progToKProgBtn"
-        android:layout_width="match_parent"
+        android:id="@+id/mainToProfBtn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/check_kyle_prog_button"
-        app:layout_constraintBottom_toTopOf="@+id/progToMainBtn"
+        android:text="Profile"
+        app:layout_constraintBottom_toTopOf="@+id/MainToSettingsBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startWorkout"
+        app:layout_constraintVertical_bias="0.767" />
+
+    <Button
+        android:id="@+id/MainToSettingsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userWkPr" />
+        app:layout_constraintTop_toBottomOf="@+id/startWorkout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
