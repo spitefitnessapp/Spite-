@@ -111,14 +111,14 @@ public class MainActivity extends AppCompatActivity {
                 int finalMin = Integer.parseInt(String.valueOf(setWorkoutHr.getValue()));
 
                 /*Sends set hour and minutes user inputted into StartWorkout (Temporarily EndWorkout)*/
-                Intent sendWorkoutTime = new Intent(MainActivity.this, EndWorkout.class);
+                Intent sendWorkoutTime = new Intent(MainActivity.this, CurrentWorkout.class);
                 sendWorkoutTime.putExtra("hour", finalHr);
                 sendWorkoutTime.putExtra("minutes", finalMin);
 
-
                 /*Takes user to StartWorkout (Temporarily EndWorkout)*/
-                Intent homeToStartWorkout = new Intent(MainActivity.this, EndWorkout.class);
+                Intent homeToStartWorkout = new Intent(MainActivity.this, CurrentWorkout.class);
                 MainActivity.this.startActivity(homeToStartWorkout);
+                startActivity(homeToStartWorkout);
 
                 /*Test to see if values are correct in Logcat*/
                 Log.d("picker value", String.valueOf(finalHr));
