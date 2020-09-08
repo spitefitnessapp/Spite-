@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class Login extends AppCompatActivity {
 
@@ -24,15 +23,15 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        userET = (EditText) findViewById(R.id.enterUsernameTextView);
-        passwordET = (EditText) findViewById(R.id.loginTextPassword);
-        loginBtn = (Button) findViewById(R.id.loginButton);
-        logToRegBtn = (Button) findViewById(R.id.logToRegBtn);
+        userET = findViewById(R.id.enterUsernameTextView);
+        passwordET = findViewById(R.id.loginTextPassword);
+        loginBtn = findViewById(R.id.loginButton);
+        logToRegBtn = findViewById(R.id.logToRegBtn);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(login() == true) {
+                if(login()) {
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     Login.this.startActivity(intent);
                 }

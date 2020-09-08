@@ -10,15 +10,13 @@ import android.widget.Button;
 public class EndWorkout extends AppCompatActivity {
 
     Button toMainBtn = null;
-    Button toProgressBtn = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_workout);
 
-        toMainBtn = (Button) findViewById(R.id.endToMainBtn);
-        toProgressBtn = (Button) findViewById(R.id.endToProgressBtn);
+        toMainBtn = findViewById(R.id.endToMainBtn);
 
         toMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,12 +26,5 @@ public class EndWorkout extends AppCompatActivity {
             }
         });
 
-        toProgressBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(EndWorkout.this, Progress.class);
-                EndWorkout.this.startActivity(intent);
-            }
-        });
     }
 }
