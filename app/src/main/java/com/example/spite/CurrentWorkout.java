@@ -15,22 +15,26 @@ import android.widget.TextView;
 
 public class CurrentWorkout extends AppCompatActivity {
 
-    Button pauseBtn = null;
-    Button endBtn = null;
-    Button resumeBtn = null;
+    private Button pauseBtn;
+    private Button endBtn;
+    private Button resumeBtn;
     private Chronometer stopwatch;
-    TextView countDownText;
-   //For the stopwatch
+    private TextView countDownText;
+
+    //For the stopwatch
     private boolean stRunning;
-    Handler handler;
-    long millisec, start, buff, update = 0;
-    int sec, min, mSec;
+    private Handler handler;
+    private long millisec, start, buff, update = 0;
+    private int sec, min, mSec;
 
     // Fetching the data from main activity
-    int hour = getIntent().getIntExtra("hour", 0);
-    int minute = getIntent().getIntExtra("minutes", 0);
+
+    int hour; /*= getIntent().getIntExtra("hour", 0);*/
+    int minute; /*= getIntent().getIntExtra("minutes", 0);*/
+
     //For the countdown timer
     private CountDownTimer countDownTimer;
+
     //Convert the values to millisecond
     private long counter = Long.valueOf(hour)/3600000 + Long.valueOf(minute)/60000 ;
     private boolean timerRunning;
@@ -40,6 +44,11 @@ public class CurrentWorkout extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_workout);
 
+        //Create an intent to retrieve set workout time
+        Intent workoutTime = getIntent();
+        hour = workoutTime.getIntExtra("hour", 0);
+        minute = workoutTime.getIntExtra("minute", 0);
+
         pauseBtn = (Button) findViewById(R.id.pause);
         endBtn = (Button) findViewById(R.id.endWorkout);
         resumeBtn = (Button) findViewById(R.id.resume);
@@ -47,9 +56,7 @@ public class CurrentWorkout extends AppCompatActivity {
         countDownText = findViewById(R.id.countdown);
         handler = new Handler();
 
-
         //pauseBtn.setEnabled(false);
-
         startStopW();
         startCounter();
         updateTimer();
