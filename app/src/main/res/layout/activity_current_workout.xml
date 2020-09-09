@@ -4,39 +4,148 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1F1F21"
     tools:context=".CurrentWorkout">
 
-    <TextView
-        android:id="@+id/workoutStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/workout_in_progress"
-        app:layout_constraintBottom_toTopOf="@+id/pauseWorkout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/pauseWorkout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pause"
-        app:layout_constraintBottom_toTopOf="@+id/endWorkout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.818" />
-
-    <Button
-        android:id="@+id/endWorkout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="188dp"
-        android:text="@string/finish"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="336dp"
+        android:layout_height="128dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="600dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="150dp"
+        android:orientation="horizontal"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <Button
+            android:id="@+id/pause"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:background="#38383C"
+            android:text="@string/pause"
+            android:textAllCaps="false"
+            android:textColor="#02CAA2"
+            android:tint="#02CAA2"
+            android:onClick="onPause"
+            app:backgroundTint="#38383C"
+            app:layout_constraintEnd_toStartOf="@+id/start"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:useCompatPadding="true"
+            android:textSize="15sp"
+            tools:layout_editor_absoluteY="614dp" />
+
+        <Button
+            android:id="@+id/resume"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:background="#38383C"
+            android:text="@string/resume"
+            android:textAllCaps="false"
+            android:textColor="#02CAA2"
+            android:textSize="15sp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/start"
+            tools:layout_editor_absoluteY="597dp" />
+
+        <Button
+            android:id="@+id/endWorkout"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:background="#38383C"
+            android:text="@string/finish"
+            android:textAllCaps="false"
+            android:textColor="#02CAA2"
+            android:textSize="15sp"
+            app:useCompatPadding="true"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/text"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/workout_in_progress"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#02CAA2"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="81dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Clock"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="500dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Chronometer
+            android:id="@+id/stopwatch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:format="00:00:00"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="40sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="331dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/countdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="30sp"/>
+    </LinearLayout>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
