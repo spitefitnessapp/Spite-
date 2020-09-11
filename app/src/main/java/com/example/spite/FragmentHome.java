@@ -92,17 +92,14 @@ public class FragmentHome extends Fragment {
             public void onClick(View view) {
                 /*Retrieve and store user workout time*/
                 int finalHr = Integer.parseInt(String.valueOf(setWorkoutHr.getValue()));
-                int finalMin = Integer.parseInt(String.valueOf(setWorkoutHr.getValue()));
+                int finalMin = Integer.parseInt(String.valueOf(setWorkoutMin.getValue()));
 
-                /*Sends set hour and minutes user inputted into StartWorkout*/
+                /*Sends set hour and minutes user inputted into StartWorkout (Temporarily EndWorkout)*/
                 Intent sendWorkoutTime = new Intent(getActivity(), CurrentWorkout.class);
                 sendWorkoutTime.putExtra("hour", finalHr);
-                sendWorkoutTime.putExtra("minutes", finalMin);
-
-
-                /*Takes user to StartWorkout*/
-                Intent homeToStartWorkout = new Intent(getActivity(), CurrentWorkout.class);
-                startActivity(homeToStartWorkout);
+                sendWorkoutTime.putExtra("minute", finalMin);
+                getActivity().startActivity(sendWorkoutTime);
+                startActivity(sendWorkoutTime);
 
                 /*Test to see if values are correct in Logcat*/
                 Log.d("picker value", String.valueOf(finalHr));
