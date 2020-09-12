@@ -12,10 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
+import java.util.Locale;
 
 public class CurrentWorkout extends AppCompatActivity {
 
-    private Button pauseBtn;
     private Button endBtn;
     private Button resumeBtn;
     private Chronometer stopwatch;
@@ -25,18 +25,16 @@ public class CurrentWorkout extends AppCompatActivity {
     private boolean stRunning;
     private Handler handler;
     private long millisec, start, buff, update = 0;
-    private int sec, min, mSec;
-
-    // Fetching the data from main activity
-
-    int hour; /*= getIntent().getIntExtra("hour", 0);*/
-    int minute; /*= getIntent().getIntExtra("minutes", 0);*/
+    private int sec, min, mSec, hrs;
 
     //For the countdown timer
     private CountDownTimer countDownTimer;
+    private int hour;
+    private int minute;
 
     //Convert the values to millisecond
-    private long counter = Long.valueOf(hour)/3600000 + Long.valueOf(minute)/60000 ;
+    private long counter;
+    private int sec, min, mSec;
     private boolean timerRunning;
 
     @Override
@@ -44,29 +42,70 @@ public class CurrentWorkout extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_workout);
 
-        //Create an intent to retrieve set workout time
+        //Receive Intent from Set Workout Time Pop-Up and instantiate countdown values
         Intent workoutTime = getIntent();
-        hour = workoutTime.getIntExtra("hour", 0);
+        hour = workoutTime.getIntExtra("hour",0);
         minute = workoutTime.getIntExtra("minute", 0);
+        counter =  ((long)(hour))*3600000 + ((long)(minute))*60000;
 
-        pauseBtn = (Button) findViewById(R.id.pause);
-        endBtn = (Button) findViewById(R.id.endWorkout);
-        resumeBtn = (Button) findViewById(R.id.resume);
+        /* TODO: Remove this later. Testing to see if intent is received*/
+        Log.d("picker hour", String.valueOf(hour));
+        Log.d("picker min", String.valueOf(minute));
+        Log.d("picker counter", String.valueOf(counter));
+
+        endBtn = findViewById(R.id.endWorkout);
+        resumeBtn = findViewById(R.id.resume);
         stopwatch = findViewById(R.id.stopwatch);
         countDownText = findViewById(R.id.countdown);
         handler = new Handler();
 
         //pauseBtn.setEnabled(false);
         startStopW();
-        startCounter();
         updateTimer();
 
+        resumeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                stopTimer();
+
+                if(!stRunning)
+                {
+                    start = SystemClock.uptimeMillis();
+                    handler.postDelayed(run,0);
+                    stopwatch.start();
+                    stRunning = true;
+                    resumeBtn.setText(R.string.Pause);
+                    startTimer();
+
+                }
+                else
+                {
+                    buff += millisec;
+                    handler.removeCallbacks(run);
+                    stopwatch.stop();
+                    stRunning = false;
+                    resumeBtn.setText(R.string.Resume);
+                    stopTimer();
+                }
+                //countDownTimer.cancel();
+            }
+
+        });
 
         endBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CurrentWorkout.this, EndWorkout.class);
-                CurrentWorkout.this.startActivity(intent);
+                /*Sends set hour and minutes user inputted into EndWorkout to display at the end*/
+                Intent sendWorkoutGoal = new Intent(CurrentWorkout.this, EndWorkout.class);
+                sendWorkoutGoal.putExtra("hour", hour);
+                sendWorkoutGoal.putExtra("minute", minute);
+
+                /*Send final logged time of workout to EndWorkout*/
+                String finalLoggedTime = String.format("%02d", min) + ":" + String.format("%02d", sec) + ":" + String.format("%02d", mSec);
+                Log.d("final logged time", String.valueOf(finalLoggedTime));
+                sendWorkoutGoal.putExtra("loggedTime", finalLoggedTime);
+                startActivity(sendWorkoutGoal);
             }
         });
     }
@@ -81,6 +120,8 @@ public class CurrentWorkout extends AppCompatActivity {
             stRunning = true;
 
         }
+
+        startTimer();
     }
 
     public Runnable run = new Runnable() {
@@ -88,51 +129,43 @@ public class CurrentWorkout extends AppCompatActivity {
         public void run() {
             millisec = SystemClock.uptimeMillis() - start;
             update = buff + millisec;
-            sec = (int) (update/1000);
-            min = sec/60;
-            sec = sec % 60;
-            millisec = (int)(update % 100);
-            stopwatch.setText(String.format("%02d", min) + ":" + String.format("%02d", sec) + ":" + String.format("%02d", mSec));
+
+            int seconds = (int) (update/1000);
+            min = seconds/60;
+            sec = seconds % 60;
+            mSec = (int)(update % 100);
+
+            if(min>60)
+            {
+                hrs =+1;
+                min = min % 60;
+
+            }
+
+            if(hrs<1) {
+                stopwatch.setText(String.format("%02d", min) + ":" + String.format("%02d", sec) + ":" + String.format("%02d", mSec));
+            }
+            else
+            {
+                stopwatch.setText(String.format("%02d", hrs) + ":" + String.format("%02d", min) + ":" + String.format("%02d", sec) + ":" + String.format("%02d", mSec));
+
+            }
             handler.postDelayed(this, 60);
         }
     };
-
-    public void onPause(View view)
-    {
-        if(stRunning)
-           {
-               buff += millisec;
-               handler.removeCallbacks(run);
-               stopwatch.stop();;
-               stRunning = false;
-
-           }
-    }
-
-    public void startCounter()
-    {
-        if(timerRunning)
-        {
-            stopTimer();
-        }
-        else
-        {
-            startTimer();
-        }
-    }
 
     public void startTimer()
     {
         countDownTimer = new CountDownTimer(counter, 1000) {
             @Override
             public void onTick(long l) {
-                counter = 1;
+                counter = l;
                 updateTimer();
             }
 
             @Override
             public void onFinish() {
-
+                timerRunning = false;
             }
         }.start();
     }
@@ -146,17 +179,30 @@ public class CurrentWorkout extends AppCompatActivity {
 
     public void updateTimer()
     {
-        int mins = (int) counter/60000;
-        int secs = (int) counter % 60000/1000;
-        String timeLeftText;
-        timeLeftText = " " + mins;
-        timeLeftText += ":";
-        if(secs<10) {
-            timeLeftText += "0";
-            timeLeftText += secs;
+        // added hours to the stopwatch
+        int hoursToUpdate = (int) (counter/1000)/3600;
+        int minToUpdate = (int) (counter/1000)%3600/60;
+        int secToUpdate = (int) (counter/1000)%60;
+        int secToUpdate2 = (int) ((counter-1000)/1000)%60;
+
+
+        String timeText;
+        if(hoursToUpdate > 0){
+            timeText =  String.format(Locale.getDefault(),
+                    "%d:%02d:%02d", hoursToUpdate, minToUpdate, secToUpdate);
+        }
+        else
+        {
+            timeText =  String.format(Locale.getDefault(),
+                    "%02d:%02d", minToUpdate, secToUpdate);
         }
 
-        countDownText.setText(timeLeftText);
+        //Update text for  countdown timer once it finises the user input time
+        if(secToUpdate == 1)
+        {
+            timeText =  String.format(Locale.getDefault(),
+                    "%02d:%02d", minToUpdate, secToUpdate2);
+        }
+        countDownText.setText(timeText);
     }
-
 }

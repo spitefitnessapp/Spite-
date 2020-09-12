@@ -9,16 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Register"></activity>
+        <activity android:name=".Register"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".EndWorkout" />
         <activity android:name=".KyleSettings" />
         <activity android:name=".ChangePassword" />
         <activity android:name=".ChangeEmail" />
         <activity android:name=".Settings" />
-        <activity android:name=".Profile" />
-        <activity android:name=".KyleProgress" />
-        <activity android:name=".Progress" />
         <activity android:name=".CurrentWorkout" />
         <activity android:name=".Login">
             <intent-filter>

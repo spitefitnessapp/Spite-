@@ -25,34 +25,15 @@
 
 
         <Button
-            android:id="@+id/pause"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="100dp"
-            android:layout_height="70dp"
-            android:background="#38383C"
-            android:text="@string/pause"
-            android:textAllCaps="false"
-            android:textColor="#02CAA2"
-            android:tint="#02CAA2"
-            android:onClick="onPause"
-            app:backgroundTint="#38383C"
-            app:layout_constraintEnd_toStartOf="@+id/start"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:useCompatPadding="true"
-            android:textSize="15sp"
-            tools:layout_editor_absoluteY="614dp" />
-
-        <Button
             android:id="@+id/resume"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="100dp"
             android:layout_height="70dp"
             android:background="#38383C"
-            android:text="@string/resume"
             android:textAllCaps="false"
             android:textColor="#02CAA2"
             android:textSize="15sp"
+            android:text = "@string/pause"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/start"
@@ -69,7 +50,6 @@
             android:textColor="#02CAA2"
             android:textSize="15sp"
             app:useCompatPadding="true"/>
-
     </LinearLayout>
 
     <LinearLayout
