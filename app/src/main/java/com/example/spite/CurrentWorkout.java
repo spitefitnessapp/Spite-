@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.util.Locale;
 
@@ -20,6 +21,7 @@ public class CurrentWorkout extends AppCompatActivity {
     private Button resumeBtn;
     private Chronometer stopwatch;
     private TextView countDownText;
+    private ProgressBar userPB;
 
     //For the stopwatch
     private boolean stRunning;
@@ -31,15 +33,20 @@ public class CurrentWorkout extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private int hour;
     private int minute;
+    private int PROGRESS_START = 0;
 
     //Convert the values to millisecond
     private long counter;
+    //private int sec, min, mSec;
     private boolean timerRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_workout);
+
+        userPB = (ProgressBar) findViewById(R.id.UserProgressMainScreen);
+        userPB.setProgress(PROGRESS_START);
 
         //Receive Intent from Set Workout Time Pop-Up and instantiate countdown values
         Intent workoutTime = getIntent();
@@ -156,9 +163,13 @@ public class CurrentWorkout extends AppCompatActivity {
     public void startTimer()
     {
         countDownTimer = new CountDownTimer(counter, 1000) {
+            int startTime = (int) (counter/1000);
             @Override
             public void onTick(long l) {
                 counter = l;
+                int count = (int) counter/1000;
+                int timeUsed = (int) (((startTime - count)/ (double) startTime)*100);
+                userPB.setProgress(timeUsed);
                 updateTimer();
             }
 
