@@ -4,12 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,12 +21,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /* Display the Bottom Navigation Bar*/
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        /*Display FragmentHome by default upon opening*/
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
-                new FragmentHome()).commit();
+        /*Switch statement to display specific fragments outside of the navigation tab*/
+        Intent whichView = getIntent();
+        String source = whichView.getStringExtra("TabView");
+
+        if (source != null) {
+            Log.d("TabView", source);
+            changeFragmentView(source);
+        }
+        else {
+            /*Display FragmentHome by default upon opening*/
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
+                    new FragmentHome()).commit();
+        }
     }
 
     /*Set up menu in the Bottom Navigation Bar and change fragments upon clicking*/
@@ -57,4 +71,21 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    /*TODO: Change FragmentView is successful. However, navBar icons do not change*/
+    public void changeFragmentView(String source){
+        Fragment selectedFragment = null;
+
+        if (source.equals("EndWorkoutToProgress")) {
+            selectedFragment = new FragmentProgress();
+            Log.d("TabView", "Stage 2");
+        }
+
+        /*Get selectedFragment and display selectedFragment in the switch*/
+        if(selectedFragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    selectedFragment).commit();
+            Log.d("TabView", "Stage 3");
+        }
+    }
 }

@@ -44,7 +44,8 @@
     <string name="home">Home</string>
     <string name="progress">Progress</string>
     <string name="kyle">Kyle</string>
-    <string name="resume">Resume</string>
+    <string name="Resume">Resume</string>
+    <string name="Pause">Pause</string>
 
 
 </resources>

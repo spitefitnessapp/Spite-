@@ -11,17 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-/*TODO: Add Firebase to project before uncommenting the following
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;*/
+import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
 
-    /*TODO: Add Firebase to project before uncommenting the following
-    private FirebaseAuth auth;*/
+    private FirebaseAuth auth;
     EditText userET = null;
     EditText passwordET = null;
     Button loginBtn = null;
@@ -38,14 +36,13 @@ public class Login extends AppCompatActivity {
         passwordET = (EditText) findViewById(R.id.loginTextPassword);
         loginBtn = (Button) findViewById(R.id.loginButton);
         logToRegBtn = (Button) findViewById(R.id.logToRegBtn);
-        /*TODO: Add Firebase to project before uncommenting the following
-        auth = FirebaseAuth.getInstance();*/
+        auth = FirebaseAuth.getInstance();
 
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (login() == true) {
+                if (login()) {
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     Login.this.startActivity(intent);
                 } else {

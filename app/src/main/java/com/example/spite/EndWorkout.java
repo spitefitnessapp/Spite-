@@ -47,7 +47,8 @@ public class EndWorkout extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EndWorkout.this, MainActivity.class);
-                EndWorkout.this.startActivity(intent);
+                intent.putExtra("TabView", "EndWorkoutToProgress");
+                startActivity(intent);
             }
         });
 
