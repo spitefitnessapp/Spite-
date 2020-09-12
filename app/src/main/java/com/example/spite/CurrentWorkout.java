@@ -67,13 +67,16 @@ public class CurrentWorkout extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                stopTimer();
+
                 if(!stRunning)
                 {
                     start = SystemClock.uptimeMillis();
                     handler.postDelayed(run,0);
                     stopwatch.start();
                     stRunning = true;
-                    resumeBtn.setText("Resume");
+                    resumeBtn.setText("Pause");
+                    startTimer();
 
                 }
                 else
@@ -82,12 +85,10 @@ public class CurrentWorkout extends AppCompatActivity {
                     handler.removeCallbacks(run);
                     stopwatch.stop();;
                     stRunning = false;
-                    resumeBtn.setText("Pause");
+                    resumeBtn.setText("Resume");
+                    stopTimer();
                 }
-                resumeBtn.setVisibility(View.VISIBLE);
-                countDownTimer.cancel();
-                timerRunning = false;
-                startCounter();
+                //countDownTimer.cancel();
             }
 
         });
@@ -95,9 +96,16 @@ public class CurrentWorkout extends AppCompatActivity {
         endBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CurrentWorkout.this, EndWorkout.class);
+                /*Sends set hour and minutes user inputted into EndWorkout to display at the end*/
+                Intent sendWorkoutGoal = new Intent(CurrentWorkout.this, EndWorkout.class);
+                sendWorkoutGoal.putExtra("hour", hour);
+                sendWorkoutGoal.putExtra("minute", minute);
 
-                CurrentWorkout.this.startActivity(intent);
+                /*Send final logged time of workout to EndWorkout*/
+                String finalLoggedTime = String.format("%02d", min) + ":" + String.format("%02d", sec) + ":" + String.format("%02d", mSec);
+                Log.d("final logged time", String.valueOf(finalLoggedTime));
+                sendWorkoutGoal.putExtra("loggedTime", finalLoggedTime);
+                startActivity(sendWorkoutGoal);
             }
         });
     }
@@ -112,7 +120,7 @@ public class CurrentWorkout extends AppCompatActivity {
             stRunning = true;
 
         }
-        startCounter();
+        startTimer();
     }
 
     public Runnable run = new Runnable() {
@@ -129,17 +137,6 @@ public class CurrentWorkout extends AppCompatActivity {
         }
     };
 
-    public void startCounter()
-    {
-        if(timerRunning)
-        {
-            stopTimer();
-        }
-        else
-        {
-            startTimer();
-        }
-    }
 
     public void startTimer()
     {
@@ -152,6 +149,7 @@ public class CurrentWorkout extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                timerRunning = false;
 
             }
         }.start();
@@ -161,14 +159,13 @@ public class CurrentWorkout extends AppCompatActivity {
     {
         countDownTimer.cancel();
         timerRunning = false;
-
     }
 
     public void updateTimer()
     {
         int hoursToUpdate = (int)(counter/1000)/3600;
         int minToUpdate = (int) (counter/1000)%3600/60;
-        int secToUpdate = (int) counter/1000%60;
+        int secToUpdate = (int) (counter/1000)%60;
         String timeText;
         if(hoursToUpdate > 0){
             timeText =  String.format(Locale.getDefault(),

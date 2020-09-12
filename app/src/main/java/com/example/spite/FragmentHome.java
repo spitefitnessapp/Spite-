@@ -94,7 +94,7 @@ public class FragmentHome extends Fragment {
                 int finalHr = Integer.parseInt(String.valueOf(setWorkoutHr.getValue()));
                 int finalMin = Integer.parseInt(String.valueOf(setWorkoutMin.getValue()));
 
-                /*Sends set hour and minutes user inputted into StartWorkout (Temporarily EndWorkout)*/
+                /*Sends set hour and minutes user inputted into CurrentWorkout*/
                 Intent sendWorkoutTime = new Intent(getActivity(), CurrentWorkout.class);
                 sendWorkoutTime.putExtra("hour", finalHr);
                 sendWorkoutTime.putExtra("minute", finalMin);
