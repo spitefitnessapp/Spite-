@@ -50,7 +50,6 @@
             android:textColor="#02CAA2"
             android:textSize="15sp"
             app:useCompatPadding="true"/>
-
     </LinearLayout>
 
     <LinearLayout

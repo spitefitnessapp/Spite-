@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
-
 import java.util.Locale;
 
 public class CurrentWorkout extends AppCompatActivity {
@@ -35,6 +34,7 @@ public class CurrentWorkout extends AppCompatActivity {
 
     //Convert the values to millisecond
     private long counter;
+    private int sec, min, mSec;
     private boolean timerRunning;
 
     @Override
@@ -120,6 +120,7 @@ public class CurrentWorkout extends AppCompatActivity {
             stRunning = true;
 
         }
+
         startTimer();
     }
 
@@ -128,6 +129,7 @@ public class CurrentWorkout extends AppCompatActivity {
         public void run() {
             millisec = SystemClock.uptimeMillis() - start;
             update = buff + millisec;
+
             int seconds = (int) (update/1000);
             min = seconds/60;
             sec = seconds % 60;
@@ -151,7 +153,6 @@ public class CurrentWorkout extends AppCompatActivity {
             handler.postDelayed(this, 60);
         }
     };
-
 
     public void startTimer()
     {
@@ -204,6 +205,4 @@ public class CurrentWorkout extends AppCompatActivity {
         }
         countDownText.setText(timeText);
     }
-
-
 }
