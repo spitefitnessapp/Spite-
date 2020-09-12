@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "546466320164",
+    "firebase_url": "https://spite-6b62a.firebaseio.com",
+    "project_id": "spite-6b62a",
+    "storage_bucket": "spite-6b62a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546466320164:android:d816448cfd53fcf5d62db1",
+        "android_client_info": {
+          "package_name": "com.example.spite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "546466320164-l6r6ipol1abojbpqge9arggt0f3qttas.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd2S8NoeMdgezkl866j0BhzcjpAv7G7Yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546466320164-l6r6ipol1abojbpqge9arggt0f3qttas.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

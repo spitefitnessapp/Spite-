@@ -34,7 +34,6 @@ public class CurrentWorkout extends AppCompatActivity {
 
     //Convert the values to millisecond
     private long counter;
-    private int sec, min, mSec;
     private boolean timerRunning;
 
     @Override
