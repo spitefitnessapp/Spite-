@@ -65,7 +65,6 @@ public class CurrentWorkout extends AppCompatActivity {
         countDownText = findViewById(R.id.countdown);
         handler = new Handler();
 
-        //pauseBtn.setEnabled(false);
         startStopW();
         updateTimer();
 
@@ -94,7 +93,6 @@ public class CurrentWorkout extends AppCompatActivity {
                     resumeBtn.setText(R.string.Resume);
                     stopTimer();
                 }
-                //countDownTimer.cancel();
             }
 
         });

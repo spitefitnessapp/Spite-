@@ -1,11 +1,18 @@
 package com.example.spite;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 
 public class Settings extends AppCompatActivity {
 
@@ -26,7 +33,28 @@ public class Settings extends AppCompatActivity {
         logout = (Button) findViewById(R.id.logoutBtn);
         settingToMainBtn = (Button) findViewById(R.id.settingToMainBtn);
 
-        logout.setEnabled(false);
+        logout.setEnabled(true);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AuthUI.getInstance()
+                        .signOut(Settings.this)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                logout.setEnabled(false);
+                                Intent sendToLogIn = new Intent(Settings.this, Login.class);
+                                startActivity(sendToLogIn);
+                                
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Settings.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
         chngEmail.setOnClickListener(new View.OnClickListener() {
             @Override

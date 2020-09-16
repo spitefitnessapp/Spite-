@@ -10,45 +10,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.firebase.ui.auth.data.model.User;
+
 import org.w3c.dom.Text;
 
 public class Register extends AppCompatActivity {
 
-    EditText emailET = null;
-    EditText emailConfirmET = null;
-    EditText passwordET = null;
-    Button regBtn = null;
+    EditText UserName;
+    EditText dateOfBirth;
+    EditText weight;
+    EditText height;
+
+    Button regBtn;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        emailET = (EditText) findViewById(R.id.emailRegTV);
-        emailConfirmET = (EditText) findViewById(R.id.confirmEmailRegTV);
-        passwordET = (EditText) findViewById(R.id.registerTextPassword);
-        regBtn = (Button) findViewById(R.id.registerBtn);
+        UserName = findViewById(R.id.userName);
+        dateOfBirth = findViewById(R.id.dateOfBirth);
+        weight = findViewById(R.id.weight);
+        height = findViewById(R.id.height);
+        regBtn = findViewById(R.id.register);
 
-        regBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registerUser();
-                Intent intent = new Intent(Register.this, Login.class); //should be a screen abt verification email?
-                Register.this.startActivity(intent);
-            }
-        });
+    }
+    private void register(View view) {
+        Intent toHome = new Intent(this, MainActivity.class);
+        startActivity(toHome);
+        //String msg = "Welcome to Spike " + UserName.getText().toString();
+        //Log.d("MAD", msg);
     }
 
-    private void registerUser()
-    {
-        if( emailET.getText().toString().equals( emailConfirmET.getText().toString() ) )
-        {
-            String msg = "New user email: " + emailET.getText().toString() + " Password: " + passwordET.getText().toString();
-            Log.d("MAD", msg);
-        }
-        else
-        {
-            Log.d("MAD", "Emails don't match uwu");
-        }
-    }
 }
