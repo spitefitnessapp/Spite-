@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNav;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         /*Switch statement to display specific fragments outside of the navigation tab*/
         Intent whichView = getIntent();
         String source = whichView.getStringExtra("TabView");
+
 
         if (source != null) {
             Log.d("TabView", source);

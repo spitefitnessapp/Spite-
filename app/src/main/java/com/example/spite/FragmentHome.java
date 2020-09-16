@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +20,10 @@ public class FragmentHome extends Fragment {
     //Start Workout Button
     private Button startWorkout;
 
+    //Progress Bars
+    private ProgressBar userMainPB;
+    private ProgressBar kyleMainPB;
+
     //Set Workout Dialog Variables
     private NumberPicker setWorkoutHr;
     private NumberPicker setWorkoutMin;
@@ -27,10 +32,16 @@ public class FragmentHome extends Fragment {
     private String[] hourValues;
     private String[] minValues;
 
+    //User variable
+    private String email;
+
     //Display fragment with layout res file fragment_home
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //if(getArguments() != null){
+       //     email = getArguments().getString("email");
+       // }
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -38,6 +49,16 @@ public class FragmentHome extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         startWorkout = requireView().findViewById(R.id.startWorkout);
+        userMainPB = requireView().findViewById(R.id.UserProgressMainScreen);
+        kyleMainPB = requireView().findViewById(R.id.KyleProgressMainScreen);
+
+/*        Intent use = getActivity().getIntent();
+       // email = use.getStringExtra("email");
+
+*/       // Log.d("MAD", email);
+        //Dummy values, access 7 day progress for com.example.spite.User and Kyle, make an int.
+        userMainPB.setProgress(33);
+        kyleMainPB.setProgress(56);
 
         startWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
