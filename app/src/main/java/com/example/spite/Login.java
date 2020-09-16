@@ -21,10 +21,10 @@ import java.util.List;
 
 public class Login extends AppCompatActivity {
 
-    private FirebaseAuth auth;
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private FirebaseUser user;
     private static  final int REQUEST_CODE = 101;
     List<AuthUI.IdpConfig> signUpOp;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +34,19 @@ public class Login extends AppCompatActivity {
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build()
         );
-        SignInOption();
+
+        //This allows users to continue their session
+        user = auth.getCurrentUser();
+        if(user != null)
+        {
+            Intent resumeActivity = new Intent(this, MainActivity.class);
+            startActivity(resumeActivity);
+        }
+        else
+        {
+            SignInOption();
+        }
+
     }
 
     private void SignInOption(){
@@ -51,22 +63,23 @@ public class Login extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if (resultCode == RESULT_OK) {
                 //Get Users
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                //String email = user.getEmail();
+                 user = auth.getCurrentUser();
                 Toast.makeText(this, "" + user.getEmail(), Toast.LENGTH_SHORT).show();
                 if(user.getMetadata().getCreationTimestamp() == user.getMetadata().getLastSignInTimestamp())
                 {
                     Toast.makeText(this, "Welcome to Spite!", Toast.LENGTH_SHORT).show();
                     Intent toRegister = new Intent(this, Register.class);
                     startActivity(toRegister);
+
                 }
                 else
                 {
                     Toast.makeText(this, "Welcome back to Spite!", Toast.LENGTH_SHORT).show();
 
                 }
-                startActivity(new Intent(this, MainActivity.class));
 
+                startActivity(new Intent(this, MainActivity.class));
+                //
                 this.finish();
 
             } else {

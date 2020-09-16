@@ -21,7 +21,7 @@ public class Settings extends AppCompatActivity {
     Button chngKyle = null;
     Button logout = null;
     Button settingToMainBtn = null;
-
+    private boolean logInCheck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +34,8 @@ public class Settings extends AppCompatActivity {
         settingToMainBtn = (Button) findViewById(R.id.settingToMainBtn);
 
         logout.setEnabled(true);
+        Intent intent = getIntent();
+        //logInCheck = intent.getBooleanExtra("Logged_in",true);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,9 +45,11 @@ public class Settings extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 logout.setEnabled(false);
+                                //logInCheck = false;
                                 Intent sendToLogIn = new Intent(Settings.this, Login.class);
                                 startActivity(sendToLogIn);
-                                
+                                sendToLogIn.addFlags(sendToLogIn.FLAG_ACTIVITY_CLEAR_TOP);
+                                sendToLogIn.addFlags(sendToLogIn.FLAG_ACTIVITY_CLEAR_TASK);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
