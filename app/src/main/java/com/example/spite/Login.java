@@ -9,13 +9,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Login extends AppCompatActivity {
 
@@ -27,6 +33,7 @@ public class Login extends AppCompatActivity {
     private String password = null;
     private String email = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +44,7 @@ public class Login extends AppCompatActivity {
         loginBtn = (Button) findViewById(R.id.loginButton);
         logToRegBtn = (Button) findViewById(R.id.logToRegBtn);
         auth = FirebaseAuth.getInstance();
+
 
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -63,11 +71,35 @@ public class Login extends AppCompatActivity {
     private boolean login() {
         password = passwordET.getText().toString();
         email = userET.getText().toString();
-        String msg = "email = " + email + " Password = " + password;
-        Log.d("MAD", msg);
+        boolean login = true;
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference mDocRef = db.collection("User").document(email);
+
+        mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()) {
+                    String pw = documentSnapshot.getString("password");
+
+                    //how to set boolean login to true/false depending on whether passwords match???
+                    if(!pw.equals(password)) {
+                        Log.d("MAD", "email found, passwords dont match");
+                    }
+                    else{Log.d("MAD", "email found, Passwords match"); }
+                }
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Login.this, "Didnt access document!", Toast.LENGTH_SHORT).show();
+                        Log.d("MAD", e.toString());
+
+                    }
+                });
 
         return true;
     }
-
 
 }

@@ -45,7 +45,7 @@ public class CurrentWorkout extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_workout);
 
-        userPB = (ProgressBar) findViewById(R.id.UserProgressMainScreen);
+        userPB = (ProgressBar) findViewById(R.id.UserProgressCurrentWorkout);
         userPB.setProgress(PROGRESS_START);
 
         //Receive Intent from Set Workout Time Pop-Up and instantiate countdown values
@@ -169,6 +169,8 @@ public class CurrentWorkout extends AppCompatActivity {
                 counter = l;
                 int count = (int) counter/1000;
                 int timeUsed = (int) (((startTime - count)/ (double) startTime)*100);
+                String checkk = timeUsed + " " + count;
+                Log.d("TAGG", checkk);
                 userPB.setProgress(timeUsed);
                 updateTimer();
             }

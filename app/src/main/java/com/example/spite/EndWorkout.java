@@ -21,6 +21,8 @@ public class EndWorkout extends AppCompatActivity {
     private TextView workoutGoalTV;
     private TextView loggedTimeTV;
 
+    private String emailIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,7 @@ public class EndWorkout extends AppCompatActivity {
         loggedTitleTV = findViewById(R.id.endLoggedTitle);
         workoutGoalTV = findViewById(R.id.endWorkoutGoal);
         loggedTimeTV = findViewById(R.id.endLoggedTime);
+
 
         /*Sends user back to the FragmentHome*/
         toMainBtn.setOnClickListener(new View.OnClickListener() {
