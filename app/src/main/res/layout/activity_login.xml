@@ -20,7 +20,7 @@
             style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Spike"
+            android:text="Spite"
             android:textColor="#02CAA2"
             android:textColorHighlight="#CDDC39"
             android:textSize="56sp"
