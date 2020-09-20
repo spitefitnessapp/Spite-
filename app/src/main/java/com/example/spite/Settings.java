@@ -15,6 +15,8 @@ public class Settings extends AppCompatActivity {
     Button logout = null;
     Button settingToMainBtn = null;
 
+    private String USER_UID = "user01";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

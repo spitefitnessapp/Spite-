@@ -14,4 +14,16 @@
         android:textSize="30sp"
         android:text="Kyle's Weekly Progress" />
 
+    <TextView
+        android:id="@+id/kyleProgPlaceHoldTV"
+        android:layout_width="192dp"
+        android:layout_height="103dp"
+        android:layout_above="@+id/kyleWeeklyProg"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="108dp"
+        android:layout_marginEnd="111dp"
+        android:layout_marginBottom="138dp"
+        android:text="Kyle's progress" />
+
 </RelativeLayout>

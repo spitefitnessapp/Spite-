@@ -1,5 +1,6 @@
 package com.example.spite;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,14 +11,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class KyleSettings extends AppCompatActivity {
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button toMainBtn = null;
     Button updateKyleNameBtn = null;
     EditText newKyleNameET = null;
     TextView renameAntag = null;
     TextView antagCurrentName = null;
-    private String kyleName = "Kyle"; //should it be null? get from user profile upon log in?
+
+    private final String KYLE_NAME_KEY = "kyle";
+    private String kyleName = "Kyle";
+    private String USER_UID = "user01";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +41,6 @@ public class KyleSettings extends AppCompatActivity {
         renameAntag = (TextView) findViewById(R.id.kyles);
         antagCurrentName = (TextView) findViewById(R.id.kyleName);
 
-        antagCurrentName.setText(kyleName);
 
         updateKyleNameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,17 +58,41 @@ public class KyleSettings extends AppCompatActivity {
                 KyleSettings.this.startActivity(intent);
             }
         });
+
+        DocumentReference mDocRef = db.collection("User").document(USER_UID);
+        mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                String kyle = documentSnapshot.getString("kyle");
+                antagCurrentName.setText(kyle);
+
+            }
+        });
     }
 
     private void updateKyle(){
         String newName = newKyleNameET.getText().toString();
-        String msg = null;
+        String msg = "nothing in the msg yet";
 
     if(newName.length() > 0)
     {
         kyleName = newName;
         msg = "New name: " + kyleName;
         Log.d("MAD", msg);
+        DocumentReference mDocRef = db.collection("User").document(USER_UID);
+        mDocRef.update("kyle", newName)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("MAD", "Kyle name successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("MAD", "Error updating kyle name", e);
+                    }
+                });
     }
     else
     {

@@ -1,6 +1,5 @@
 package com.example.spite;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,18 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Login extends AppCompatActivity {
@@ -34,6 +24,9 @@ public class Login extends AppCompatActivity {
     private String email;
 
     private boolean login;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private UserDBHandler dbh = new UserDBHandler();
+    private User user;
 
 
     @Override
@@ -48,12 +41,13 @@ public class Login extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
 
-
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (login()) {
-                    Intent intent = new Intent(Login.this, MainActivity.class);
+                    Intent intent = new Intent(Login.this, ChangeEmail.class);
+                    intent.putExtra("email", userET.getText().toString());
+                    intent.putExtra("password", passwordET.getText().toString());
                     Login.this.startActivity(intent);
                 } else {
                     Log.d("MAD", "unsuccessful log in");
@@ -73,8 +67,24 @@ public class Login extends AppCompatActivity {
     private boolean login() {
         password = passwordET.getText().toString();
         email = userET.getText().toString();
+/*
+        if ( dbh.checkUserExists(db, email)) {
+            user = dbh.getUser(db, email);
+        } else {
+            Log.d("MAD", "email not in db, according to login()");
+            return false;
+        }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        if (!password.equals(user.getPassword())) {
+            Log.d("MAD", "Passwords don't match boo");
+            return false;
+        } else {
+            return true;
+        }
+ */
+return true; //and get some help
+
+/*
         DocumentReference mDocRef = db.collection("User").document(email);
 
         mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -105,6 +115,7 @@ public class Login extends AppCompatActivity {
                 });
 
         return login;
-    }
 
+ */
+    }
 }
