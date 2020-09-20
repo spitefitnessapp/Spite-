@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,7 +23,9 @@ public class FragmentKyleProgress extends Fragment {
     private TextView kyleWeeklyProg;
     private TextView kyleProgPHTV;
 
-    private String USER_UID = "user01";
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String USER_UID = user.getUid();
+
     private final String GOAL_KEY = "goal";
     private final String KYLE_UID_KEY = "kyleUID";
     private final String KYLE_NAME_KEY = "kyle";
@@ -38,6 +42,7 @@ public class FragmentKyleProgress extends Fragment {
     //Initialising Kyle Weekly Progress View inside the Fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         kyleWeeklyProg = requireView().findViewById(R.id.kyleWeeklyProg);
         kyleProgPHTV = requireView().findViewById(R.id.kyleProgPlaceHoldTV);
 

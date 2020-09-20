@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,7 +24,8 @@ public class FragmentProgress extends Fragment {
     private TextView userWeeklyProg;
     private TextView userProgPHTV;
 
-    private String USER_UID = "user01";
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String USER_UID = user.getUid();
     private final String USERNAME_KEY = "username";
     private final String GOAL_KEY = "goal";
 
@@ -38,6 +41,7 @@ public class FragmentProgress extends Fragment {
     //Set up views inside the fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         userWeeklyProg = requireView().findViewById(R.id.userWeeklyProg);
         userProgPHTV = requireView().findViewById(R.id.userProgPHTV);
 

@@ -51,7 +51,7 @@ public class Register extends AppCompatActivity {
 //Send email info to other activity, use DBHandler class?
 
                 Log.d("MAD", "above intent");
-                Intent intent = new Intent(Register.this, MainActivity.class); //should be a screen abt verification email?
+                Intent intent = new Intent(Register.this, FragmentHome.class); //should be a screen abt verification email?
                 //intent.putExtra( EMAIL_KEY, emailET.getText().toString() ); how do intents with fragmentsssssss
                 Register.this.startActivity(intent);
 

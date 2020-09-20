@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,7 +34,8 @@ public class FragmentProfile extends Fragment {
     private TextView currentGoalNumTV;
     private EditText userGoalET; //cannot use decimal point.
 
-    private String USER_UID = "user01"; //TO BE CHANGED BY INTENT PASSING INFO?
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String USER_UID = user.getUid();
     private final String GOAL_KEY = "goal";
     private final String USERNAME_KEY = "username";
 

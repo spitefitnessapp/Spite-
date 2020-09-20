@@ -16,6 +16,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,8 +42,9 @@ public class FragmentHome extends Fragment {
     private String[] hourValues;
     private String[] minValues;
 
-    //User variable
-    private String USER_UID = "user01"; //TO BE CHANGED BY INTENT PASSING INFO?
+    //User variables
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String USER_UID = user.getUid();
     private static final String GOAL_KEY = "goal";
     private static final String KYLE_UID_KEY = "kyleUID";
 
@@ -49,9 +52,9 @@ public class FragmentHome extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //if(getArguments() != null){
-       //     email = getArguments().getString("email");
-       // }
+           // Bundle bundle = this.getArguments();
+           // USER_UID = bundle.getString("userID");
+           // Log.d("MAD", USER_UID);
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -59,17 +62,11 @@ public class FragmentHome extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-       // User kyle = dbh.getKyle( db, user.getKyleUID() );
-
         startWorkout = requireView().findViewById(R.id.startWorkout);
         userMainPB = requireView().findViewById(R.id.UserProgressMainScreen);
         kyleMainPB = requireView().findViewById(R.id.KyleProgressMainScreen);
 
-/*        Intent use = getActivity().getIntent();
-          email = use.getStringExtra("email");
-           Log.d("MAD", email);
 
-*/
 
 
 

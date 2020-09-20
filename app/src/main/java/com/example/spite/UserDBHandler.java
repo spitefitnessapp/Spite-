@@ -25,10 +25,12 @@ void changeUsername( FirebaseFirestore db, String uid, String username)
 void changeKyleName( FirebaseFirestore db, String uid, String newKyleName)
 void changeGoal(FirebaseFirestore db, String uid, double goal)
 User getKyle( FirebaseFirestore db, String kyleID )
+deleteUser()
 
 Needed methods:
 addKyleUID()
 updateKyleUID()
+
  */
 
 public class UserDBHandler {
@@ -224,6 +226,24 @@ public class UserDBHandler {
         });
         return user;
 
+    }
+
+    //does not delete subcollections.
+    public void deleteUser( FirebaseFirestore db, String uid ){
+        db.collection("User").document(uid)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("MAD", "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("MAD", "Error deleting document", e);
+                    }
+                });
     }
 
     /*

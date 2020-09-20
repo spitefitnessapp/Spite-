@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,7 +30,8 @@ public class KyleSettings extends AppCompatActivity {
 
     private final String KYLE_NAME_KEY = "kyle";
     private String kyleName = "Kyle";
-    private String USER_UID = "user01";
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String USER_UID = user.getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

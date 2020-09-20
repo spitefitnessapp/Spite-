@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,13 +25,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-/*        User user = new User( "user01", "Chloe", "chloeEmail", "chloe", 55.0, "Kyle", "user02" );
-        User user2 = new User( "user02", "Jack", "PumpkinKing", "box", 206.0, "Oogie-Boogie", "user03");
-        User user3 = new User( "user03", "Kelini", "waywardsRest", "stab", 64.3, "Emotions", "user01");
-        dbh.addUser( db, user );
-        dbh.addUser( db, user2 );
-        dbh.addUser( db, user3 );
-*/
+        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //String USER_UID = user.getUid();
+
+        //User user01 = new User( USER_UID, "Amita", user.getEmail(), "no password function", 100.0, "Kyle", "user02" );
+        //dbh.addUser( db, user01 );
+
 
         /* Display the Bottom Navigation Bar*/
         bottomNav = findViewById(R.id.bottom_navigation);
