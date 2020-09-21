@@ -39,7 +39,7 @@ public class FragmentProfile extends Fragment {
     private final String GOAL_KEY = "goal";
     private final String USERNAME_KEY = "username";
 
-    private String goal = "0.0";
+    private double goal = 0.0;
     private String goalTimeFrame = "per week.";
 
     //Display fragment with layout res file fragment_profile
@@ -102,7 +102,8 @@ public class FragmentProfile extends Fragment {
     //Method to change the user's weekly workout goal
     private void changeWorkoutGoal()
     {
-        goal = userGoalET.getText().toString();
+        String g = userGoalET.getText().toString();
+        goal = Double.parseDouble(g);
         currentGoalNumTV.setText(goal + " minutes.");
 
         DocumentReference mDocRef = db.collection("User").document(USER_UID);
