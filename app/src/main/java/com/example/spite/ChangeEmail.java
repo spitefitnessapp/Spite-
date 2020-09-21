@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,16 +31,10 @@ public class ChangeEmail extends AppCompatActivity {
     EditText newEmailET;
     EditText confirmNewEmailET;
     EditText passwordET;
-    private String password = "123";
-    private String email = "rogue";
 
-
-    private String id = "none";
-    private String username ="none";
-    private String kyleName = "none";
-    private double goal = 0.0;
-    private String kyleID = "none";
-    private User user;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String USER_UID = user.getUid();
+    private static final String EMAIL_KEY = "email";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +47,11 @@ public class ChangeEmail extends AppCompatActivity {
         confirmNewEmailET = (EditText) findViewById(R.id.confirmNewEmail);
         passwordET = (EditText) findViewById(R.id.changeEmailPassword);
 
-
-        /*Intent intent = getIntent();
-        email = intent.getStringExtra("email");
-        password = intent.getStringExtra("password");
-        Log.d("MAD", email);*/
-
         chngEmailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeEmail();
+                String newEmail = newEmailET.getText().toString();
+                changeEmail( newEmail );
                 //do we want a notification here to say yes, email is updated?
             }
         });
@@ -72,46 +63,41 @@ public class ChangeEmail extends AppCompatActivity {
                 ChangeEmail.this.startActivity(intent);
             }
         });
-        DocumentReference user = db.collection("User").document("user01");
-        user.get().addOnCompleteListener(new OnCompleteListener < DocumentSnapshot > () {
-            @Override
-            public void onComplete(@NonNull Task < DocumentSnapshot > task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot doc = task.getResult();
-                    id = (String) doc.get("userID");
-                    email = (String) doc.get("email");
-                    password = (String) doc.get("password");
-                    username = (String) doc.get("username");
-                    kyleName = (String) doc.get("kyle");
-                    goal = (double) doc.get("goal");
-                    kyleID = doc.getString("kyleUID");
 
+    }
 
+    private void changeEmail( String email )
+    {
+        if( user.getEmail().equals(email) )
+        {
+            Log.d("MAD", "Emails are the same");
+            return;
+        }
 
-                }
-            }
-        })
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user.updateEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("MAD", "User email address updated.");
+                        }
+                    }
+                });
+
+        DocumentReference mDocRef = db.collection("User").document(USER_UID);
+        mDocRef.update(EMAIL_KEY, email)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("MAD", "Email successfully updated in Firestore!");
+                    }
+                })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Log.d("MAD", "Error updating email in Firestore", e);
                     }
                 });
-    }
-
-    private void changeEmail()
-    {
-        if( passwordET.getText().toString().equals(password) ) {
-            if (newEmailET.getText().toString().equals(confirmNewEmailET.getText().toString())) {
-                String newEmail = newEmailET.getText().toString();
-
-                //dbh.changeEmail( db, email, newEmail );
-
-            } else {
-                Log.d("MAD", "Email unchanged");
-            }
-        }
-        else
-        {Log.d("MAD", "Password doesnt match");}
-
     }
 }
