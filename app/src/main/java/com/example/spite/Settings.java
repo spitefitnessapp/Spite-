@@ -22,7 +22,6 @@ public class Settings extends AppCompatActivity {
     //Button chngPassword = null;
     Button chngKyle = null;
     Button logout = null;
-    Button deleteAccount = null;
     Button settingToMainBtn = null;
 
     private boolean logInCheck;
