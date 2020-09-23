@@ -206,11 +206,11 @@ public class CurrentWorkout extends AppCompatActivity {
         }
 
         //Update text for  countdown timer once it finises the user input time
-        if(secToUpdate == 1)
+       /* if(secToUpdate == 1)
         {
             timeText =  String.format(Locale.getDefault(),
                     "%02d:%02d", minToUpdate, secToUpdate2);
-        }
+        }*/
         countDownText.setText(timeText);
     }
 }

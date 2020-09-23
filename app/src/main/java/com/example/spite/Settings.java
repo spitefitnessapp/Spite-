@@ -13,14 +13,18 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Settings extends AppCompatActivity {
 
     Button chngEmail = null;
-    Button chngPassword = null;
+    //Button chngPassword = null;
     Button chngKyle = null;
     Button logout = null;
+    Button deleteAccount = null;
     Button settingToMainBtn = null;
+
     private boolean logInCheck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +32,7 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         chngEmail = (Button) findViewById(R.id.chngEmailBtn);
-        chngPassword = (Button) findViewById(R.id.chngePasswordBtn);
+       // chngPassword = (Button) findViewById(R.id.chngePasswordBtn);
         chngKyle = (Button) findViewById(R.id.kyleSettingsBtn);
         logout = (Button) findViewById(R.id.logoutBtn);
         settingToMainBtn = (Button) findViewById(R.id.settingToMainBtn);
@@ -65,16 +69,17 @@ public class Settings extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Settings.this, ChangeEmail.class);
                 Settings.this.startActivity(intent);
-            }
+                }
         });
 
-        chngPassword.setOnClickListener(new View.OnClickListener() {
+       /* chngPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Settings.this, ChangePassword.class);
                 Settings.this.startActivity(intent);
             }
         });
+        */
 
         chngKyle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,5 +96,7 @@ public class Settings extends AppCompatActivity {
                 Settings.this.startActivity(intent);
             }
         });
+
+
     }
 }

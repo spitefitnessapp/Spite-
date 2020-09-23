@@ -6,19 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".FragmentProfile">
 
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="UserName"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
-
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="413dp"
-        android:layout_height="67dp"
+        android:layout_width="450dp"
+        android:layout_height="45dp"
         android:layout_marginBottom="316dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/profileToMainBtn"
@@ -28,7 +19,7 @@
 
         <TextView
             android:id="@+id/workoutGoalTV"
-            android:layout_width="wrap_content"
+            android:layout_width="119dp"
             android:layout_height="wrap_content"
             android:text="@string/workout_goal" />
 
@@ -74,7 +65,7 @@
 
         <TextView
             android:id="@+id/newGoalTV"
-            android:layout_width="wrap_content"
+            android:layout_width="108dp"
             android:layout_height="36dp"
             android:layout_weight="0"
             android:text="@string/set_new_goal" />
@@ -95,5 +86,15 @@
             android:layout_weight="0"
             android:text="confirm" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:text="UserName"
+
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="-2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

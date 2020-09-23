@@ -25,12 +25,6 @@
             android:layout_weight="0"
             android:text="@string/change_email" />
 
-        <Button
-            android:id="@+id/chngePasswordBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="@string/change_password" />
 
         <Button
             android:id="@+id/kyleSettingsBtn"
@@ -52,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:text="@string/home_button_text" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
