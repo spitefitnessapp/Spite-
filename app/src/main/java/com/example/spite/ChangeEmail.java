@@ -51,7 +51,8 @@ public class ChangeEmail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String newEmail = newEmailET.getText().toString();
-                changeEmail( newEmail );
+                String password = passwordET.getText().toString();
+                changeEmail( newEmail, password );
                 //do we want a notification here to say yes, email is updated?
             }
         });
@@ -66,11 +67,16 @@ public class ChangeEmail extends AppCompatActivity {
 
     }
 
-    private void changeEmail( String email )
+    private void changeEmail( String email, String password )
     {
         if( user.getEmail().equals(email) )
         {
             Log.d("MAD", "Emails are the same");
+            return;
+        }
+        if( !email.equals(confirmNewEmailET.getText().toString() ) )
+        {
+            Log.d("MAD", "Emails supplied don't match");
             return;
         }
 

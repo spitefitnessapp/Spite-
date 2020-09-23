@@ -52,9 +52,6 @@ public class FragmentHome extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-           // Bundle bundle = this.getArguments();
-           // USER_UID = bundle.getString("userID");
-           // Log.d("MAD", USER_UID);
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -85,6 +82,7 @@ public class FragmentHome extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
+                Log.d("MAD", user.getUid() );
                 double goal = documentSnapshot.getDouble(GOAL_KEY);
                 String kyleID = documentSnapshot.getString(KYLE_UID_KEY);
                 userMainPB.setProgress( (int) goal );

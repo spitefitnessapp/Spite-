@@ -41,7 +41,7 @@ public class User {
     private String lastName;
 
     public User(){
-        userUID = "userUID";
+        userUID = "JiggleUID";
         username = "username";
         email = "email";
         password = "password";
@@ -87,7 +87,7 @@ public class User {
 
 
 public String toString(){
-    String user = "Username: " + username + " /Email: " + email + " /Password: " + password;
+    String user = "UID: " + userUID + "/Username: " + username + " /Email: " + email + " /Password: " + password;
     return user;
 }
 

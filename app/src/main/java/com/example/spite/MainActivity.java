@@ -17,8 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNav;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private UserDBHandler dbh = new UserDBHandler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

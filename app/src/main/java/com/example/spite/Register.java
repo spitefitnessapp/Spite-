@@ -1,5 +1,6 @@
 package com.example.spite;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,9 +10,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Register extends AppCompatActivity {
 
@@ -53,16 +63,13 @@ public class Register extends AppCompatActivity {
 //Send email info to other activity, use DBHandler class?
 
                 Log.d("MAD", "above intent");
-                Intent intent = new Intent(Register.this, MainActivity.class); //should be a screen abt verification email?
-                //intent.putExtra( EMAIL_KEY, emailET.getText().toString() ); how do intents with fragmentsssssss
+                Intent intent = new Intent(Register.this, MainActivity.class);
                 Register.this.startActivity(intent);
 
             }
         });
     }
 
-    //Still need to check whether email is already in use.
-    //allocate a kyle
     private void registerUser()
     {
         String username = usernameET.getText().toString();
@@ -71,5 +78,44 @@ public class Register extends AppCompatActivity {
 
         User use = new User( USER_UID, username, user.getEmail(), "password", goal, kyleName, "user01");
         dbh.addUser( db, use );
+
+        CollectionReference userCR = db.collection("User");
+        userCR.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<String> UserList = new ArrayList<>();
+                    for (DocumentSnapshot document : task.getResult()) {
+                        User use = document.toObject(User.class);
+                        String u = document.getId();
+                        UserList.add( u );
+                    }
+
+                    int userListSize = UserList.size() - 1;
+                    boolean done = false;
+                    while ( !done ) {
+
+                        int ran = new Random().nextInt(userListSize);
+
+                        String randomUser = UserList.get(ran);
+
+                        if (randomUser.equals(user.getUid())) {
+                            Log.d("MAD", "Kyle cannot be current user");
+                        }
+
+                        else {
+                            dbh.changeKyle(db, user.getUid(), randomUser);
+                            String ids = user.getUid() + " is now paired with Kyle: " + randomUser;
+                            Log.d("MAD", ids);
+                            done = true;
+                        }
+                    }
+
+                } else {
+                    Log.d("MAD", "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
     }
 }

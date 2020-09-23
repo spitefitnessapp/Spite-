@@ -5,15 +5,22 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /*Methods list:
 UserDBHandler()
@@ -193,6 +200,24 @@ public class UserDBHandler {
                     }
                 });
     }
+    public void changeKyle( FirebaseFirestore db, String uid, String newKyleUID) {
+        DocumentReference mDocRef = db.collection("User").document(uid);
+
+        mDocRef
+                .update(KYLE_UID_KEY, newKyleUID)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("MAD", "Kyle UID successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("MAD", "Error updating kyle UID", e);
+                    }
+                });
+    }
 
     public void changeGoal(FirebaseFirestore db, String uid, double goal) {
         DocumentReference mDocRef = db.collection("User").document(uid);
@@ -245,6 +270,9 @@ public class UserDBHandler {
                     }
                 });
     }
+
+
+
 
     /*
     public double getDailyProgress() {

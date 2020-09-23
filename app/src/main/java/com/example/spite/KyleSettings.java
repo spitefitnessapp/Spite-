@@ -11,24 +11,32 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class KyleSettings extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private UserDBHandler dbh = new UserDBHandler();
     Button toMainBtn = null;
     Button updateKyleNameBtn = null;
     EditText newKyleNameET = null;
     TextView renameAntag = null;
     TextView antagCurrentName = null;
 
-    private final String KYLE_NAME_KEY = "kyle";
     private String kyleName = "Kyle";
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String USER_UID = user.getUid();
@@ -43,6 +51,8 @@ public class KyleSettings extends AppCompatActivity {
         newKyleNameET = (EditText) findViewById(R.id.newKyleName);
         renameAntag = (TextView) findViewById(R.id.kyles);
         antagCurrentName = (TextView) findViewById(R.id.kyleName);
+
+        //resetKyle();
 
 
         updateKyleNameBtn.setOnClickListener(new View.OnClickListener() {
@@ -102,5 +112,46 @@ public class KyleSettings extends AppCompatActivity {
         msg = "No name entered";
         Log.d("MAD", msg);
     }
+    }
+
+
+    private void resetKyle() {
+        CollectionReference userCR = db.collection("User");
+        userCR.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<String> UserList = new ArrayList<>();
+                    for (DocumentSnapshot document : task.getResult()) {
+                        User use = document.toObject(User.class);
+                        String u = document.getId();
+                        UserList.add( u );
+                    }
+
+                    int userListSize = UserList.size() - 1;
+                    boolean done = false;
+                    while ( !done ) {
+
+                        int ran = new Random().nextInt(userListSize);
+                        String randomUser = UserList.get(ran);
+
+                        if (randomUser.equals(user.getUid())) {
+                            Log.d("MAD", "Kyle cannot be current user");
+                        }
+
+                        else {
+                            dbh.changeKyle(db, user.getUid(), randomUser);
+                            String ids = user.getUid() + " is now paired with Kyle: " + randomUser;
+                            Log.d("MAD", ids);
+                            done = true;
+                        }
+                    }
+
+
+                } else {
+                    Log.d("MAD", "Error getting documents: ", task.getException());
+                }
+            }
+        });
     }
 }
