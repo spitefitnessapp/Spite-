@@ -24,13 +24,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        //String USER_UID = user.getUid();
-
-        //User user01 = new User( USER_UID, "Amita", user.getEmail(), "no password function", 100.0, "Kyle", "user02" );
-        //dbh.addUser( db, user01 );
-
-
         /* Display the Bottom Navigation Bar*/
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);

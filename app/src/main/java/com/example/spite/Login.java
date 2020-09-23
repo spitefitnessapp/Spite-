@@ -68,12 +68,6 @@ public class Login extends AppCompatActivity {
 
                 }
 
-               String userUID = user.getUid();
-                Log.d("MAD", userUID);
-               // Intent toMain = new Intent(this, MainActivity.class);
-               // toMain.putExtra("userID", userUID);
-
-                //startActivity(toMain);
                 startActivity(new Intent(this, MainActivity.class));
                 this.finish();
 

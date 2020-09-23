@@ -15,7 +15,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
-    <string name="workout_goal">Workout goal: </string>
+    <string name="workout_goal">Workout Goal: </string>
     <string name="home_button_text">Return to Home</string>
     <string name="register">Register</string>
     <string name="confirm_email">Confirm email</string>
@@ -45,5 +45,6 @@
     <string name="kyle">Kyle</string>
     <string name="Resume">Resume</string>
     <string name="Pause">Pause</string>
+    <string name="logged_time">Logged Time:</string>
 
 </resources>

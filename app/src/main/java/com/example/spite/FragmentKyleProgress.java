@@ -30,8 +30,6 @@ public class FragmentKyleProgress extends Fragment {
     private final String KYLE_UID_KEY = "kyleUID";
     private final String KYLE_NAME_KEY = "kyle";
 
-    private double kGoal = 0.0;
-
     //Display fragment with layout res file fragment_progress
     @Nullable
     @Override
@@ -46,6 +44,7 @@ public class FragmentKyleProgress extends Fragment {
         kyleWeeklyProg = requireView().findViewById(R.id.kyleWeeklyProg);
         kyleProgPHTV = requireView().findViewById(R.id.kyleProgPlaceHoldTV);
 
+        //access User in FB, for kyleUID
         DocumentReference mDocRef = db.collection("User").document(USER_UID);
         mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -56,6 +55,7 @@ public class FragmentKyleProgress extends Fragment {
 
                 kyleWeeklyProg.setText( kyleName + "'s Weekly Progress");
 
+                //Access Kyle's User in FB, for goal/progress
                 DocumentReference kDocRef = db.collection("User").document(kyleID);
                 kDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override

@@ -45,6 +45,7 @@ public class FragmentProgress extends Fragment {
         userWeeklyProg = requireView().findViewById(R.id.userWeeklyProg);
         userProgPHTV = requireView().findViewById(R.id.userProgPHTV);
 
+        //Access DB for User progress
         DocumentReference mDocRef = db.collection("User").document(USER_UID);
         mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override

@@ -40,7 +40,7 @@ public class Settings extends AppCompatActivity {
         logout = (Button) findViewById(R.id.logoutBtn);
         settingToMainBtn = (Button) findViewById(R.id.settingToMainBtn);
 
-        logout.setEnabled(true);
+        chngPassword.setEnabled(false);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,6 +63,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        //
         chngEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +72,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        //setEnabled = false. Work out interactions w gmail, tokens. Necessary?
         chngPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -85,6 +85,7 @@ public class FragmentProfile extends Fragment {
             }
         });
 
+        //Access DB for current user stats
         DocumentReference kDocRef = db.collection("User").document(USER_UID);
         kDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override

@@ -3,7 +3,6 @@ package com.example.spite;
 /*Methods list:
 User()
 User( String uid, String un, String em, String pw, String kl, double gl, String kid )
-User( String uid )
 String getUID(){
 String getUsername()
 String getPassword()
@@ -18,27 +17,16 @@ void setGoal( double gl)
 void setKyleName( String kyle )
 void setKyleUID( String kid )
 
-Methods to add:
-public double getDailyProgress(){}
-public WeeklyWorkout<> getWeeklyProgress() {} //double sufficient or need weeklyworkoutclass
-public void setNewKyle(){}
-public WeeklyWorkout<> getKyleWeeklyProgress()
-startNewWeek() {}
-addWorkout() {}
  */
 
 public class User {
     private String userUID;
     private String username;
     private String email;
-    private String password; //do we need password?
+    private String password; //do we need password? No. remove in later stage
     private double goal;
     private String kyleName;
     private String kyleUID;
-
-    private User kyle;
-    private String firstName;
-    private String lastName;
 
     public User(){
         userUID = "JiggleUID";
@@ -57,16 +45,6 @@ public class User {
         kyleName = kl;
         goal = gl;
         kyleUID = kid;
-    }
-
-    public User( String uid ) { //call in conjunction with UserDBHandler getUser method
-        userUID = uid;
-        username = "username";
-        email = "email";
-        password = "password";
-        goal = 0.0;
-        kyleName = "Antagonist";
-        kyleUID = "No Kyle ID";
     }
 
     public String getUID(){ return userUID; }

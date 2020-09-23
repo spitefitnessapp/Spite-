@@ -33,12 +33,6 @@ public class Register extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private UserDBHandler dbh = new UserDBHandler();
 
-    public static final String EMAIL_KEY = "email";
-    public static final String PASSWORD_KEY = "password";
-    public static final String USERNAME_KEY = "username";
-    public static final String GOAL_KEY = "goal";
-    public static final String KYLE_NAME_KEY = "kyle";
-
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String USER_UID = user.getUid();
 
@@ -57,12 +51,6 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 registerUser();
-
-
-
-//Send email info to other activity, use DBHandler class?
-
-                Log.d("MAD", "above intent");
                 Intent intent = new Intent(Register.this, MainActivity.class);
                 Register.this.startActivity(intent);
 
@@ -70,6 +58,7 @@ public class Register extends AppCompatActivity {
         });
     }
 
+    //Take in username, Kyle name, user goal. Set Kyle. Save user to DB.
     private void registerUser()
     {
         String username = usernameET.getText().toString();

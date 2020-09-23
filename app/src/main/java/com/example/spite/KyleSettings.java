@@ -54,24 +54,7 @@ public class KyleSettings extends AppCompatActivity {
 
         //resetKyle();
 
-
-        updateKyleNameBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateKyle();
-                antagCurrentName.setText(kyleName);
-
-            }
-        });
-
-        toMainBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(KyleSettings.this, MainActivity.class);
-                KyleSettings.this.startActivity(intent);
-            }
-        });
-
+        //Sets current Kyle name in antagCurrentName TextView
         DocumentReference mDocRef = db.collection("User").document(USER_UID);
         mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -81,8 +64,29 @@ public class KyleSettings extends AppCompatActivity {
 
             }
         });
+
+        //to change Kyle name
+        updateKyleNameBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateKyle();
+                antagCurrentName.setText(kyleName);
+
+            }
+        });
+
+        //return to Home
+        toMainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(KyleSettings.this, MainActivity.class);
+                KyleSettings.this.startActivity(intent);
+            }
+        });
+
     }
 
+    //To update the KyleName in DB
     private void updateKyle(){
         String newName = newKyleNameET.getText().toString();
         String msg = "nothing in the msg yet";
@@ -90,22 +94,7 @@ public class KyleSettings extends AppCompatActivity {
     if(newName.length() > 0)
     {
         kyleName = newName;
-        msg = "New name: " + kyleName;
-        Log.d("MAD", msg);
-        DocumentReference mDocRef = db.collection("User").document(USER_UID);
-        mDocRef.update("kyle", newName)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("MAD", "Kyle name successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("MAD", "Error updating kyle name", e);
-                    }
-                });
+        dbh.changeKyleName( db, USER_UID, kyleName );
     }
     else
     {
@@ -114,7 +103,8 @@ public class KyleSettings extends AppCompatActivity {
     }
     }
 
-
+    //to change Kyle User weekly, in conjunction with AlarmManager
+    //for larger userbase- store IDs in a document on Firestore- ArrayList??
     private void resetKyle() {
         CollectionReference userCR = db.collection("User");
         userCR.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
