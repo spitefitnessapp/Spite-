@@ -11,9 +11,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class FragmentProgress extends Fragment {
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private TextView userWeeklyProg;
+    private TextView userProgPHTV;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String USER_UID = user.getUid();
+    private final String USERNAME_KEY = "username";
+    private final String GOAL_KEY = "goal";
+
+    private double goal = 0.0;
 
     //Display fragment with layout res file fragment_home
     @Nullable
@@ -25,6 +41,24 @@ public class FragmentProgress extends Fragment {
     //Set up views inside the fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         userWeeklyProg = requireView().findViewById(R.id.userWeeklyProg);
+        userProgPHTV = requireView().findViewById(R.id.userProgPHTV);
+
+        //Access DB for User progress
+        DocumentReference mDocRef = db.collection("User").document(USER_UID);
+        mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                double goal = documentSnapshot.getDouble(GOAL_KEY);
+                String username = documentSnapshot.getString(USERNAME_KEY);
+                userWeeklyProg.setText(username + "'s weekly progress.");
+                String progress = "User current goal is: " + goal + "\nInsert some math about goal and time for percent. \ninsert a graph";
+                userProgPHTV.setText( progress );
+
+
+            }
+        });
     }
 }

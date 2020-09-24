@@ -9,31 +9,35 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
-    EditText emailET = null;
-    EditText emailConfirmET = null;
-    EditText passwordET = null;
+    EditText usernameET = null;
+    EditText kyleNameET = null;
+    EditText goalET = null;
     Button regBtn = null;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public static final String EMAIL_KEY = "email";
-    public static final String PASSWORD_KEY = "password";
-    public static final String USERNAME_KEY = "username";
-    public static final String GOAL_KEY = "goal";
-    public static final String KYLE_NAME_KEY = "kyle";
+    private UserDBHandler dbh = new UserDBHandler();
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String USER_UID = user.getUid();
 
 
     @Override
@@ -41,72 +45,67 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        emailET = (EditText) findViewById(R.id.emailRegTV);
-        emailConfirmET = (EditText) findViewById(R.id.confirmEmailRegTV);
-        passwordET = (EditText) findViewById(R.id.registerTextPassword);
+        usernameET = (EditText) findViewById(R.id.usernameET);
+        kyleNameET = (EditText) findViewById(R.id.kyleNameET);
+        goalET = (EditText) findViewById(R.id.registerGoalET);
         regBtn = (Button) findViewById(R.id.registerBtn);
 
         regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 registerUser();
-
-                Bundle newBundle = new Bundle();
-                newBundle.putString( EMAIL_KEY, emailET.getText().toString() );
-                FragmentHome objects = new FragmentHome();
-                objects.setArguments(newBundle);
-
-//Send email info to other activity, use DBHandler class?
-
-                Log.d("MAD", "above intent");
-                Intent intent = new Intent(Register.this, MainActivity.class); //should be a screen abt verification email?
-                //intent.putExtra( EMAIL_KEY, emailET.getText().toString() ); how do intents with fragmentsssssss
+                Intent intent = new Intent(Register.this, MainActivity.class);
                 Register.this.startActivity(intent);
 
             }
         });
     }
-
-    //Still need to check whether email is already in use.
+    //Take in username, Kyle name, user goal. Set Kyle. Save user to DB.
     private void registerUser()
     {
-        if( emailET.getText().toString().equals( emailConfirmET.getText().toString() ) )
-        {
-            User user = new User();
-            String email = emailET.getText().toString();
-            String password = passwordET.getText().toString();
+        String username = usernameET.getText().toString();
+        String kyleName = kyleNameET.getText().toString();
+        double goal = Double.parseDouble( goalET.getText().toString() );
 
-            Map<String, Object> saveUser = new HashMap<>();
-            saveUser.put(EMAIL_KEY, email);
-            saveUser.put(PASSWORD_KEY, password);
-            saveUser.put(USERNAME_KEY, user.getUsername());
-            saveUser.put(GOAL_KEY, user.getGoal());
-            saveUser.put(KYLE_NAME_KEY, user.getKyleName());
+        User use = new User( USER_UID, username, user.getEmail(), "password", goal, kyleName, "user01");
+        dbh.addUser( db, use );
 
+        CollectionReference userCR = db.collection("User");
+        userCR.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<String> UserList = new ArrayList<>();
+                    for (DocumentSnapshot document : task.getResult()) {
+                        User use = document.toObject(User.class);
+                        String u = document.getId();
+                        UserList.add( u );
+                    }
 
-            db.collection("User").document(email).set(saveUser)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(Register.this, "Success", Toast.LENGTH_SHORT).show();
-                            Log.d("MAD", "Successfully added user");
+                    int userListSize = UserList.size() - 1;
+                    boolean done = false;
+                    while ( !done ) {
+
+                        int ran = new Random().nextInt(userListSize);
+
+                        String randomUser = UserList.get(ran);
+
+                        if (randomUser.equals(user.getUid())) {
+                            Log.d("MAD", "Kyle cannot be current user");
                         }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Register.this, "Error!", Toast.LENGTH_SHORT).show();
-                            Log.d("MAD", e.toString());
+
+                        else {
+                            dbh.changeKyle(db, user.getUid(), randomUser);
+                            String ids = user.getUid() + " is now paired with Kyle: " + randomUser;
+                            Log.d("MAD", ids);
+                            done = true;
                         }
-                    });
-            Log.d("MAD", email);
+                    }
 
-
-        }
-        else
-        {
-            Log.d("MAD", "Emails don't match uwu");
-        }
-        Log.d("MAD", "End of registerUser()");
+                } else {
+                    Log.d("MAD", "Error getting documents: ", task.getException());
+                }
+            }
+        });
     }
 }

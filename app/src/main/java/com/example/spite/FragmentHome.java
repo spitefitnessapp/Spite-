@@ -15,7 +15,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class FragmentHome extends Fragment {
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+   // private UserDBHandler dbh = new UserDBHandler();
 
     //Start Workout Button
     private Button startWorkout;
@@ -32,8 +42,11 @@ public class FragmentHome extends Fragment {
     private String[] hourValues;
     private String[] minValues;
 
-    //User variable
-    private String email;
+    //User variables
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String USER_UID = user.getUid();
+    private static final String GOAL_KEY = "goal";
+    private static final String KYLE_UID_KEY = "kyleUID";
 
     //Display fragment with layout res file fragment_home
     @Nullable
@@ -48,22 +61,39 @@ public class FragmentHome extends Fragment {
     //Initialising StartWorkout Button and Listener inside the Fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         startWorkout = requireView().findViewById(R.id.startWorkout);
         userMainPB = requireView().findViewById(R.id.UserProgressMainScreen);
         kyleMainPB = requireView().findViewById(R.id.KyleProgressMainScreen);
-
-/*        Intent use = getActivity().getIntent();
-       // email = use.getStringExtra("email");
-
-*/       // Log.d("MAD", email);
-        //Dummy values, access 7 day progress for com.example.spite.User and Kyle, make an int.
-        userMainPB.setProgress(33);
-        kyleMainPB.setProgress(56);
 
         startWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showSetWorkoutDialog();
+            }
+        });
+
+
+        //Dummy values, access 7 day progress for com.example.spite.User and Kyle, make an int.
+        //Need to access workout info in conjunction w goal to work out daily progress as a %
+        DocumentReference mDocRef = db.collection("User").document(USER_UID);
+        mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                double goal = documentSnapshot.getDouble(GOAL_KEY);
+                String kyleID = documentSnapshot.getString(KYLE_UID_KEY);
+                userMainPB.setProgress( (int) goal );
+
+                DocumentReference kDocRef = db.collection("User").document(kyleID);
+                kDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        double kGoal = documentSnapshot.getDouble(GOAL_KEY);
+                        kyleMainPB.setProgress( (int) kGoal );
+                    }
+                });
             }
         });
     }

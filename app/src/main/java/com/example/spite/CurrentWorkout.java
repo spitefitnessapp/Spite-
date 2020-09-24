@@ -40,6 +40,9 @@ public class CurrentWorkout extends AppCompatActivity {
     //private int sec, min, mSec;
     private boolean timerRunning;
 
+    //For user
+    private String USER_UID = "user01";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

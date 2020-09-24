@@ -1,8 +1,5 @@
 package com.example.spite;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,27 +8,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.AuthResult;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Login extends AppCompatActivity {
 
     private FirebaseAuth auth;
-    EditText userET = null;
-    EditText passwordET = null;
-    Button loginBtn = null;
-    Button logToRegBtn = null;
-    private String password = null;
-    private String email = null;
+    private static final int REQUEST_CODE = 101;
+    private static final String USER_UID = "userID";
+    List<AuthUI.IdpConfig> signUpOp;
 
 
     @Override
@@ -39,67 +36,50 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        userET = (EditText) findViewById(R.id.enterUsernameTextView);
-        passwordET = (EditText) findViewById(R.id.loginTextPassword);
-        loginBtn = (Button) findViewById(R.id.loginButton);
-        logToRegBtn = (Button) findViewById(R.id.logToRegBtn);
-        auth = FirebaseAuth.getInstance();
+        signUpOp = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build()
+        );
+        SignInOption();
 
-
-
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (login()) {
-                    Intent intent = new Intent(Login.this, MainActivity.class);
-                    Login.this.startActivity(intent);
-                } else {
-                    Log.d("MAD", "unsuccessful log in");
-                }
-            }
-        });
-
-        logToRegBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Login.this, Register.class);
-                Login.this.startActivity(intent);
-            }
-        });
     }
 
-    private boolean login() {
-        password = passwordET.getText().toString();
-        email = userET.getText().toString();
-        boolean login = true;
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference mDocRef = db.collection("User").document(email);
-
-        mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()) {
-                    String pw = documentSnapshot.getString("password");
-
-                    //how to set boolean login to true/false depending on whether passwords match???
-                    if(!pw.equals(password)) {
-                        Log.d("MAD", "email found, passwords dont match");
-                    }
-                    else{Log.d("MAD", "email found, Passwords match"); }
-                }
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Login.this, "Didnt access document!", Toast.LENGTH_SHORT).show();
-                        Log.d("MAD", e.toString());
-
-                    }
-                });
-
-        return true;
+    private void SignInOption(){
+        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
+                .setAvailableProviders(signUpOp).build(),REQUEST_CODE);
+        //We can add the Logo here using .setLogo();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+            if (resultCode == RESULT_OK) {
+                //Get Users
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                //String email = user.getEmail();
+                Toast.makeText(this, "" + user.getEmail(), Toast.LENGTH_SHORT).show();
+                if(user.getMetadata().getCreationTimestamp() == user.getMetadata().getLastSignInTimestamp())
+                {
+                    Toast.makeText(this, "Welcome to Spite!", Toast.LENGTH_SHORT).show();
+                    Intent toRegister = new Intent(this, Register.class);
+                    startActivity(toRegister);
+                }
+                else
+                {
+                    Toast.makeText(this, "Welcome back to Spite!", Toast.LENGTH_SHORT).show();
+
+                }
+
+                startActivity(new Intent(this, MainActivity.class));
+                this.finish();
+
+            } else {
+                //Sign in fail
+                Toast.makeText(this, "" + response.getError().getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

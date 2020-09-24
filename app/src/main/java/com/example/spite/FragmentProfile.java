@@ -2,6 +2,7 @@ package com.example.spite;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class FragmentProfile extends Fragment {
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Button profToMainBtn;
     private Button profToSetBtn;
     private Button confirmChangeBtn;
@@ -24,7 +34,13 @@ public class FragmentProfile extends Fragment {
     private TextView currentGoalNumTV;
     private EditText userGoalET; //cannot use decimal point.
 
-    private String goal = "0.0";
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String USER_UID = user.getUid();
+    private final String GOAL_KEY = "goal";
+    private final String USERNAME_KEY = "username";
+
+    private double goal = 0.0;
+    private String goalTimeFrame = "per week.";
 
     //Display fragment with layout res file fragment_profile
     @Nullable
@@ -45,8 +61,6 @@ public class FragmentProfile extends Fragment {
         goalTV = requireView().findViewById(R.id.workoutGoalTV);
         newGoalTV = requireView().findViewById(R.id.newGoalTV);
         currentGoalNumTV = requireView().findViewById(R.id.currentGoalTV);
-
-        currentGoalNumTV.setText(goal + " minutes.");
 
         profToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +84,46 @@ public class FragmentProfile extends Fragment {
             changeWorkoutGoal();
             }
         });
+
+        //Access DB for current user stats
+        DocumentReference kDocRef = db.collection("User").document(USER_UID);
+        kDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                String username = documentSnapshot.getString(USERNAME_KEY);
+                double goal = documentSnapshot.getDouble(GOAL_KEY);
+                userNameTV.setText(username);
+                currentGoalNumTV.setText(" " + goal + " minutes " + goalTimeFrame);
+            }
+        });
+
     }
 
     //Method to change the user's weekly workout goal
     private void changeWorkoutGoal()
     {
-        goal = userGoalET.getText().toString();
+        String g = userGoalET.getText().toString();
+        goal = Double.parseDouble(g);
         currentGoalNumTV.setText(goal + " minutes.");
+
+        DocumentReference mDocRef = db.collection("User").document(USER_UID);
+
+        mDocRef
+                .update(GOAL_KEY, goal)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("MAD", "goal successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("MAD", "Error updating goal", e);
+                    }
+                });
+
+
     }
 }

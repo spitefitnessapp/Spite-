@@ -11,6 +11,9 @@ import android.widget.EditText;
 
 public class ChangePassword extends AppCompatActivity {
 
+    //NOT CURRENTLY IN USE
+
+
     Button chngPWtoMainBtn = null;
     Button chngPWBtn = null;
     EditText oldPWET = null;

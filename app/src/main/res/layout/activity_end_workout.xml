@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="Workout Goal: "
+                android:text="@string/workout_goal"
                 android:textSize="25sp" />
 
             <TextView
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:hint="Workout Goal: "
+                android:hint="@string/workout_goal"
                 android:textSize="25sp" />
         </LinearLayout>
 
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="Logged Time: "
+                android:text="@string/logged_time"
                 android:textSize="25sp" />
 
             <TextView
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:hint="Workout Goal: "
+                android:hint="@string/logged_time"
                 android:textSize="25sp" />
         </LinearLayout>
 

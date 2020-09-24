@@ -10,9 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import org.w3c.dom.Text;
 
 public class EndWorkout extends AppCompatActivity {
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private Button toMainBtn;
     private Button toProgressBtn;
@@ -21,7 +27,8 @@ public class EndWorkout extends AppCompatActivity {
     private TextView workoutGoalTV;
     private TextView loggedTimeTV;
 
-    private String emailIntent;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String USER_UID = user.getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,11 @@ public class EndWorkout extends AppCompatActivity {
 
         String loggedTime = getWorkoutGoal.getStringExtra("loggedTime");
         loggedTimeTV.setText(loggedTime);
+
+
+
+
+        //Save workout progress here
 
     }
 }
