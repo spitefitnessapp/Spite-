@@ -12,8 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +29,7 @@ public class Login extends AppCompatActivity {
     private static final int REQUEST_CODE = 101;
     private static final String USER_UID = "userID";
     List<AuthUI.IdpConfig> signUpOp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +82,4 @@ public class Login extends AppCompatActivity {
             }
         }
     }
-
-
-
-
-
 }
