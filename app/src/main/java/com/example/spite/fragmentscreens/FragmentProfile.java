@@ -1,4 +1,4 @@
-package com.example.spite;
+package com.example.spite.fragmentscreens;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.spite.MainActivity;
+import com.example.spite.R;
+import com.example.spite.Settings;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
