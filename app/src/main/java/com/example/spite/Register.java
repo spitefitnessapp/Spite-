@@ -23,9 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Register extends AppCompatActivity {
 
     EditText usernameET = null;
@@ -60,6 +57,7 @@ public class Register extends AppCompatActivity {
             }
         });
     }
+
     //Take in username, Kyle name, user goal. Set Kyle. Save user to DB.
     private void registerUser()
     {
@@ -107,5 +105,6 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
+
     }
 }

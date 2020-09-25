@@ -52,9 +52,6 @@ public class FragmentHome extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //if(getArguments() != null){
-       //     email = getArguments().getString("email");
-       // }
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -65,6 +62,10 @@ public class FragmentHome extends Fragment {
         startWorkout = requireView().findViewById(R.id.startWorkout);
         userMainPB = requireView().findViewById(R.id.UserProgressMainScreen);
         kyleMainPB = requireView().findViewById(R.id.KyleProgressMainScreen);
+
+
+
+
 
         startWorkout.setOnClickListener(new View.OnClickListener() {
             @Override

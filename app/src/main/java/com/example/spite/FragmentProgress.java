@@ -1,5 +1,6 @@
 package com.example.spite;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -17,12 +18,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
+import static android.graphics.Color.BLUE;
 
 public class FragmentProgress extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private TextView userWeeklyProg;
-    private TextView userProgPHTV;
+    private GraphView graph;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String USER_UID = user.getUid();
@@ -43,7 +49,8 @@ public class FragmentProgress extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         userWeeklyProg = requireView().findViewById(R.id.userWeeklyProg);
-        userProgPHTV = requireView().findViewById(R.id.userProgPHTV);
+        graph = requireView().findViewById(R.id.userGraph);
+
 
         //Access DB for User progress
         DocumentReference mDocRef = db.collection("User").document(USER_UID);
@@ -54,9 +61,27 @@ public class FragmentProgress extends Fragment {
                 double goal = documentSnapshot.getDouble(GOAL_KEY);
                 String username = documentSnapshot.getString(USERNAME_KEY);
                 userWeeklyProg.setText(username + "'s weekly progress.");
-                String progress = "User current goal is: " + goal + "\nInsert some math about goal and time for percent. \ninsert a graph";
-                userProgPHTV.setText( progress );
 
+
+                LineGraphSeries<DataPoint> userSeries = new LineGraphSeries<>(new DataPoint[] {
+                        new DataPoint(0, 8),
+                        new DataPoint(1, 1),
+                        new DataPoint(2, 2),
+                        new DataPoint(3, 3),
+                        new DataPoint(4, 4),
+                        new DataPoint(5, 5),
+                        new DataPoint(6, 6),
+                        new DataPoint(7, 2),
+                });graph.addSeries(userSeries);
+
+                userSeries.setDrawDataPoints(true);
+                userSeries.setDataPointsRadius(10);
+/*
+                graph.getViewport().setBackgroundColor(Color.argb(255, 222, 222, 222));
+                graph.getViewport().setDrawBorder(true);
+                graph.getViewport().setBorderColor(BLUE);
+
+ */
 
             }
         });

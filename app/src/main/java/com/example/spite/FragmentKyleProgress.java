@@ -1,5 +1,6 @@
 package com.example.spite;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +17,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 public class FragmentKyleProgress extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private TextView kyleWeeklyProg;
-    private TextView kyleProgPHTV;
+    private GraphView kyleGraph;
+
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String USER_UID = user.getUid();
@@ -42,7 +47,8 @@ public class FragmentKyleProgress extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         kyleWeeklyProg = requireView().findViewById(R.id.kyleWeeklyProg);
-        kyleProgPHTV = requireView().findViewById(R.id.kyleProgPlaceHoldTV);
+        kyleGraph = requireView().findViewById(R.id.kyleGraph);
+
 
         //access User in FB, for kyleUID
         DocumentReference mDocRef = db.collection("User").document(USER_UID);
@@ -62,8 +68,24 @@ public class FragmentKyleProgress extends Fragment {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                         double kGoal = documentSnapshot.getDouble(GOAL_KEY);
-                        String progress = "Kyle's current goal is: " + kGoal + "\nInsert some math about goal and time for percent. \ninsert a graph";
-                        kyleProgPHTV.setText( progress );
+
+
+                        LineGraphSeries<DataPoint> kyleSeries = new LineGraphSeries<>(new DataPoint[] {
+                                new DataPoint(0, 8),
+                                new DataPoint(1, 1),
+                                new DataPoint(2, 2),
+                                new DataPoint(3, 3),
+                                new DataPoint(4, 4),
+                                new DataPoint(5, 5),
+                                new DataPoint(6, 6),
+                                new DataPoint(7, 2),
+                        });
+                        kyleGraph.addSeries(kyleSeries);
+
+                        kyleSeries.setColor(Color.RED);
+                        kyleSeries.setDrawDataPoints(true);
+                        kyleSeries.setDataPointsRadius(10);
+
                     }
                 });
             }

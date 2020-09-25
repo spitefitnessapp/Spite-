@@ -9,21 +9,17 @@
         android:id="@+id/kyleWeeklyProg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:text="Kyle's Weekly Progress"
         android:textAlignment="center"
-        android:textSize="30sp"
-        android:text="Kyle's Weekly Progress" />
+        android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/kyleProgPlaceHoldTV"
-        android:layout_width="192dp"
-        android:layout_height="103dp"
-        android:layout_above="@+id/kyleWeeklyProg"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="108dp"
-        android:layout_marginEnd="111dp"
-        android:layout_marginBottom="138dp"
-        android:text="Kyle's progress" />
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/kyleGraph"
+        android:layout_width="412dp"
+        android:layout_height="414dp"
+        android:layout_below="@+id/kyleWeeklyProg"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="47dp"
+        android:layout_marginBottom="94dp" />
 
 </RelativeLayout>
