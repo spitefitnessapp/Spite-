@@ -16,7 +16,6 @@ void setEmail( String em )
 void setGoal( double gl)
 void setKyleName( String kyle )
 void setKyleUID( String kid )
-
  */
 
 public class User {

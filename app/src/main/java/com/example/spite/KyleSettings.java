@@ -113,7 +113,6 @@ public class KyleSettings extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     List<String> UserList = new ArrayList<>();
                     for (DocumentSnapshot document : task.getResult()) {
-                        User use = document.toObject(User.class);
                         String u = document.getId();
                         UserList.add( u );
                     }
