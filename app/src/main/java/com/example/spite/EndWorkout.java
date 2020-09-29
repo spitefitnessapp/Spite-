@@ -66,10 +66,10 @@ public class EndWorkout extends AppCompatActivity {
         Intent getWorkoutGoal = getIntent();
         int hour = getWorkoutGoal.getIntExtra("hour",0);
         int minute = getWorkoutGoal.getIntExtra("minute", 0);
-        String goal = hour + ":" + minute;
+        String goal = String.format("%02d", hour) + ":" + String.format("%02d", minute) ;
         workoutGoalTV.setText(goal);
 
-        String loggedTime = getWorkoutGoal.getStringExtra("loggedTime");
+        String loggedTime = getWorkoutGoal.getStringExtra("loggedTimeString");
         loggedTimeTV.setText(loggedTime);
 
 
