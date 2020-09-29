@@ -13,6 +13,11 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.spite.dbhandlers.DBWorkoutHandler;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.Locale;
 
 public class CurrentWorkout extends AppCompatActivity {
@@ -37,11 +42,12 @@ public class CurrentWorkout extends AppCompatActivity {
 
     //Convert the values to millisecond
     private long counter;
-    //private int sec, min, mSec;
     private boolean timerRunning;
 
-    //For user
-    private String USER_UID = "user01";
+    //For saving information to the database
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String uid = user.getUid();
+    private DBWorkoutHandler dbWorkoutHandler = new DBWorkoutHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,15 +112,21 @@ public class CurrentWorkout extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 /*Sends set hour and minutes user inputted into EndWorkout to display at the end*/
-                Intent sendWorkoutGoal = new Intent(CurrentWorkout.this, EndWorkout.class);
-                sendWorkoutGoal.putExtra("hour", hour);
-                sendWorkoutGoal.putExtra("minute", minute);
+                Intent sendWorkoutValues = new Intent(CurrentWorkout.this, EndWorkout.class);
+                sendWorkoutValues.putExtra("hour", hour);
+                sendWorkoutValues.putExtra("minute", minute);
 
                 /*Send final logged time of workout to EndWorkout*/
-                String finalLoggedTime = String.format("%02d", min) + ":" + String.format("%02d", sec) + ":" + String.format("%02d", mSec);
-                Log.d("final logged time", String.valueOf(finalLoggedTime));
-                sendWorkoutGoal.putExtra("loggedTime", finalLoggedTime);
-                startActivity(sendWorkoutGoal);
+                String loggedTimeString = String.format("%02d", hrs) + ":" + String.format("%02d", min) + ":" + String.format("%02d", sec) + ":" + String.format("%02d", mSec);
+                Log.d("final logged time", String.valueOf(loggedTimeString));
+                sendWorkoutValues.putExtra("loggedTimeString", loggedTimeString);
+
+                /*Send intent*/
+                startActivity(sendWorkoutValues);
+
+                /*Save information of workout as a WorkoutLog doc to the database*/
+                long totalWorkoutMillisec = ((long) hrs * 3600000) + ((long) min * 60000) + ((long) sec * 1000) +((long) mSec);
+                dbWorkoutHandler.createWorkoutLog(uid, totalWorkoutMillisec);
             }
         });
     }
@@ -127,7 +139,6 @@ public class CurrentWorkout extends AppCompatActivity {
             handler.postDelayed(run, 0);
             stopwatch.start();
             stRunning = true;
-
         }
 
         startTimer();

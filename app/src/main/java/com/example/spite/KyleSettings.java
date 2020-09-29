@@ -11,8 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.spite.dbhandlers.UserDBHandler;
+import com.example.spite.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,57 +92,15 @@ public class KyleSettings extends AppCompatActivity {
         String newName = newKyleNameET.getText().toString();
         String msg = "nothing in the msg yet";
 
-    if(newName.length() > 0)
-    {
-        kyleName = newName;
-        dbh.changeKyleName( db, USER_UID, kyleName );
-    }
-    else
-    {
-        msg = "No name entered";
-        Log.d("MAD", msg);
-    }
-    }
-
-    //to change Kyle User weekly, in conjunction with AlarmManager
-    //for larger userbase- store IDs in a document on Firestore- ArrayList??
-    private void resetKyle() {
-        CollectionReference userCR = db.collection("User");
-        userCR.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    List<String> UserList = new ArrayList<>();
-                    for (DocumentSnapshot document : task.getResult()) {
-                        User use = document.toObject(User.class);
-                        String u = document.getId();
-                        UserList.add( u );
-                    }
-
-                    int userListSize = UserList.size() - 1;
-                    boolean done = false;
-                    while ( !done ) {
-
-                        int ran = new Random().nextInt(userListSize);
-                        String randomUser = UserList.get(ran);
-
-                        if (randomUser.equals(user.getUid())) {
-                            Log.d("MAD", "Kyle cannot be current user");
-                        }
-
-                        else {
-                            dbh.changeKyle(db, user.getUid(), randomUser);
-                            String ids = user.getUid() + " is now paired with Kyle: " + randomUser;
-                            Log.d("MAD", ids);
-                            done = true;
-                        }
-                    }
-
-
-                } else {
-                    Log.d("MAD", "Error getting documents: ", task.getException());
-                }
-            }
-        });
+        if(newName.length() > 0)
+        {
+            kyleName = newName;
+            dbh.changeKyleName( db, USER_UID, kyleName );
+        }
+        else
+        {
+            msg = "No name entered";
+            Log.d("MAD", msg);
+        }
     }
 }
