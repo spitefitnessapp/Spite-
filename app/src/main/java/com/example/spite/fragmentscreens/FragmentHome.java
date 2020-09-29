@@ -1,3 +1,6 @@
+//Currently displays values from hardcoded week, 21-09-2020. Searches for doc titles based on current date.
+//Need to get QueryTask working to get current week title
+
 package com.example.spite.fragmentscreens;
 
 import android.content.Intent;
@@ -17,12 +20,25 @@ import androidx.fragment.app.Fragment;
 
 import com.example.spite.CurrentWorkout;
 import com.example.spite.R;
+import com.example.spite.models.WeeklyWorkout;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.jjoe64.graphview.series.DataPoint;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class FragmentHome extends Fragment {
 
@@ -49,6 +65,7 @@ public class FragmentHome extends Fragment {
     private String USER_UID = user.getUid();
     private static final String GOAL_KEY = "goal";
     private static final String KYLE_UID_KEY = "kyleUID";
+    private static final String PROGRESS_KEY = "timeLogged";
 
     //Display fragment with layout res file fragment_home
     @Nullable
@@ -83,17 +100,85 @@ public class FragmentHome extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                double goal = documentSnapshot.getDouble(GOAL_KEY);
-                String kyleID = documentSnapshot.getString(KYLE_UID_KEY);
+                final double goal = documentSnapshot.getDouble(GOAL_KEY);
+                final String kyleID = documentSnapshot.getString(KYLE_UID_KEY);
+                Log.d("MAD", "Here's the mDoc variable");
                 userMainPB.setProgress( (int) goal );
+
+
+                Calendar cal = Calendar.getInstance();
+                Date date = cal.getTime();
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                String strDate = dateFormat.format(date);
+                DateFormat dayFormat = new SimpleDateFormat("EEE");
+                String day = dayFormat.format(date);
+                final String title = strDate+day;
+                Log.d("MAD", "Title passed in is: " + title);
+
+                DocumentReference docRef0 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document("28-09-2020")
+                        .collection("DailyWorkout").document(title);
+                docRef0.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Log.d("MAD", "docRef0 docSnap data TODAY");
+                                double progress = document.getDouble(PROGRESS_KEY);
+                                Log.d("MAD", "Progress is " + progress );
+                                Log.d("MAD", "Goal is " + goal );
+
+                                double finalProg = 100 - (((goal-progress)/goal)*100);
+                                Log.d("MAD", "Final output is " + finalProg );
+                                userMainPB.setProgress( (int) finalProg );
+
+                            } else {
+                                Log.d("MAD", "User prog bar main screen no progress");
+
+                            }
+                        } else {
+                            //end of docRef0
+                            Log.d("MAD", "get failed with ", task.getException());
+                        }
+                    }
+                });
+
 
                 DocumentReference kDocRef = db.collection("User").document(kyleID);
                 kDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                        double kGoal = documentSnapshot.getDouble(GOAL_KEY);
-                        kyleMainPB.setProgress( (int) kGoal );
+                        final double kGoal = documentSnapshot.getDouble(GOAL_KEY);
+
+
+                        DocumentReference docRefk = db.collection("User").document(kyleID).collection("WeeklyWorkout").document("28-09-2020")
+                                .collection("DailyWorkout").document(title);
+                        docRefk.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        Log.d("MAD", "docRefk docSnap data TODAY");
+                                        double progress = document.getDouble(PROGRESS_KEY);
+                                        Log.d("MAD", "Progress is " + progress );
+                                        Log.d("MAD", "Goal is " + kGoal );
+
+                                        double finalProg = 100 - (((kGoal-progress)/kGoal)*100);
+                                        Log.d("MAD", "Final output is " + finalProg );
+                                        kyleMainPB.setProgress( (int) finalProg );
+
+                                    } else {
+                                        Log.d("MAD", "kyle prog bar main screen no progress");
+
+                                    }
+                                } else {
+                                    //end of docRefk
+                                    Log.d("MAD", "get failed with ", task.getException());
+                                }
+                            }
+                        });
                     }
                 });
             }
@@ -170,3 +255,4 @@ public class FragmentHome extends Fragment {
         });
     }
 }
+

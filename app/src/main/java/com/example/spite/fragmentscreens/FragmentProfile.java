@@ -43,7 +43,7 @@ public class FragmentProfile extends Fragment {
     private final String USERNAME_KEY = "username";
 
     private double goal = 0.0;
-    private String goalTimeFrame = "per week.";
+    private String goalTimeFrame = "per day.";
 
     //Display fragment with layout res file fragment_profile
     @Nullable
