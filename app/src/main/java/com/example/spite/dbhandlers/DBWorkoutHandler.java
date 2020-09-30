@@ -1,4 +1,4 @@
-package com.example.spite;
+package com.example.spite.dbhandlers;
 
 import android.util.Log;
 
@@ -113,10 +113,12 @@ public class DBWorkoutHandler {
                         saveDailyWorkout.put(DAILY_TIME_LOGGED_KEY, dailyWorkout.getDailyTimeLogged());
 
                         /*Add the document within DailyWorkout collection*/
+                        String dailyWorkoutDocID = dailyWorkout.getDate() + dailyWorkout.getDay();
+
                         dailyWorkoutRef = db
                                 .collection("User").document(userID)
                                 .collection("WeeklyWorkout").document(recentWeekDate)
-                                .collection("DailyWorkout").document(dailyWorkout.getDay());
+                                .collection("DailyWorkout").document(dailyWorkoutDocID);
 
                         /*Testing to see whether method has succeeded*/
                         dailyWorkoutRef.set(saveDailyWorkout)
@@ -142,6 +144,15 @@ public class DBWorkoutHandler {
                         Log.d("Recent Week: ", e.toString());
                     }
                 });
+    }
+
+    public void updateDailyTimeLogged(String userID, String recentWeekDate, String day, long oldTimeLogged, long newTimeLogged){
+        long updatedTimeLogged = oldTimeLogged + newTimeLogged;
+
+        db.collection("User").document(userID)
+                .collection("WeeklyWorkout").document(recentWeekDate)
+                .collection("DailyWorkout").document(day)
+                .update(DAILY_TIME_LOGGED_KEY, updatedTimeLogged);
     }
 
 
@@ -185,32 +196,44 @@ public class DBWorkoutHandler {
                                     @Override
                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                         String recentDay = "";
+                                        long dailyTimeLogged = 0;
 
                                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                                             DailyWorkout recentDayObject = documentSnapshot.toObject(DailyWorkout.class);
 
                                             String date = recentDayObject.getDay();
-                                            recentDay += date;
+                                            long time = recentDayObject.getDailyTimeLogged();
+                                            recentDay = date;
+                                            dailyTimeLogged = time;
                                         }
 
+                                        /*Create the WorkoutLog within the DailyWorkout doc with recentDay string*/
+                                        /*Create instance of WorkoutLog model*/
                                         workoutLog = new WorkoutLog(userID, timeLogged);
 
+                                        /*Create field variables in the document*/
                                         saveWorkoutLog = new HashMap<>();
                                         saveWorkoutLog.put(USERNAME_KEY, workoutLog.getUserID());
                                         saveWorkoutLog.put(DATE_KEY, workoutLog.getDate());
                                         saveWorkoutLog.put(TIME_LOGGED, workoutLog.getTimeLogged());
 
+                                        /*Add the document within WorkoutLog collection*/
                                         workoutLogRef = db
                                                 .collection("User").document(userID)
                                                 .collection("WeeklyWorkout").document(finalRecentWeekDate)
                                                 .collection("DailyWorkout").document(recentDay)
                                                 .collection("WorkoutLog").document(workoutLog.getTime());
 
+                                        /*Testing to see whether method has succeeded*/
+                                        final String finalRecentDay = recentDay;
+                                        final long finalDailyTimeLogged = dailyTimeLogged;
                                         workoutLogRef.set(saveWorkoutLog)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         Log.d("Workout Log Ref:", "Successfully added workout log");
+                                                        /*Updating DailyWorkout's dailyTimeLogged after the successful creation of a WorkoutLog*/
+                                                        updateDailyTimeLogged(userID, finalRecentWeekDate, finalRecentDay, finalDailyTimeLogged, timeLogged);
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
