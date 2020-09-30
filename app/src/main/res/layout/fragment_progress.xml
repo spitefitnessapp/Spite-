@@ -10,21 +10,15 @@
         android:id="@+id/userWeeklyProg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:text="Weekly Progress"
         android:textAlignment="center"
         android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/userProgPHTV"
-        android:layout_width="166dp"
-        android:layout_height="88dp"
-        android:layout_above="@+id/userWeeklyProg"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="65dp"
-        android:layout_marginEnd="181dp"
-        android:layout_marginBottom="144dp"
-        android:text="TextView" />
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/userGraph"
+        android:layout_width="412dp"
+        android:layout_height="414dp"
+        android:layout_below="@+id/userWeeklyProg"
+        android:layout_marginTop="47dp" />
 
 </RelativeLayout>
