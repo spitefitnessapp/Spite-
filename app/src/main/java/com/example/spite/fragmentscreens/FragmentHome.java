@@ -1,6 +1,13 @@
+//Currently displays values from hardcoded week, 21-09-2020. Searches for doc titles based on current date.
+//Need to get QueryTask working to get current week title
+
 package com.example.spite.fragmentscreens;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,17 +24,33 @@ import androidx.fragment.app.Fragment;
 
 import com.example.spite.CurrentWorkout;
 import com.example.spite.R;
+import com.example.spite.models.DailyWorkout;
+import com.example.spite.models.WeeklyWorkout;
+import com.example.spite.models.WorkoutLog;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.jjoe64.graphview.series.DataPoint;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 
 public class FragmentHome extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-   // private UserDBHandler dbh = new UserDBHandler();
+    // private UserDBHandler dbh = new UserDBHandler();
 
     //Start Workout Button
     private Button startWorkout;
@@ -49,14 +72,12 @@ public class FragmentHome extends Fragment {
     private String USER_UID = user.getUid();
     private static final String GOAL_KEY = "goal";
     private static final String KYLE_UID_KEY = "kyleUID";
+    private static final String PROGRESS_KEY = "timeLogged";
 
     //Display fragment with layout res file fragment_home
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //if(getArguments() != null){
-       //     email = getArguments().getString("email");
-       // }
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -68,13 +89,20 @@ public class FragmentHome extends Fragment {
         userMainPB = requireView().findViewById(R.id.UserProgressMainScreen);
         kyleMainPB = requireView().findViewById(R.id.KyleProgressMainScreen);
 
+
+
+        Drawable progressDrawable = kyleMainPB.getProgressDrawable().mutate();
+        progressDrawable.setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+        kyleMainPB.setProgressDrawable(progressDrawable);
+
+
+
         startWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showSetWorkoutDialog();
             }
         });
-
 
         //Dummy values, access 7 day progress for com.example.spite.User and Kyle, make an int.
         //Need to access workout info in conjunction w goal to work out daily progress as a %
@@ -83,21 +111,107 @@ public class FragmentHome extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                double goal = documentSnapshot.getDouble(GOAL_KEY);
-                String kyleID = documentSnapshot.getString(KYLE_UID_KEY);
+                final double goal = documentSnapshot.getDouble(GOAL_KEY);
+                final String kyleID = documentSnapshot.getString(KYLE_UID_KEY);
                 userMainPB.setProgress( (int) goal );
 
-                DocumentReference kDocRef = db.collection("User").document(kyleID);
-                kDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                db.collection("User").document(USER_UID).collection("WeeklyWorkout")
+                        .orderBy("date", Query.Direction.DESCENDING)
+                        .limit(1)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
 
-                        double kGoal = documentSnapshot.getDouble(GOAL_KEY);
-                        kyleMainPB.setProgress( (int) kGoal );
-                    }
-                });
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("HERE", document.getId() + " => " + document.getData());
+                                        final String thisWeek = document.getId();
+                                        Calendar cal = Calendar.getInstance();
+
+                                        Date date = cal.getTime();
+                                        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                        String strDate = dateFormat.format(date);
+                                        DateFormat dayFormat = new SimpleDateFormat("EEE");
+                                        String day = dayFormat.format(date);
+                                        final String title = strDate+day;
+                                        Log.d("MAD", "Title passed in is: " + title);
+
+                                        DocumentReference docRef0 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(thisWeek)
+                                                .collection("DailyWorkout").document(title);
+                                        docRef0.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    if (document.exists()) {
+                                                        Log.d("MAD", "docRef0 docSnap data TODAY");
+                                                        double progress = document.getDouble(PROGRESS_KEY);
+                                                        Log.d("MAD", "Progress is " + progress );
+                                                        Log.d("MAD", "Goal is " + goal );
+
+                                                        double finalProg = 100 - (((goal-progress)/goal)*100);
+                                                        Log.d("MAD", "Final output is " + finalProg );
+                                                        userMainPB.setProgress( (int) finalProg );
+
+                                                    } else {
+                                                        Log.d("MAD", "User prog bar main screen no progress");
+
+                                                    }
+                                                } else {
+                                                    //end of docRef0
+                                                    Log.d("MAD", "get failed with ", task.getException());
+                                                }
+                                            }
+
+                                        });
+
+                                        DocumentReference kDocRef = db.collection("User").document(kyleID);
+                                        kDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                                final double kGoal = documentSnapshot.getDouble(GOAL_KEY);
+
+
+                                                DocumentReference docRefk = db.collection("User").document(kyleID).collection("WeeklyWorkout").document(thisWeek)
+                                                        .collection("DailyWorkout").document(title);
+                                                docRefk.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+                                                                Log.d("MAD", "docRefk docSnap data TODAY");
+                                                                double progress = document.getDouble(PROGRESS_KEY);
+                                                                Log.d("MAD", "Progress is " + progress );
+                                                                Log.d("MAD", "Goal is " + kGoal );
+
+                                                                double finalProg = 100 - (((kGoal-progress)/kGoal)*100);
+                                                                Log.d("MAD", "Final kyle output is " + finalProg );
+                                                                kyleMainPB.setProgress( (int) finalProg );
+
+
+                                                            } else {
+                                                                Log.d("MAD", "kyle prog bar main screen no progress");
+
+                                                            }
+                                                        } else {
+                                                            Log.d("MAD", "get failed with ", task.getException());
+                                                        }
+                                                    }
+                                                });//end of docRefk
+                                            }
+                                        });//end of kDocRef
+                                    }
+                                } else {
+                                    Log.d("HERE", "Error getting documents: ", task.getException());
+                                }
+                            }
+                        }); //end of Query for weekly workout Title
             }
-        });
+
+        });//end of mDocRef
     }
 
     /*Opens a number picker dialog to set workout time and passes the variable to Start Workout Activity*/
