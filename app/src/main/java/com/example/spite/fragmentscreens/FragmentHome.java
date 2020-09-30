@@ -4,6 +4,10 @@
 package com.example.spite.fragmentscreens;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +24,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.spite.CurrentWorkout;
 import com.example.spite.R;
+import com.example.spite.models.DailyWorkout;
 import com.example.spite.models.WeeklyWorkout;
+import com.example.spite.models.WorkoutLog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,6 +45,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class FragmentHome extends Fragment {
 
@@ -71,9 +78,6 @@ public class FragmentHome extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //if(getArguments() != null){
-       //     email = getArguments().getString("email");
-       // }
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -85,13 +89,20 @@ public class FragmentHome extends Fragment {
         userMainPB = requireView().findViewById(R.id.UserProgressMainScreen);
         kyleMainPB = requireView().findViewById(R.id.KyleProgressMainScreen);
 
+
+
+        Drawable progressDrawable = kyleMainPB.getProgressDrawable().mutate();
+        progressDrawable.setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+        kyleMainPB.setProgressDrawable(progressDrawable);
+
+
+
         startWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showSetWorkoutDialog();
             }
         });
-
 
         //Dummy values, access 7 day progress for com.example.spite.User and Kyle, make an int.
         //Need to access workout info in conjunction w goal to work out daily progress as a %
@@ -102,11 +113,22 @@ public class FragmentHome extends Fragment {
 
                 final double goal = documentSnapshot.getDouble(GOAL_KEY);
                 final String kyleID = documentSnapshot.getString(KYLE_UID_KEY);
-                Log.d("MAD", "Here's the mDoc variable");
                 userMainPB.setProgress( (int) goal );
 
+                db.collection("User").document(USER_UID).collection("WeeklyWorkout")
+                        .orderBy("date", Query.Direction.DESCENDING)
+                        .limit(1)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
 
-                Calendar cal = Calendar.getInstance();
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("HERE", document.getId() + " => " + document.getData());
+                                        final String thisWeek = document.getId();
+                                        Calendar cal = Calendar.getInstance();
+
                 Date date = cal.getTime();
                 DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 String strDate = dateFormat.format(date);
@@ -115,7 +137,7 @@ public class FragmentHome extends Fragment {
                 final String title = strDate+day;
                 Log.d("MAD", "Title passed in is: " + title);
 
-                DocumentReference docRef0 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document("28-09-2020")
+                DocumentReference docRef0 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(thisWeek)
                         .collection("DailyWorkout").document(title);
                 docRef0.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -141,8 +163,8 @@ public class FragmentHome extends Fragment {
                             Log.d("MAD", "get failed with ", task.getException());
                         }
                     }
-                });
 
+                });
 
                 DocumentReference kDocRef = db.collection("User").document(kyleID);
                 kDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -152,7 +174,7 @@ public class FragmentHome extends Fragment {
                         final double kGoal = documentSnapshot.getDouble(GOAL_KEY);
 
 
-                        DocumentReference docRefk = db.collection("User").document(kyleID).collection("WeeklyWorkout").document("28-09-2020")
+                        DocumentReference docRefk = db.collection("User").document(kyleID).collection("WeeklyWorkout").document(thisWeek)
                                 .collection("DailyWorkout").document(title);
                         docRefk.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
@@ -166,23 +188,30 @@ public class FragmentHome extends Fragment {
                                         Log.d("MAD", "Goal is " + kGoal );
 
                                         double finalProg = 100 - (((kGoal-progress)/kGoal)*100);
-                                        Log.d("MAD", "Final output is " + finalProg );
+                                        Log.d("MAD", "Final kyle output is " + finalProg );
                                         kyleMainPB.setProgress( (int) finalProg );
+
 
                                     } else {
                                         Log.d("MAD", "kyle prog bar main screen no progress");
 
                                     }
                                 } else {
-                                    //end of docRefk
                                     Log.d("MAD", "get failed with ", task.getException());
                                 }
                             }
-                        });
+                        });//end of docRefk
                     }
-                });
+                });//end of kDocRef
             }
-        });
+             } else {
+                    Log.d("HERE", "Error getting documents: ", task.getException());
+                    }
+                }
+                }); //end of Query for weekly workout Title
+            }
+
+        });//end of mDocRef
     }
 
     /*Opens a number picker dialog to set workout time and passes the variable to Start Workout Activity*/
@@ -255,4 +284,3 @@ public class FragmentHome extends Fragment {
         });
     }
 }
-
