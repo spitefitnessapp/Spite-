@@ -2,14 +2,16 @@ package com.example.spite;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.core.app.NotificationCompat;
+import android.app.NotificationManager;
+import android.app.RemoteAction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import com.google.android.gms.tasks.OnFailureListener;
 import android.widget.Toast;
-
 import com.example.spite.dbhandlers.UserDBHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -77,7 +79,6 @@ public class NotificationSetting extends AppCompatActivity {
 
                                 } else {
                                     NotificationOn = false;
-                                    ReminderOn = false;
                                     Log.d("CloudMsg", "Subscribed to Notification " + Notification);
                                     Log.d("CloudMsg", "Subscribed to daily reminder " + Reminder);
                                     FirebaseMessaging.getInstance().unsubscribeFromTopic("Notification");
@@ -95,6 +96,7 @@ public class NotificationSetting extends AppCompatActivity {
                 getReminder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         if (!ReminderOn) {
                             FirebaseMessaging.getInstance().subscribeToTopic("Daily_Reminder");
                             ReminderOn = true;
@@ -128,6 +130,7 @@ public class NotificationSetting extends AppCompatActivity {
         });
 
     }
+
     //sets auto enable for FirebaseMessaging
     public void runtimeEnableAutoInit() {
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
@@ -148,6 +151,7 @@ public class NotificationSetting extends AppCompatActivity {
         }
 
     }
+
 
     //update data to firestore
     private void updateCloud(boolean notification, boolean reminder)

@@ -48,5 +48,8 @@
     <string name="logged_time">Logged Time:</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="notification_settings">Notification Settings</string>
+    <string name="turn_on_daily_reminder">Turn On Daily reminder</string>
+    <string name="Go_back">Go Back to Settings</string>
+    <string name="turn_on_app_notifications">Turn On App Notifications</string>
 
 </resources>
