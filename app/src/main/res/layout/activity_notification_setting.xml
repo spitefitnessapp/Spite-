@@ -8,11 +8,9 @@
 
     <LinearLayout
         android:id="@+id/linearLayout1"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
@@ -24,7 +22,7 @@
             android:id="@+id/notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Turn On App Notifications         "
+            android:text="@string/turn_on_app_notifications"
             android:textSize="24sp" />
 
         <Button
@@ -38,11 +36,9 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="362dp"
+        android:layout_height="55dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout1"
@@ -53,17 +49,16 @@
 
         <TextView
             android:id="@+id/ReminderText"
-            android:layout_width="331dp"
+            android:layout_width="278dp"
             android:layout_height="70dp"
-            android:text="Turn On Daily workout reminders"
+            android:text="@string/turn_on_daily_reminder"
             android:textSize="24sp" />
 
         <Button
             android:id="@+id/turnOnreminder"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            />
+            android:layout_marginEnd="16dp" />
 
 
     </LinearLayout>
@@ -82,7 +77,7 @@
             android:id="@+id/goBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Go Back to Settings"
+            android:text="@string/Go_back"
             tools:layout_editor_absoluteX="103dp"
             tools:layout_editor_absoluteY="165dp" />
     </LinearLayout>

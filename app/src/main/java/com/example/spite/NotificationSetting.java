@@ -81,7 +81,6 @@ public class NotificationSetting extends AppCompatActivity {
 
                                 } else {
                                     NotificationOn = false;
-                                    ReminderOn = false;
                                     Log.d("CloudMsg", "Subscribed to Notification " + Notification);
                                     Log.d("CloudMsg", "Subscribed to daily reminder " + Reminder);
                                     FirebaseMessaging.getInstance().unsubscribeFromTopic("Notification");
