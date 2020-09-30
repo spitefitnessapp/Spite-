@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.example.spite.dbhandlers.DBWorkoutHandler;
 import com.example.spite.dbhandlers.UserDBHandler;
+import com.example.spite.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
