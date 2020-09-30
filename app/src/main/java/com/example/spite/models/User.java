@@ -1,4 +1,4 @@
-package com.example.spite;
+package com.example.spite.models;
 
 /*Methods list:
 User()
