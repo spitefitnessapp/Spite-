@@ -104,7 +104,7 @@ public class FragmentHome extends Fragment {
             }
         });
 
-        //Dummy values, access 7 day progress for com.example.spite.User and Kyle, make an int.
+        //Dummy values, access 7 day progress for com.example.spite.models.User and Kyle, make an int.
         //Need to access workout info in conjunction w goal to work out daily progress as a %
         DocumentReference mDocRef = db.collection("User").document(USER_UID);
         mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
