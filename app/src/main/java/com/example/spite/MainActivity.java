@@ -13,7 +13,10 @@ import com.example.spite.fragmentscreens.FragmentHome;
 import com.example.spite.fragmentscreens.FragmentKyleProgress;
 import com.example.spite.fragmentscreens.FragmentProfile;
 import com.example.spite.fragmentscreens.FragmentProgress;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         /*Switch statement to display specific fragments outside of the navigation tab*/
         Intent whichView = getIntent();
         String source = whichView.getStringExtra("TabView");
-
 
         if (source != null) {
             Log.d("TabView", source);
@@ -94,4 +96,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("TabView", "Stage 3");
         }
     }
+
+
+
 }

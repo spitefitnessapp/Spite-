@@ -46,11 +46,17 @@ public class UserDBHandler {
     private static final String KYLE_NAME_KEY = "kyle";
     private static final String GOAL_KEY = "goal";
     private static final String KYLE_UID_KEY = "kyleUID";
+    private static final String NOTIFICATION = "Notification Enable";
+    private static final String REMINDER = "Reminder Enable";
+
 
     boolean exists;
-    User user;
+    User user = new User();
     private String kyleID;
-
+    boolean enableN = user.getEnableNotification();
+    String Notif = Boolean.toString(enableN);
+    boolean enableR = user.getEnableReminder();
+    String Remi = Boolean.toString(enableR);
 
     public UserDBHandler() {
     }
@@ -64,6 +70,8 @@ public class UserDBHandler {
         saveUser.put(GOAL_KEY, user.getGoal());
         saveUser.put(KYLE_NAME_KEY, user.getKyleName());
         saveUser.put(KYLE_UID_KEY, user.getKyleUID());
+        saveUser.put(NOTIFICATION, Notif);
+        saveUser.put(REMINDER, Remi);
 
         db.collection("User").document(user.getUID()).set(saveUser)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -175,6 +183,42 @@ public class UserDBHandler {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w("MAD", "Error deleting document", e);
+                    }
+                });
+    }
+    public void changeNotiSetting(FirebaseFirestore db, String uid, String notificationE) {
+        DocumentReference mDocRef = db.collection("User").document(uid);
+        mDocRef
+                .update(NOTIFICATION, notificationE)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("MAD", "Notification successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("MAD", "Error updating notification settings", e);
+                    }
+                });
+    }
+
+    public void changeDailyRem(FirebaseFirestore db, String uid, String dailyRem) {
+        DocumentReference mDocRef = db.collection("User").document(uid);
+
+        mDocRef
+                .update(REMINDER, dailyRem)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("MAD", "Daily Reminder successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("MAD", "Error updating reminder", e);
                     }
                 });
     }

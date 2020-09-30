@@ -40,6 +40,12 @@
             android:text="@string/current_antag_name" />
 
         <Button
+            android:id="@+id/notiSet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="@string/notification_settings" />
+        <Button
             android:id="@+id/logoutBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,6 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:text="@string/home_button_text" />
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,7 @@ public class Settings extends AppCompatActivity {
     Button chngEmail = null;
     //Button chngPassword = null;
     Button chngKyle = null;
+    Button notificationbtn = null;
     Button logout = null;
     Button settingToMainBtn = null;
 
@@ -30,12 +31,12 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        chngEmail = (Button) findViewById(R.id.chngEmailBtn);
+        chngEmail = findViewById(R.id.chngEmailBtn);
         // chngPassword = (Button) findViewById(R.id.chngePasswordBtn);
         chngKyle = (Button) findViewById(R.id.kyleSettingsBtn);
         logout = (Button) findViewById(R.id.logoutBtn);
         settingToMainBtn = (Button) findViewById(R.id.settingToMainBtn);
-
+        notificationbtn = findViewById(R.id.notiSet);
         logout.setEnabled(true);
         Intent intent = getIntent();
         //logInCheck = intent.getBooleanExtra("Logged_in",true);
@@ -92,6 +93,14 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Settings.this, MainActivity.class);
+                Settings.this.startActivity(intent);
+            }
+        });
+
+        notificationbtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(Settings.this, NotificationSetting.class);
                 Settings.this.startActivity(intent);
             }
         });
