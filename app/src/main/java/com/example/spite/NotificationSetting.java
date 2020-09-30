@@ -74,6 +74,11 @@ public class NotificationSetting extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<InstanceIdResult> task) {
                                 if (!NotificationOn) {
+                                    if(!task.isSuccessful()){
+                                        Log.d("MAD", "Cannot receive device Token", task.getException());
+                                    }
+                                    String token = task.getResult().getToken();
+                                    Log.d("MAD", "Device Token"+token);
                                     FirebaseMessaging.getInstance().subscribeToTopic("Notification");
                                     NotificationOn = true;
                                     Toast.makeText(NotificationSetting.this, "Notification Activated", Toast.LENGTH_SHORT).show();
