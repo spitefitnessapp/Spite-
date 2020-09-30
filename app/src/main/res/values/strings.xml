@@ -46,5 +46,7 @@
     <string name="Resume">Resume</string>
     <string name="Pause">Pause</string>
     <string name="logged_time">Logged Time:</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="notification_settings">Notification Settings</string>
 
 </resources>

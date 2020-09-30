@@ -26,7 +26,8 @@ public class User {
     private double goal;
     private String kyleName;
     private String kyleUID;
-
+    private boolean EnableNotification;
+    private boolean EnableReminder;
     public User(){
         userUID = "JiggleUID";
         username = "username";
@@ -35,7 +36,10 @@ public class User {
         goal = 0.0;
         kyleName = "Antagonist";
         kyleUID = "No Kyle ID";
+        EnableNotification = false;
+        EnableReminder = false;
     }
+
     public User( String uid, String un, String em, String pw, double gl, String kl, String kid ){
         userUID = uid;
         username = un;
@@ -53,6 +57,9 @@ public class User {
     public double getGoal(){ return goal; }
     public String getKyleName(){ return kyleName; }
     public String getKyleUID(){ return kyleUID; }
+    public boolean getEnableNotification(){return EnableNotification;}
+    public boolean getEnableReminder(){return EnableReminder;}
+
 
     public void setUsername( String un ){ this.username = un; }
     public void setPassword( String pw){ this.password = pw; }
@@ -60,7 +67,8 @@ public class User {
     public void setGoal( double gl){  this.goal = gl; }
     public void setKyleName( String kyle ){ this.kyleName = kyle; }
     public void setKyleUID( String kid ){ this.kyleUID = kid; }
-
+    public void setEnableNotification( boolean enableN ){this.EnableNotification = enableN;}
+    public void setEnableReminder( boolean enableR ){this.EnableReminder = enableR;}
 
 
 public String toString(){
