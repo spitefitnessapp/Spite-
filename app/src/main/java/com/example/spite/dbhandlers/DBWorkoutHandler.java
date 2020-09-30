@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -42,33 +43,40 @@ public class DBWorkoutHandler {
 
 
     /*Create document within the WeeklyWorkout collection for the current week*/
-    public void createWeeklyWorkout(String userID){
-
+    public void createWeeklyWorkout(final String userID){
         /*Create instance of WeeklyWorkout model*/
         weeklyWorkout = new WeeklyWorkout(userID);
 
-        /*Create field variables in the document*/
-        saveWeeklyWorkout = new HashMap<>();
-        saveWeeklyWorkout.put(DATE_KEY, weeklyWorkout.getDate());
-        saveWeeklyWorkout.put(USERNAME_KEY, weeklyWorkout.getUserID());
-
-        /*Add the document within WeeklyWorkout collection*/
-         weeklyWorkoutRef = db
-                .collection("User").document(userID)
-                .collection("WeeklyWorkout").document(weeklyWorkout.getDateString());
-
-        /*Testing to see whether method has succeeded*/
-        weeklyWorkoutRef.set(saveWeeklyWorkout)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Weekly Workout Ref:", "Successfully added weekly workout");
-                    }
-                })
+        Task<DocumentSnapshot> ifWeeklyDocExists = db.collection("User").document(userID)
+                .collection("WeeklyWorkout").document(weeklyWorkout.getDateString())
+                .get()
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("Weekly Workout Ref:", e.toString());
+                        /*Create field variables in the document*/
+                        saveWeeklyWorkout = new HashMap<>();
+                        saveWeeklyWorkout.put(DATE_KEY, weeklyWorkout.getDate());
+                        saveWeeklyWorkout.put(USERNAME_KEY, weeklyWorkout.getUserID());
+
+                        /*Add the document within WeeklyWorkout collection*/
+                        weeklyWorkoutRef = db
+                                .collection("User").document(userID)
+                                .collection("WeeklyWorkout").document(weeklyWorkout.getDateString());
+
+                        /*Testing to see whether method has succeeded*/
+                        weeklyWorkoutRef.set(saveWeeklyWorkout)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("Weekly Workout Ref:", "Successfully added weekly workout");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("Weekly Workout Ref:", e.toString());
+                                    }
+                                });
                     }
                 });
     }
@@ -101,37 +109,50 @@ public class DBWorkoutHandler {
                             recentWeekDate += date;
                         }
 
+
+
                             /*Create the DailyWorkout within the WeeklyWorkout doc with recentWeekDate string*/
                         /*Create instance of DailyWorkout model*/
                         dailyWorkout = new DailyWorkout(userID);
+                        final String dailyWorkoutDocID = dailyWorkout.getDateString() + "-" + dailyWorkout.getDay();
+                        final String finalRecentWeekDate = recentWeekDate;
 
-                        /*Create field variables in the document*/
-                        saveDailyWorkout = new HashMap<>();
-                        saveDailyWorkout.put(USERNAME_KEY, dailyWorkout.getUserID());
-                        saveDailyWorkout.put(DATE_KEY, dailyWorkout.getDate());
-                        saveDailyWorkout.put(DAY_KEY, dailyWorkout.getDay());
-                        saveDailyWorkout.put(DAILY_TIME_LOGGED_KEY, dailyWorkout.getDailyTimeLogged());
-
-                        /*Add the document within DailyWorkout collection*/
-                        String dailyWorkoutDocID = dailyWorkout.getDate() + dailyWorkout.getDay();
-
-                        dailyWorkoutRef = db
-                                .collection("User").document(userID)
+                        Task<DocumentSnapshot> ifDailyDocExists = db.collection("User").document(userID)
                                 .collection("WeeklyWorkout").document(recentWeekDate)
-                                .collection("DailyWorkout").document(dailyWorkoutDocID);
-
-                        /*Testing to see whether method has succeeded*/
-                        dailyWorkoutRef.set(saveDailyWorkout)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("Daily Workout Ref:", "Successfully added daily workout");
-                                    }
-                                })
+                                .collection("DailyWorkout").document(dailyWorkoutDocID)
+                                .get()
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Log.d("Daily Workout Ref:", e.toString());
+                                        /*Create field variables in the document*/
+                                        saveDailyWorkout = new HashMap<>();
+                                        saveDailyWorkout.put(USERNAME_KEY, dailyWorkout.getUserID());
+                                        saveDailyWorkout.put(DATE_KEY, dailyWorkout.getDate());
+                                        saveDailyWorkout.put(DAY_KEY, dailyWorkout.getDay());
+                                        saveDailyWorkout.put(DAILY_TIME_LOGGED_KEY, dailyWorkout.getDailyTimeLogged());
+
+                                        /*Add the document within DailyWorkout collection*/
+
+
+                                        dailyWorkoutRef = db
+                                                .collection("User").document(userID)
+                                                .collection("WeeklyWorkout").document(finalRecentWeekDate)
+                                                .collection("DailyWorkout").document(dailyWorkoutDocID);
+
+                                        /*Testing to see whether method has succeeded*/
+                                        dailyWorkoutRef.set(saveDailyWorkout)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("Daily Workout Ref:", "Successfully added daily workout");
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.d("Daily Workout Ref:", e.toString());
+                                                    }
+                                                });
                                     }
                                 });
                     }
