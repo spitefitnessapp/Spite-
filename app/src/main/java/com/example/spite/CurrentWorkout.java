@@ -39,6 +39,7 @@ public class CurrentWorkout extends AppCompatActivity {
     private int hour;
     private int minute;
     private int PROGRESS_START = 0;
+    private int initialStartTime = 0;
 
     //Convert the values to millisecond
     private long counter;
@@ -73,6 +74,8 @@ public class CurrentWorkout extends AppCompatActivity {
         stopwatch = findViewById(R.id.stopwatch);
         countDownText = findViewById(R.id.countdown);
         handler = new Handler();
+
+        initialStartTime = (int) (counter/1000);
 
         //pauseBtn.setEnabled(false);
         startStopW();
@@ -182,7 +185,7 @@ public class CurrentWorkout extends AppCompatActivity {
             public void onTick(long l) {
                 counter = l;
                 int count = (int) counter/1000;
-                int timeUsed = (int) (((startTime - count)/ (double) startTime)*100);
+                int timeUsed = (int) (((initialStartTime - count)/ (double) initialStartTime)*100);
                 String checkk = timeUsed + " " + count;
                 Log.d("TAGG", checkk);
                 userPB.setProgress(timeUsed);
