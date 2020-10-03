@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1F1F21"
     tools:context=".KyleSettings">
 
     <LinearLayout
@@ -29,7 +30,7 @@
             <TextView
                 android:id="@+id/kyleName"
                 android:layout_width="wrap_content"
-                android:layout_height="33dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="@string/current_antag_name" />
 
@@ -40,21 +41,27 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/rename"
+                android:text="@string/register"
+                android:textSize="20dp"
+                android:textColorHint="@color/grey"
                 android:inputType="textPersonName" />
 
         </LinearLayout>
 
         <Button
             android:id="@+id/changeKyleBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="@string/update" />
+            android:background="@color/background"
+            android:text="@string/update"
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/chngKyleToMainBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/home_button_text" />
+            android:background="@color/background"
+            android:text="@string/home_button_text"
+            android:textSize="15dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

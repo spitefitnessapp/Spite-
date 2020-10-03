@@ -37,12 +37,10 @@ public class NotificationSetting extends AppCompatActivity {
     private boolean NotificationOn;
     private boolean ReminderOn;
     private static final String NOTIFICATION = "Notification Enable";
-    private static final String REMINDER = "Daily_Reminder Enable";
+    private static final String REMINDER = "Reminder Enable";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String Notification;
     private String Reminder;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +62,28 @@ public class NotificationSetting extends AppCompatActivity {
                 NotificationOn = Boolean.parseBoolean(Noti);
                 ReminderOn = Boolean.parseBoolean(Rem);
                 setButtonText();
+                Log.d("CloudMsg", "Subscribed to daily reminder " + ReminderOn);
 
+                getReminder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if(!ReminderOn) {
+                            FirebaseMessaging.getInstance().subscribeToTopic("Daily_Reminder");
+                            ReminderOn = true;
+                            Toast.makeText(NotificationSetting.this, "Daily reminder activated", Toast.LENGTH_SHORT).show();
+                            updateRemToCloud(ReminderOn);
+                        } else {
+                            FirebaseMessaging.getInstance().unsubscribeFromTopic("Daily_Reminder");
+                            ReminderOn = false;
+                            Toast.makeText(NotificationSetting.this, "Daily reminder Deactivated", Toast.LENGTH_SHORT).show();
+                            updateRemToCloud(ReminderOn);
+
+                        }
+                        setButtonText();
+
+                    }
+                });
                 notibtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -80,15 +99,13 @@ public class NotificationSetting extends AppCompatActivity {
                                     FirebaseMessaging.getInstance().subscribeToTopic("Notification");
                                     NotificationOn = true;
                                     Toast.makeText(NotificationSetting.this, "Notification Activated", Toast.LENGTH_SHORT).show();
-                                    updateCloud(NotificationOn, ReminderOn);
-
+                                    updateNotiToCloud(NotificationOn);
                                 } else {
                                     NotificationOn = false;
                                     Log.d("CloudMsg", "Subscribed to Notification " + Notification);
-                                    Log.d("CloudMsg", "Subscribed to daily reminder " + Reminder);
                                     FirebaseMessaging.getInstance().unsubscribeFromTopic("Notification");
-                                    Toast.makeText(NotificationSetting.this, "Notification disabled and reminder disabled", Toast.LENGTH_SHORT).show();
-                                    updateCloud(NotificationOn, ReminderOn);
+                                    Toast.makeText(NotificationSetting.this, "Notification disabled.", Toast.LENGTH_SHORT).show();
+                                    updateNotiToCloud(NotificationOn);
                                 }
                                 Log.d("CloudMsg", "Notification turned on " + NotificationOn);
                                 setButtonText();
@@ -98,32 +115,9 @@ public class NotificationSetting extends AppCompatActivity {
                     }
                 });
 
-                getReminder.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (!ReminderOn) {
-                            FirebaseMessaging.getInstance().subscribeToTopic("Daily_Reminder");
-                            ReminderOn = true;
-                            Toast.makeText(NotificationSetting.this, "Daily reminder activated", Toast.LENGTH_SHORT).show();
-                            updateCloud(NotificationOn, ReminderOn);
-                        } else {
-                            ReminderOn = false;
-                            FirebaseMessaging.getInstance().unsubscribeFromTopic("Daily_Reminder");
-                            Toast.makeText(NotificationSetting.this, "Daily reminder Deactivated", Toast.LENGTH_SHORT).show();
-                            updateCloud(NotificationOn, ReminderOn);
-                        }
-                        Log.d("CloudMsg", "Subscribed to daily reminder " + ReminderOn);
-                        setButtonText();
-                    }
-                });
-
-
-
-                //Update Firestore
 
             }
         });
-
 
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,8 +126,8 @@ public class NotificationSetting extends AppCompatActivity {
                 NotificationSetting.this.startActivity(intent);
             }
         });
-
     }
+
     //sets auto enable for FirebaseMessaging
     public void runtimeEnableAutoInit() {
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
@@ -148,24 +142,25 @@ public class NotificationSetting extends AppCompatActivity {
         }
         if (ReminderOn) {
             getReminder.setText("ON");
-
         } else {
             getReminder.setText("OFF");
         }
 
     }
-
-
     //update data to firestore
-    private void updateCloud(boolean notification, boolean reminder)
+    private void updateNotiToCloud(boolean notification)
     {
         Notification = Boolean.toString(notification);
-        Log.d("CloudMsg", "Subscribed to Notification " + Notification);
-        Reminder = Boolean.toString(reminder);
-        Log.d("CloudMsg", "Subscribed to daily reminder " + Reminder);
+        Log.d("Update Firestore", "Subscribed to Notification " + Notification);
         UserDBHandler firestoreHandler = new UserDBHandler();
-        firestoreHandler.changeNotiSetting(db,USER_UID,Notification);
-        firestoreHandler.changeDailyRem(db,USER_UID,Reminder);
+        firestoreHandler.changeNotiSetting(db, USER_UID, Notification);
     }
 
+    private  void updateRemToCloud(boolean reminder)
+    {
+        Reminder = Boolean.toString(reminder);
+        Log.d("Update Firestore", "Subscribed to daily reminder " + Reminder);
+        UserDBHandler firestoreHandler = new UserDBHandler();
+        firestoreHandler.changeDailyRem(db, USER_UID, Reminder);
+    }
 }

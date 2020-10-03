@@ -37,6 +37,7 @@ public class Login extends AppCompatActivity {
                 new AuthUI.IdpConfig.GoogleBuilder().build()
         );
         user = auth.getCurrentUser();
+       //Checks to see if user is already signed in if yes then app ones to home screen if not to the sign in screen
         if(user != null)
         {
             Intent resumeActivity = new Intent(this, MainActivity.class);
@@ -46,11 +47,13 @@ public class Login extends AppCompatActivity {
         {
             SignInOption();
         }
+
+
     }
 
     private void SignInOption(){
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
-                .setAvailableProviders(signUpOp).build(),REQUEST_CODE);
+                .setAvailableProviders(signUpOp).setTheme(R.style.LoginTheme).build(),REQUEST_CODE);
         //We can add the Logo here using .setLogo();
     }
 

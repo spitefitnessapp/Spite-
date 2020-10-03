@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1F1F21"
     tools:context=".ChangeEmail">
 
     <LinearLayout
@@ -26,6 +27,8 @@
             android:autofillHints=""
             android:ems="10"
             android:hint="Enter your Email"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/grey"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -34,16 +37,19 @@
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:ems="10"
+            android:textColor="@color/colorPrimary"
             android:hint="@string/new_email"
+            android:textColorHint="@color/grey"
             android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/confirmNewEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
             android:ems="10"
+            android:textColor="@color/colorPrimary"
             android:hint="@string/confirm_email"
+            android:textColorHint="@color/grey"
             android:inputType="textEmailAddress" />
 
 
@@ -51,12 +57,14 @@
             android:id="@+id/changeEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/background"
             android:text="@string/change_email" />
 
         <Button
             android:id="@+id/chngEMtoMainBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/background"
             android:text="@string/home_button_text" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

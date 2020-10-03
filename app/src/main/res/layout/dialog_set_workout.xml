@@ -4,13 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
         android:orientation="vertical"
+        android:background="#38383C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -27,7 +28,6 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/set_workout_time"
-            android:textColor="#000000"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -39,12 +39,14 @@
             <NumberPicker
                 android:id="@+id/setWorkoutHr"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:textColor="@color/colorAccent" />
 
             <NumberPicker
                 android:id="@+id/setWorkoutMin"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:textColor="@color/colorAccent" />
 
         </LinearLayout>
 
@@ -52,13 +54,16 @@
             android:id="@+id/setWorkoutBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/start_workout" />
+            android:text="@string/start_workout"
+            android:background="@color/background"
+        />
 
         <Button
             android:id="@+id/cancelBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"
+            android:background="@color/background"/>
 
     </LinearLayout>
 

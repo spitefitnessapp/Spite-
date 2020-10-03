@@ -72,7 +72,7 @@ public class FragmentKyleProgress extends Fragment {
                 String kyleName = documentSnapshot.getString(KYLE_NAME_KEY);
                 final String kyleID = documentSnapshot.getString(KYLE_UID_KEY);
 
-                kyleWeeklyProg.setText( kyleName + "'s Weekly Progress");
+                kyleWeeklyProg.setText( kyleName + "'s Weekly Progress:");
 
                 //Access Kyle's User in FB, for goal/progress
                 DocumentReference kDocRef = db.collection("User").document(kyleID);

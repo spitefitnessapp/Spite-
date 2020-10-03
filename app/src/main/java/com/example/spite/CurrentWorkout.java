@@ -61,6 +61,7 @@ public class CurrentWorkout extends AppCompatActivity {
         Intent workoutTime = getIntent();
         hour = workoutTime.getIntExtra("hour",0);
         minute = workoutTime.getIntExtra("minute", 0);
+        //Converts the users input values to the milliseconds
         counter =  ((long)(hour))*3600000 + ((long)(minute))*60000;
 
         /* TODO: Remove this later. Testing to see if intent is received*/
@@ -75,6 +76,7 @@ public class CurrentWorkout extends AppCompatActivity {
         handler = new Handler();
 
         //pauseBtn.setEnabled(false);
+        //start the stopwatch and the countdown timer when it the user starts the workout
         startStopW();
         updateTimer();
 
@@ -130,7 +132,7 @@ public class CurrentWorkout extends AppCompatActivity {
             }
         });
     }
-
+    //Start stopwatch
     public void startStopW()
     {
         if(!stRunning)
@@ -143,7 +145,7 @@ public class CurrentWorkout extends AppCompatActivity {
 
         startTimer();
     }
-
+    //Stopwatch set up
     public Runnable run = new Runnable() {
         @Override
         public void run() {
@@ -152,7 +154,9 @@ public class CurrentWorkout extends AppCompatActivity {
 
             int seconds = (int) (update/1000);
             min = seconds/60;
-            sec = seconds % 60;
+            long testSec = update/1000;
+            sec = (int)testSec % 60;
+
             mSec = (int)(update % 100);
 
             if(min>60)
@@ -174,6 +178,7 @@ public class CurrentWorkout extends AppCompatActivity {
         }
     };
 
+    //Start for the countdown timer
     public void startTimer()
     {
         countDownTimer = new CountDownTimer(counter, 1000) {
@@ -195,14 +200,14 @@ public class CurrentWorkout extends AppCompatActivity {
             }
         }.start();
     }
-
+    // Stops time in countdown timer
     public void stopTimer()
     {
         countDownTimer.cancel();
         timerRunning = false;
 
     }
-
+    // Updates time in countdown timer
     public void updateTimer()
     {
         // added hours to the stopwatch

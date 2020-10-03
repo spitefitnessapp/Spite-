@@ -80,7 +80,7 @@ public class FragmentProgress extends Fragment {
 
                 double goal = documentSnapshot.getDouble(GOAL_KEY);
                 String username = documentSnapshot.getString(USERNAME_KEY);
-                userWeeklyProg.setText(username + "'s weekly progress.");
+                userWeeklyProg.setText(username + "'s Weekly Progress:");
 
                 final LineGraphSeries<DataPoint> goalSeries = new LineGraphSeries<>(new DataPoint[] {
                         new DataPoint(0, goal),

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1F1F21"
     tools:context=".Register">
 
     <EditText
@@ -12,6 +13,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Username"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/grey"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/kyleNameET"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +29,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Antagonist Name"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/grey"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/registerGoalET"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +46,8 @@
         android:ems="10"
         android:hint="Weekly goal (minutes) "
         android:inputType="number"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -50,9 +57,11 @@
 
     <Button
         android:id="@+id/registerBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/background"
         android:text="@string/register"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.394"
