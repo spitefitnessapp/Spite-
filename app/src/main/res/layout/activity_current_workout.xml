@@ -9,7 +9,7 @@
 
     <ProgressBar
         android:id="@+id/UserProgressCurrentWorkout"
-        style="@style/CircularDeterminateProgressBar"
+        style="@style/CircularDeterminateProgressBarUser"
         android:layout_width="423dp"
         android:layout_height="428dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,31 +38,32 @@
 
 
         <Button
+            android:id="@+id/endWorkout"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:background="@drawable/rund2"
+            android:text="@string/finish"
+            android:textAllCaps="false"
+            android:textColor="#f53a50"
+            android:textSize="15sp"
+            app:useCompatPadding="true" />
+
+        <Button
             android:id="@+id/resume"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="100dp"
             android:layout_height="70dp"
-            android:background="#38383C"
+            android:background="@drawable/round1"
+            android:text="@string/pause"
             android:textAllCaps="false"
-            android:textColor="#02CAA2"
+            android:textColor="#AAA"
             android:textSize="15sp"
-            android:text = "@string/pause"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/start"
             tools:layout_editor_absoluteY="597dp" />
 
-        <Button
-            android:id="@+id/endWorkout"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="100dp"
-            android:layout_height="70dp"
-            android:background="#38383C"
-            android:text="@string/finish"
-            android:textAllCaps="false"
-            android:textColor="#02CAA2"
-            android:textSize="15sp"
-            app:useCompatPadding="true"/>
     </LinearLayout>
 
     <LinearLayout

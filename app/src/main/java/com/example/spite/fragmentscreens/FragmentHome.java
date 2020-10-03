@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,6 +53,12 @@ public class FragmentHome extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     // private UserDBHandler dbh = new UserDBHandler();
 
+    //TextViews
+    private TextView You;
+    private TextView kyleMainTV;
+    private TextView userProgValueTV;
+    private TextView kyleProgValueTV;
+
     //Start Workout Button
     private Button startWorkout;
 
@@ -73,6 +80,7 @@ public class FragmentHome extends Fragment {
     private static final String GOAL_KEY = "goal";
     private static final String KYLE_UID_KEY = "kyleUID";
     private static final String PROGRESS_KEY = "timeLogged";
+    private static final String KYLE_NAME_KEY = "kyle";
 
     //Display fragment with layout res file fragment_home
     @Nullable
@@ -88,12 +96,10 @@ public class FragmentHome extends Fragment {
         startWorkout = requireView().findViewById(R.id.startWorkout);
         userMainPB = requireView().findViewById(R.id.UserProgressMainScreen);
         kyleMainPB = requireView().findViewById(R.id.KyleProgressMainScreen);
-
-
-
-        Drawable progressDrawable = kyleMainPB.getProgressDrawable().mutate();
-        progressDrawable.setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
-        kyleMainPB.setProgressDrawable(progressDrawable);
+        You = requireView().findViewById(R.id.userMainTV);
+        kyleMainTV = requireView().findViewById(R.id.kyleMainTV);
+        userProgValueTV = requireView().findViewById(R.id.userProgValueTV);
+        kyleProgValueTV = requireView().findViewById(R.id.kyleProgValueTV);
 
 
 
@@ -113,7 +119,9 @@ public class FragmentHome extends Fragment {
 
                 final double goal = documentSnapshot.getDouble(GOAL_KEY);
                 final String kyleID = documentSnapshot.getString(KYLE_UID_KEY);
-                userMainPB.setProgress( (int) goal );
+                final String kyleName = documentSnapshot.getString(KYLE_NAME_KEY);
+
+                kyleMainTV.setText(kyleName);
 
                 db.collection("User").document(USER_UID).collection("WeeklyWorkout")
                         .orderBy("date", Query.Direction.DESCENDING)
@@ -153,6 +161,8 @@ public class FragmentHome extends Fragment {
                                                         double finalProg = 100 - (((goal-progress)/goal)*100);
                                                         Log.d("MAD", "Final output is " + finalProg );
                                                         userMainPB.setProgress( (int) finalProg );
+                                                        String prog = "" + progress;
+                                                        userProgValueTV.setText( prog );
 
                                                     } else {
                                                         Log.d("MAD", "User prog bar main screen no progress");
@@ -190,6 +200,8 @@ public class FragmentHome extends Fragment {
                                                                 double finalProg = 100 - (((kGoal-progress)/kGoal)*100);
                                                                 Log.d("MAD", "Final kyle output is " + finalProg );
                                                                 kyleMainPB.setProgress( (int) finalProg );
+                                                                String prog = "" + progress;
+                                                                kyleProgValueTV.setText( prog );
 
 
                                                             } else {

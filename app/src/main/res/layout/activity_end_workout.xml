@@ -4,85 +4,100 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1F1F21"
     tools:context=".EndWorkout">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+
+    <Button
+        android:id="@+id/endToProgressBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/view_progress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/endToMainBtn"
+        app:layout_constraintVertical_bias="0.268" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="200dp"
-            android:orientation="horizontal">
+    <Button
+        android:id="@+id/endToMainBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="88dp"
+        android:text="@string/home_button_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/endGoalTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="@string/workout_goal"
-                android:textSize="25sp" />
+    <TextView
+        android:id="@+id/endLoggedTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:text="@string/logged_time"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/UserProgressEndWorkout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.732" />
 
-            <TextView
-                android:id="@+id/endWorkoutGoal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:hint="@string/workout_goal"
-                android:textSize="25sp" />
-        </LinearLayout>
+    <TextView
+        android:id="@+id/endLoggedTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:hint="@string/logged_time"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/UserProgressEndWorkout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toEndOf="@+id/endLoggedTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.732" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+    <ProgressBar
+        android:id="@+id/UserProgressEndWorkout"
+        style="@style/CircularDeterminateProgressBarUser"
+        android:layout_width="254dp"
+        android:layout_height="263dp"
 
-            <TextView
-                android:id="@+id/endLoggedTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="@string/logged_time"
-                android:textSize="25sp" />
 
-            <TextView
-                android:id="@+id/endLoggedTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:hint="@string/logged_time"
-                android:textSize="25sp" />
-        </LinearLayout>
+        android:layout_marginBottom="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/endToMainBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/endToProgressBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/background"
-            android:textSize="20dp"
-            android:layout_marginTop="100dp"
-            android:text="@string/view_progress" />
+    <TextView
+        android:id="@+id/endWorkoutGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:hint="@string/workout_goal"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/endLoggedTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toEndOf="@+id/endGoalTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.47" />
 
-        <Button
-            android:id="@+id/endToMainBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:textSize="20dp"
-            android:layout_gravity="center"
-            android:text="@string/home_button_text" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/endGoalTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:text="@string/workout_goal"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/endLoggedTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.507" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

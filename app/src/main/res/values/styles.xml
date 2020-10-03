@@ -10,9 +10,13 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
-    <style name="CircularDeterminateProgressBar">
+    <style name="CircularDeterminateProgressBarUser">
         <item name="android:indeterminateOnly">false</item>
         <item name="android:progressDrawable">@drawable/progresscircle</item>
+    </style>
+    <style name="CircularDeterminateProgressBarKyle">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/kyle_progress_circle</item>
     </style>
 
     <style name="LoginTheme" parent="Theme.AppCompat.Light.NoActionBar">
