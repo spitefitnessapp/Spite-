@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity {
         );
         user = auth.getCurrentUser();
        //Checks to see if user is already signed in if yes then app ones to home screen if not to the sign in screen
-       /* if(user != null)
+        if(user != null)
         {
             Intent resumeActivity = new Intent(this, MainActivity.class);
             startActivity(resumeActivity);
@@ -47,9 +47,6 @@ public class Login extends AppCompatActivity {
         {
             SignInOption();
         }
-*/
-        SignInOption();
-
 
     }
 
