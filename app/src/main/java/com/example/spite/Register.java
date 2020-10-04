@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.spite.dbhandlers.DBWorkoutHandler;
 import com.example.spite.dbhandlers.UserDBHandler;
 import com.example.spite.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +35,7 @@ public class Register extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private UserDBHandler dbh = new UserDBHandler();
+    private DBWorkoutHandler dbWorkoutHandler = new DBWorkoutHandler();
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String USER_UID = user.getUid();
@@ -68,6 +70,9 @@ public class Register extends AppCompatActivity {
 
         User use = new User(USER_UID, username, user.getEmail(), "password", goal, kyleName, "user01");
         dbh.addUser(db, use);
+
+        dbWorkoutHandler.createWeeklyWorkout(USER_UID);
+        dbWorkoutHandler.createDailyWorkout(USER_UID);
 
         CollectionReference userCR = db.collection("User");
         userCR.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
