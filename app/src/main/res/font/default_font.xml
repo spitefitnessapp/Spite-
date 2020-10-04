@@ -4,5 +4,5 @@
             android:fontStyle="normal"
             android:fontWeight="400"
             android:font="@font/source_sans_pro_light"
-            android:textColor="@color/colorAccent"/>
+            android:textColor="@color/colorPrimary"/>
 </font-family>

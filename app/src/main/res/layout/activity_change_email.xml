@@ -26,8 +26,8 @@
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:ems="10"
-            android:hint="Enter your Email"
-            android:textColor="@color/colorPrimary"
+            android:hint="@string/enter_your_email"
+            android:textColor="@color/colorAccent"
             android:textColorHint="@color/grey"
             android:inputType="textEmailAddress" />
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:ems="10"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorAccent"
             android:hint="@string/new_email"
             android:textColorHint="@color/grey"
             android:inputType="textEmailAddress" />
@@ -47,7 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textColor="@color/colorPrimary"
+            android:autofillHints="@string/confirm_email"
+            android:textColor="@color/colorAccent"
             android:hint="@string/confirm_email"
             android:textColorHint="@color/grey"
             android:inputType="textEmailAddress" />

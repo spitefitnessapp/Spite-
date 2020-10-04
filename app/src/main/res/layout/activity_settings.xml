@@ -18,18 +18,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:textAlignment="viewStart"
-            android:textSize="20dp"
+            android:textSize="40sp"
             android:text="@string/settings_title" />
 
         <Button
             android:id="@+id/chngEmailBtn"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
+            android:layout_height="58sp"
             android:layout_weight="0"
             android:background="@color/background"
             android:text="@string/change_email"
             android:textAlignment="viewStart"
-            android:textSize="15dp" />
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/chngePasswordBtn"
@@ -39,7 +39,7 @@
             android:background="@color/background"
             android:text="@string/change_password"
             android:textAlignment="viewStart"
-            android:textSize="15dp" />
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/kyleSettingsBtn"
@@ -48,7 +48,7 @@
             android:layout_weight="0"
             android:textAlignment="viewStart"
             android:background="@color/background"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:text="@string/current_antag_name" />
 
         <Button
@@ -58,7 +58,7 @@
             android:layout_weight="0"
             android:textAlignment="viewStart"
             android:background="@color/background"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:text="@string/notification_settings" />
 
         <Button
@@ -68,7 +68,7 @@
             android:layout_weight="0"
             android:textAlignment="viewStart"
             android:background="@color/background"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:text="@string/logout" />
 
         <Button
@@ -78,7 +78,7 @@
             android:layout_weight="0"
             android:textAlignment="viewStart"
             android:background="@color/background"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:text="@string/home_button_text" />
 
 

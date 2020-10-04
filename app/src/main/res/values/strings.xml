@@ -49,6 +49,7 @@
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="notification_settings">Notification Settings</string>
     <string name="you">You</string>
+    <string name="enter_your_email">Enter your Email</string>
 
 
 </resources>
