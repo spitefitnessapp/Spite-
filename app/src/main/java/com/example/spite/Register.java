@@ -66,8 +66,8 @@ public class Register extends AppCompatActivity {
         String kyleName = kyleNameET.getText().toString();
         double goal = Double.parseDouble( goalET.getText().toString() );
 
-        User use = new User( USER_UID, username, user.getEmail(), "password", goal, kyleName, "user01");
-        dbh.addUser( db, use );
+        User use = new User(USER_UID, username, user.getEmail(), "password", goal, kyleName, "user01");
+        dbh.addUser(db, use);
 
         CollectionReference userCR = db.collection("User");
         userCR.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
