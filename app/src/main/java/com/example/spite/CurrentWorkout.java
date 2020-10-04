@@ -180,14 +180,11 @@ public class CurrentWorkout extends AppCompatActivity {
     public void startTimer()
     {
         countDownTimer = new CountDownTimer(counter, 1000) {
-            int startTime = (int) (counter/1000);
             @Override
             public void onTick(long l) {
                 counter = l;
                 int count = (int) counter/1000;
                 int timeUsed = (int) (((initialStartTime - count)/ (double) initialStartTime)*100);
-                String checkk = timeUsed + " " + count;
-                Log.d("TAGG", checkk);
                 userPB.setProgress(timeUsed);
                 updateTimer();
             }

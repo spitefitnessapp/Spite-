@@ -32,6 +32,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -99,14 +100,17 @@ public class FragmentProgress extends Fragment {
                 userSeries.setDrawDataPoints(true);
                 userSeries.setDataPointsRadius(10);
 
-                userSeries.setColor(Color.CYAN);
-                goalSeries.setColor(Color.GREEN);
-/*
-                graph.getViewport().setBackgroundColor(Color.argb(255, 222, 222, 222));
-                graph.getViewport().setDrawBorder(true);
-                graph.getViewport().setBorderColor(BLUE);
+                //Aesthetics
+                goalSeries.setColor(Color.GRAY);
+                goalSeries.setTitle("Goal");
+                userSeries.setColor(Color.argb(255, 2, 202, 162));
+                userSeries.setTitle("Prog");
+                graph.getLegendRenderer().setVisible(true);
+                graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+                graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
+                graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
 
- */
+                //getting current date for progress
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, -6);
                 Date date = cal.getTime();

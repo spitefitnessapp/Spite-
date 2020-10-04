@@ -36,7 +36,7 @@
 
     <TextView
         android:id="@+id/userMainTV"
-        android:layout_width="75dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/UserProgressMainScreen"
         android:layout_alignParentStart="true"
@@ -60,7 +60,7 @@
 
     <TextView
         android:id="@+id/userProgValueTV"
-        android:layout_width="58dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/userMainTV"
         android:layout_alignParentStart="true"
@@ -73,12 +73,13 @@
 
     <TextView
         android:id="@+id/kyleProgValueTV"
-        android:layout_width="57dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/kyleMainTV"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="70dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="92dp"
         android:text="0.0"
         android:textSize="18sp" />
 
