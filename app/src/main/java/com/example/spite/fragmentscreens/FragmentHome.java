@@ -163,7 +163,6 @@ public class FragmentHome extends Fragment {
                                                         userMainPB.setProgress( (int) finalProg );
                                                         String prog = "" + progress;
                                                         userProgValueTV.setText( prog );
-
                                                     } else {
                                                         Log.d("MAD", "User prog bar main screen no progress");
 
