@@ -43,11 +43,9 @@ public class Login extends AppCompatActivity {
             Intent resumeActivity = new Intent(this, MainActivity.class);
             startActivity(resumeActivity);
         }
-        else
-        {
+        else {
             SignInOption();
         }
-
     }
 
     private void SignInOption(){
