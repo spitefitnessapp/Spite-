@@ -79,7 +79,7 @@ public class FragmentHome extends Fragment {
     private String USER_UID = user.getUid();
     private static final String GOAL_KEY = "goal";
     private static final String KYLE_UID_KEY = "kyleUID";
-    private static final String PROGRESS_KEY = "timeLogged";
+    private static final String dailyTimeLogged = "timeLogged";
     private static final String KYLE_NAME_KEY = "kyle";
 
     //Display fragment with layout res file fragment_home
@@ -154,7 +154,7 @@ public class FragmentHome extends Fragment {
                                                     DocumentSnapshot document = task.getResult();
                                                     if (document.exists()) {
                                                         Log.d("MAD", "docRef0 docSnap data TODAY");
-                                                        double progress = document.getDouble(PROGRESS_KEY);
+                                                        double progress = document.getDouble(dailyTimeLogged);
                                                         Log.d("MAD", "Progress is " + progress );
                                                         Log.d("MAD", "Goal is " + goal );
 
@@ -192,7 +192,7 @@ public class FragmentHome extends Fragment {
                                                             DocumentSnapshot document = task.getResult();
                                                             if (document.exists()) {
                                                                 Log.d("MAD", "docRefk docSnap data TODAY");
-                                                                double progress = document.getDouble(PROGRESS_KEY);
+                                                                double progress = document.getDouble(dailyTimeLogged);
                                                                 Log.d("MAD", "Progress is " + progress );
                                                                 Log.d("MAD", "Goal is " + kGoal );
 
