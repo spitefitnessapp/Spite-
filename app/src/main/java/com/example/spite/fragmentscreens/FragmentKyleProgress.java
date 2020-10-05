@@ -47,7 +47,7 @@ public class FragmentKyleProgress extends Fragment {
     private final String GOAL_KEY = "goal";
     private final String KYLE_UID_KEY = "kyleUID";
     private final String KYLE_NAME_KEY = "kyle";
-    private final String PROGRESS_KEY = "timeLogged";
+    private final String PROGRESS_KEY = "dailyTimeLogged";
 
     //Display fragment with layout res file fragment_progress
     @Nullable
