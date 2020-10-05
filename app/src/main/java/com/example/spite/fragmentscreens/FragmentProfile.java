@@ -61,8 +61,6 @@ public class FragmentProfile extends Fragment {
         confirmChangeBtn = requireView().findViewById(R.id.confirmGoalChangeBtn);
         userGoalET = requireView().findViewById(R.id.userGoalTimeView);
         userNameTV = requireView().findViewById(R.id.userName);
-        //goalTV = requireView().findViewById(R.id.workoutGoalTV);
-        newGoalTV = requireView().findViewById(R.id.newGoalTV);
         timeFrame = requireView().findViewById(R.id.timeFrame);
         currentGoalNumTV = requireView().findViewById(R.id.currentGoalTV);
         timeFrame.setText(goalTimeFrame);
