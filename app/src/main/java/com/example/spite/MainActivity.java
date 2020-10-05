@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         /*If "EndWorkoutToProgress", the selectedFragment shown is Progress*/
         if (source.equals("EndWorkoutToProgress")) {
             selectedFragment = new FragmentProgress();
+            bottomNav.setSelectedItemId(R.id.nav_progress);
             Log.d("TabView", "Stage 2");
         }
 

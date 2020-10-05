@@ -73,13 +73,6 @@ public class FragmentProfile extends Fragment {
             }
         });
 
-        confirmChangeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            changeWorkoutGoal();
-            }
-        });
-
         //Access DB for current user stats
         DocumentReference kDocRef = db.collection("User").document(USER_UID);
         kDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -92,33 +85,6 @@ public class FragmentProfile extends Fragment {
                 currentGoalNumTV.setText(" " + goal + " min ");
             }
         });
-
-    }
-
-    //Method to change the user's weekly workout goal
-    private void changeWorkoutGoal()
-    {
-        String g = userGoalET.getText().toString();
-        goal = Double.parseDouble(g);
-        currentGoalNumTV.setText(goal + " minutes.");
-
-        DocumentReference mDocRef = db.collection("User").document(USER_UID);
-
-        mDocRef
-                .update(GOAL_KEY, goal)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("MAD", "goal successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("MAD", "Error updating goal", e);
-                    }
-                });
-
 
     }
 }
