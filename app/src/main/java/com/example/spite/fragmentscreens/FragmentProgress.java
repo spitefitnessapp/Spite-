@@ -107,8 +107,8 @@ public class FragmentProgress extends Fragment {
                 userSeries.setTitle("Prog");
                 graph.getLegendRenderer().setVisible(true);
                 graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-                graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
-                graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+                //graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
+                //graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
                 graph.getGridLabelRenderer().setGridColor(Color.WHITE);
                 graph.getGridLabelRenderer().setHighlightZeroLines(false);
 
