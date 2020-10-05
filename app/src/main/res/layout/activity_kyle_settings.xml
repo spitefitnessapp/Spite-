@@ -7,88 +7,95 @@
     android:background="#1F1F21"
     tools:context=".KyleSettings">
 
-
     <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/Rename"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/kyleName"
+        <ImageButton
+            android:id="@+id/toSettingsBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="@string/current_antag_name"
-            android:textSize="40dp"
-            android:textColor="@color/colorPrimary"/>
+            android:backgroundTint="#1f1f21"
+            android:backgroundTintMode="src_over"
+            android:padding="10dp"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/Rename"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="26dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/Buttons"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
-
-        <TextView
-            android:id="@+id/kyles"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rename_antagonist"
-            android:textSize="20dp" />
-
-        <EditText
-            android:id="@+id/newKyleName"
-            android:layout_width="0dp"
-            android:autofillHints="New Name"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/rename"
-            android:inputType="textPersonName"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/grey"
-            android:textSize="15sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/Buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="239dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35">
-
-        <Button
-            android:id="@+id/changeKyleBtn"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:text="@string/update"
-            android:textSize="15sp" />
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:padding="18dp"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/chngKyleToMainBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:text="@string/home_button_text"
-            android:textSize="15sp" />
+            <TextView
+                android:id="@+id/renameAntagonistTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp"
+                android:text="Change the name of your antagonist:"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+
+                <TextView
+                    android:id="@+id/kyleName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/current_antag_name"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="25sp" />
+
+                <EditText
+                    android:id="@+id/newKyleName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="@string/current_antag_name"
+                    android:ems="10"
+                    app:backgroundTint="@color/grey"
+                    android:hint="New Antagonist Name"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorAccent"
+                    android:textColorHint="@color/offWhite"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingTop="50dp">
+
+                    <Button
+                        android:id="@+id/changeKyleBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="60dp"
+                        android:paddingRight="60dp"
+                        android:background="@drawable/selector_settings_red"
+                        android:textColor="@color/background"
+                        android:text="@string/update"
+                        android:textAllCaps="false"
+                        android:letterSpacing="0.075"
+                        android:textSize="20sp"
+                        style="?android:attr/borderlessButtonStyle"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

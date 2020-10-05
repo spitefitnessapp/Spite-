@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.google.android.gms.tasks.OnFailureListener;
+
+import android.widget.ImageButton;
 import android.widget.Toast;
 import com.example.spite.dbhandlers.UserDBHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,9 +29,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class NotificationSetting extends AppCompatActivity {
 
-    Button notibtn;
-    Button getReminder;
-    Button goBack;
+    private Button notibtn;
+    private Button getReminder;
+    private ImageButton toSettingsBtn;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseUser user = auth.getCurrentUser();
@@ -49,9 +51,9 @@ public class NotificationSetting extends AppCompatActivity {
         runtimeEnableAutoInit();
         notibtn = findViewById(R.id.turnOnNoti);
         getReminder = findViewById(R.id.turnOnreminder);
-        goBack = findViewById(R.id.goBack);
+        toSettingsBtn = findViewById(R.id.toSettingsBtn);
 
-        //Receive data from firestore
+        //Receive data from Firestore
         DocumentReference DocRef = db.collection("User").document(USER_UID);
         DocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -119,7 +121,7 @@ public class NotificationSetting extends AppCompatActivity {
             }
         });
 
-        goBack.setOnClickListener(new View.OnClickListener() {
+        toSettingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NotificationSetting.this, Settings.class);

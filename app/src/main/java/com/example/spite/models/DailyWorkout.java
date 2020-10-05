@@ -44,6 +44,7 @@ public class DailyWorkout {
     }
 
     public long getDailyTimeLogged(){
+
         return dailyTimeLogged;
     }
 

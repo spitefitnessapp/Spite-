@@ -49,9 +49,13 @@ public class Login extends AppCompatActivity {
     }
 
     private void SignInOption(){
+        /*TODO: We can add the Logo here using .setLogo()
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
-                .setAvailableProviders(signUpOp).setTheme(R.style.LoginTheme).setLogo(R.drawable.spite_logo).build(),REQUEST_CODE);
-        //We can add the Logo here using .setLogo();
+                .setAvailableProviders(signUpOp).setTheme(R.style.LoginTheme).setLogo(R.drawable.ic_baseline_arrow_back_24).build(),REQUEST_CODE);
+         */
+
+        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
+                .setAvailableProviders(signUpOp).build(),REQUEST_CODE);
     }
 
     @Override

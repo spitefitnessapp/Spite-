@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -18,12 +19,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Settings extends AppCompatActivity {
 
-    Button chngEmail = null;
-    //Button chngPassword = null;
-    Button chngKyle = null;
-    Button notificationbtn = null;
-    Button logout = null;
-    Button settingToMainBtn = null;
+    private Button chngEmail;
+    private Button chngKyle;
+    private Button reminderSettings;
+    private Button logout;
+    private ImageButton toMainBtn;
 
     private boolean logInCheck;
     @Override
@@ -35,8 +35,8 @@ public class Settings extends AppCompatActivity {
         // chngPassword = (Button) findViewById(R.id.chngePasswordBtn);
         chngKyle = (Button) findViewById(R.id.kyleSettingsBtn);
         logout = (Button) findViewById(R.id.logoutBtn);
-        settingToMainBtn = (Button) findViewById(R.id.settingToMainBtn);
-        notificationbtn = findViewById(R.id.notiSet);
+        toMainBtn = findViewById(R.id.toMainBtn);
+        reminderSettings = findViewById(R.id.reminderSettings);
         logout.setEnabled(true);
         Intent intent = getIntent();
         //logInCheck = intent.getBooleanExtra("Logged_in",true);
@@ -89,7 +89,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        settingToMainBtn.setOnClickListener(new View.OnClickListener() {
+        toMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Settings.this, MainActivity.class);
@@ -97,7 +97,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        notificationbtn.setOnClickListener(new View.OnClickListener(){
+        reminderSettings.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(Settings.this, NotificationSetting.class);

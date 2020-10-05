@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,8 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class FragmentProfile extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Button profToMainBtn;
-    private Button profToSetBtn;
+    private ImageButton settingsBtn;
     private Button confirmChangeBtn;
     private TextView userNameTV;
     private TextView goalTV;
@@ -56,8 +56,7 @@ public class FragmentProfile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        profToMainBtn = requireView().findViewById(R.id.profileToMainBtn);
-        profToSetBtn = requireView().findViewById(R.id.profToSettBtn);
+        settingsBtn = requireView().findViewById(R.id.settingsBtn);
         confirmChangeBtn = requireView().findViewById(R.id.confirmGoalChangeBtn);
         userGoalET = requireView().findViewById(R.id.userGoalTimeView);
         userNameTV = requireView().findViewById(R.id.userName);
@@ -65,15 +64,7 @@ public class FragmentProfile extends Fragment {
         newGoalTV = requireView().findViewById(R.id.newGoalTV);
         currentGoalNumTV = requireView().findViewById(R.id.currentGoalTV);
 
-        profToMainBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                FragmentProfile.this.startActivity(intent);
-            }
-        });
-
-        profToSetBtn.setOnClickListener(new View.OnClickListener() {
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), Settings.class);

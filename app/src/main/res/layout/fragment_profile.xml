@@ -5,27 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1F1F21"
+    android:backgroundTint="#1F1F21"
     tools:context=".fragmentscreens.FragmentProfile">
-
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="UserName"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="413dp"
-        android:layout_height="67dp"
-        android:layout_marginBottom="316dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/profileToMainBtn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="25dp"
+        android:paddingTop="25dp"
+        android:paddingEnd="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/settingsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="#00FFFFFF"
+            android:src="@drawable/ic_settings"
+            app:tint="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.05"
+            android:text="YOU"
+            android:textAllCaps="true"
+            android:textColor="#02caa2"
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/workoutGoalTV"
@@ -35,73 +48,44 @@
 
         <TextView
             android:id="@+id/currentGoalTV"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:text="TextView" />
 
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/profToSettBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_weight="1"
-        android:background="@color/background"
-        android:text="@string/settings"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/profileToMainBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.901" />
-
-    <Button
-        android:id="@+id/profileToMainBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="168dp"
-        android:text="@string/home_button_text"
-        android:background="@color/background"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="51dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/profToSettBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        <TextView
-            android:id="@+id/newGoalTV"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_weight="0"
-            android:text="@string/set_new_goal" />
-
-        <EditText
-            android:id="@+id/userGoalTimeView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="10"
-            android:ems="10"
-            android:inputType="time"/>
-
-        <Button
-            android:id="@+id/confirmGoalChangeBtn"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:textSize="15dp"
-            android:background="@color/background"
-            android:text="confirm" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/newGoalTV"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_weight="0"
+                android:text="@string/set_new_goal" />
+
+            <EditText
+                android:id="@+id/userGoalTimeView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="10"
+                android:inputType="time"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF" />
+
+            <Button
+                android:id="@+id/confirmGoalChangeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@color/background"
+                android:text="confirm"
+                android:textSize="15dp" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
