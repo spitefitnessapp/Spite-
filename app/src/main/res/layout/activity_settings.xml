@@ -37,10 +37,10 @@
                 android:id="@+id/setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:background="#38383C"
                 android:letterSpacing="0.075"
-                android:paddingLeft="110dp"
+
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="@string/settings_title"
@@ -84,8 +84,9 @@
                 android:paddingRight="18dp"
                 android:background="@drawable/selector_settings_grey"
                 android:text="@string/change_email"
+                android:textAllCaps="false"
                 android:textAlignment="viewStart"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 style="?android:attr/borderlessButtonStyle"/>
 
             <Button
@@ -96,8 +97,9 @@
                 android:paddingRight="18dp"
                 android:background="@drawable/selector_settings_grey"
                 android:text="@string/change_password"
+                android:textAllCaps="false"
                 android:textAlignment="viewStart"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 style="?android:attr/borderlessButtonStyle"/>
 
             <Button
@@ -108,8 +110,9 @@
                 android:paddingRight="18dp"
                 android:background="@drawable/selector_settings_grey"
                 android:text="@string/logout"
+                android:textAllCaps="false"
                 android:textAlignment="viewStart"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 style="?android:attr/borderlessButtonStyle"/>
 
             <TextView
@@ -143,8 +146,9 @@
                 android:paddingRight="18dp"
                 android:background="@drawable/selector_settings_grey"
                 android:text="Enable/Disable Reminders"
+                android:textAllCaps="false"
                 android:textAlignment="viewStart"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 style="?android:attr/borderlessButtonStyle"/>
 
             <TextView
@@ -178,8 +182,9 @@
                 android:paddingRight="18dp"
                 android:background="@drawable/selector_settings_grey"
                 android:text="Rename Your Antagonist"
+                android:textAllCaps="false"
                 android:textAlignment="viewStart"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 style="?android:attr/borderlessButtonStyle"/>
         </LinearLayout>
 

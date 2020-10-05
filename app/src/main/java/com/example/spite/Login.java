@@ -55,7 +55,7 @@ public class Login extends AppCompatActivity {
          */
 
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
-                .setAvailableProviders(signUpOp).build(),REQUEST_CODE);
+                .setAvailableProviders(signUpOp).setLogo(R.drawable.spite_logo_1).build(),REQUEST_CODE);
     }
 
     @Override
