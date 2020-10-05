@@ -23,7 +23,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/toMainBtn"
+                android:id="@+id/toProfileBtn"
                 android:layout_width="3dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

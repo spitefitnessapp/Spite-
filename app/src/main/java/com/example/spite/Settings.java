@@ -24,7 +24,7 @@ public class Settings extends AppCompatActivity {
     private Button chngKyle;
     private Button reminderSettings;
     private Button logout;
-    private ImageButton toMainBtn;
+    private ImageButton toProfileBtn;
 
     private boolean logInCheck;
     @Override
@@ -36,7 +36,7 @@ public class Settings extends AppCompatActivity {
         chngWorkoutGoal = (Button) findViewById(R.id.chngWorkoutGoal);
         chngKyle = (Button) findViewById(R.id.kyleSettingsBtn);
         logout = (Button) findViewById(R.id.logoutBtn);
-        toMainBtn = findViewById(R.id.toMainBtn);
+        toProfileBtn = findViewById(R.id.toProfileBtn);
         reminderSettings = findViewById(R.id.reminderSettings);
         logout.setEnabled(true);
         Intent intent = getIntent();
@@ -89,10 +89,11 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        toMainBtn.setOnClickListener(new View.OnClickListener() {
+        toProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Settings.this, MainActivity.class);
+                intent.putExtra("TabView", "SettingsToProfile");
                 Settings.this.startActivity(intent);
             }
         });

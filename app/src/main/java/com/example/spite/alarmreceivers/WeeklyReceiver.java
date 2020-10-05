@@ -50,6 +50,7 @@ public class WeeklyReceiver extends BroadcastReceiver {
         }
         else{
             dbWorkoutHandler.createWeeklyWorkout(uid);
+            dbWorkoutHandler.createDailyWorkout(uid);
             resetKyle();
         }
     }

@@ -102,7 +102,13 @@ public class MainActivity extends AppCompatActivity {
         if (source.equals("EndWorkoutToProgress")) {
             selectedFragment = new FragmentProgress();
             bottomNav.setSelectedItemId(R.id.nav_progress);
-            Log.d("TabView", "Stage 2");
+            Log.d("TabView: ", "EndWorkoutToProgress");
+        }
+
+        if (source.equals("SettingsToProfile")) {
+            selectedFragment = new FragmentProfile();
+            bottomNav.setSelectedItemId(R.id.nav_profile);
+            Log.d("TabView: ", "SettingsToProfile");
         }
 
         /*Get selectedFragment and display selectedFragment in the switch*/
@@ -131,11 +137,6 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 1);
-
-        /*Check we aren't setting it in the past which would trigger it to fire instantly*/
-        if(calendar.getTimeInMillis() < System.currentTimeMillis()) {
-            calendar.add(Calendar.DAY_OF_YEAR, 7);
-        }
 
         /*Set alarmManager to repeat the alarm every 7 days on the Monday*/
         alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), android.app.AlarmManager.INTERVAL_DAY * 7, pendingIntent);

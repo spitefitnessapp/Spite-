@@ -7,12 +7,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DailyWorkout {
+    private String dailyWorkoutDocID;
     private String userID;
     private String day;
     private Date date;
     private long dailyTimeLogged;
-    private static final long maxDailyTime = 86400000; /*Milliseconds in one day*/
-    private ArrayList<WorkoutLog> workoutLogs;
 
     public DailyWorkout(){
         //Public no-arg constructor needed
@@ -23,6 +22,7 @@ public class DailyWorkout {
         this.dailyTimeLogged = 0;
         setDate();
         setDay();
+        this.dailyWorkoutDocID = getDateString() + day;
     }
 
     public String getUserID(){
@@ -35,6 +35,10 @@ public class DailyWorkout {
 
     public Date getDate(){
         return date;
+    }
+
+    public String getDailyWorkoutID(){
+        return dailyWorkoutDocID;
     }
 
     public String getDateString(){
@@ -56,13 +60,5 @@ public class DailyWorkout {
     private void setDate(){
         Calendar cal = Calendar.getInstance();
         this.date = cal.getTime();
-    }
-
-    public void addWorkout(WorkoutLog newWorkout){
-        //If newWorkout is from the same username and is after the set date time.
-        if(dailyTimeLogged < maxDailyTime) {
-            workoutLogs.add(newWorkout);
-            this.dailyTimeLogged += newWorkout.getTimeLogged();
-        }
     }
 }
