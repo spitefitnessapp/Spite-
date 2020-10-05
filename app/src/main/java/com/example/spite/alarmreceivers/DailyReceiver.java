@@ -20,8 +20,9 @@ public class DailyReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        /*dbWorkoutHandler.createDailyWorkout(uid);*/
+        dbWorkoutHandler.createDailyWorkout(uid);
 
+        /*
         boolean alarmUp = (PendingIntent.getBroadcast(context, 1,
                 new Intent("com.my.package.MY_UNIQUE_ACTION"),
                 PendingIntent.FLAG_NO_CREATE) != null);
@@ -32,6 +33,6 @@ public class DailyReceiver extends BroadcastReceiver {
         }
         else{
             dbWorkoutHandler.createDailyWorkout(uid);
-        }
+        }*/
     }
 }

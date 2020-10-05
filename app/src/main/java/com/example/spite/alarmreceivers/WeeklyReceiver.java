@@ -37,9 +37,11 @@ public class WeeklyReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        /*dbWorkoutHandler.createWeeklyWorkout(uid);
-        resetKyle();*/
+        dbWorkoutHandler.createWeeklyWorkout(uid);
+        dbWorkoutHandler.createDailyWorkout(uid);
+        resetKyle();
 
+        /*
         boolean alarmUp = (PendingIntent.getBroadcast(context, 0,
                 new Intent("com.my.package.MY_UNIQUE_ACTION"),
                 PendingIntent.FLAG_NO_CREATE) != null);
@@ -52,7 +54,7 @@ public class WeeklyReceiver extends BroadcastReceiver {
             dbWorkoutHandler.createWeeklyWorkout(uid);
             dbWorkoutHandler.createDailyWorkout(uid);
             resetKyle();
-        }
+        }*/
     }
 
     /*TODO: Ask Rogue about this code*/

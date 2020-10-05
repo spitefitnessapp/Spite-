@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.SECOND, 1);
 
         /*Set alarmManager to repeat the alarm every 7 days on the Monday*/
-        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), android.app.AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), android.app.AlarmManager.INTERVAL_DAY * 7, pendingIntent);
         Log.d("Weekly Alarm: ", "Succeeded");
     }
 
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.SECOND, 0);
 
         /*Set alarmManager to repeat the alarm every 7 days on the Monday*/
-        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), android.app.AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), android.app.AlarmManager.INTERVAL_DAY, pendingIntent);
         Log.d("Daily Alarm: ", "Succeeded");
     }
 }

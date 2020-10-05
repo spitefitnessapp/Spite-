@@ -22,8 +22,11 @@ public class DailyWorkout {
         this.dailyTimeLogged = 0;
         setDate();
         setDay();
+
         this.dailyWorkoutDocID = getDateString() + day;
     }
+
+    public String getDailyWorkoutID() {return dailyWorkoutID;}
 
     public String getUserID(){
         return userID;

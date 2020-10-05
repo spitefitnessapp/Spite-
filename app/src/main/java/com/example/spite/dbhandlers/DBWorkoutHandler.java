@@ -17,6 +17,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,12 +43,24 @@ public class DBWorkoutHandler {
     private DocumentReference workoutLogRef;
     private Map<String, Object> saveWorkoutLog;
 
+    public static boolean isDateInCurrentWeek(Date date) {
+        Calendar currentCalendar = Calendar.getInstance();
+        int week = currentCalendar.get(Calendar.WEEK_OF_YEAR);
+        int year = currentCalendar.get(Calendar.YEAR);
+        Calendar targetCalendar = Calendar.getInstance();
+
+        targetCalendar.setTime(date);
+        int targetWeek = targetCalendar.get(Calendar.WEEK_OF_YEAR);
+        int targetYear = targetCalendar.get(Calendar.YEAR);
+        return week == targetWeek && year == targetYear;
+    }
 
     /*Create document within the WeeklyWorkout collection for the current week*/
     public void createWeeklyWorkout(final String userID){
+
         /*Create instance of WeeklyWorkout model*/
         weeklyWorkout = new WeeklyWorkout(userID);
-
+      
         /*Create field variables in the document*/
         saveWeeklyWorkout = new HashMap<>();
         saveWeeklyWorkout.put(DATE_KEY, weeklyWorkout.getDate());
@@ -102,7 +116,6 @@ public class DBWorkoutHandler {
                         }
 
 
-
                             /*Create the DailyWorkout within the WeeklyWorkout doc with recentWeekDate string*/
                         /*Create instance of DailyWorkout model*/
                         dailyWorkout = new DailyWorkout(userID);
@@ -116,7 +129,6 @@ public class DBWorkoutHandler {
                         saveDailyWorkout.put(DAILY_TIME_LOGGED_KEY, dailyWorkout.getDailyTimeLogged());
 
                         /*Add the document within DailyWorkout collection*/
-
 
                         dailyWorkoutRef = db
                                 .collection("User").document(userID)

@@ -25,6 +25,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -96,13 +97,20 @@ public class FragmentKyleProgress extends Fragment {
                         kyleGraph.addSeries(kyleGoal);
 
                         final LineGraphSeries<DataPoint> kyleSeries = new LineGraphSeries<>();
-                        kyleSeries.setColor(Color.RED);
                         kyleSeries.setDrawDataPoints(true);
                         kyleSeries.setDataPointsRadius(10);
 
-                        kyleGoal.setColor(Color.GREEN);
+                        //Aesthetics
+                        kyleGoal.setColor(Color.GRAY);
+                        kyleGoal.setTitle("Goal");
+                        kyleSeries.setColor(Color.argb(255, 245, 58, 80));
+                        kyleSeries.setTitle("Prog");
+                        kyleGraph.getLegendRenderer().setVisible(true);
+                        kyleGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+                        kyleGraph.getGridLabelRenderer().setVerticalLabelsVisible(false);
+                        kyleGraph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
 
-
+                        //getting current date for progress
                         Calendar cal = Calendar.getInstance();
                         cal.add(Calendar.DATE, -6);
                         Date date = cal.getTime();
