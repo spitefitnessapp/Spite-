@@ -109,6 +109,25 @@ public class FragmentProgress extends Fragment {
                 graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
                 graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
                 graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+                graph.getGridLabelRenderer().setGridColor(Color.WHITE);
+                graph.getGridLabelRenderer().setHighlightZeroLines(false);
+
+                //Below two lines change the label color
+                graph.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
+                graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.WHITE);
+                graph.getGridLabelRenderer().reloadStyles();
+
+
+                //sets X axis label
+                graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
+                    @Override
+                    public String formatLabel( double value, boolean isValueX ){
+                        if(isValueX){
+                            return "Day " + super.formatLabel(value, isValueX);
+                        }
+                        return super.formatLabel(value, isValueX);
+                    }
+                });
 
                 //getting current date for progress
                 Calendar cal = Calendar.getInstance();
