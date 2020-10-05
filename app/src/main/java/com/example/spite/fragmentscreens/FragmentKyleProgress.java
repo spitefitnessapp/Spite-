@@ -107,8 +107,26 @@ public class FragmentKyleProgress extends Fragment {
                         kyleSeries.setTitle("Prog");
                         kyleGraph.getLegendRenderer().setVisible(true);
                         kyleGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-                        kyleGraph.getGridLabelRenderer().setVerticalLabelsVisible(false);
-                        kyleGraph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+                        //kyleGraph.getGridLabelRenderer().setVerticalLabelsVisible(false);
+                        //kyleGraph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+                        kyleGraph.getGridLabelRenderer().setGridColor(Color.WHITE);
+                        kyleGraph.getGridLabelRenderer().setHighlightZeroLines(false);
+
+                        //Below two lines change the label color
+                        kyleGraph.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
+                        kyleGraph.getGridLabelRenderer().setHorizontalLabelsColor(Color.WHITE);
+                        kyleGraph.getGridLabelRenderer().reloadStyles();
+
+                        //sets label on X axis
+                        kyleGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
+                            @Override
+                            public String formatLabel( double value, boolean isValueX ){
+                                if(isValueX){
+                                    return "Day " + super.formatLabel(value, isValueX);
+                                }
+                                return super.formatLabel(value, isValueX);
+                            }
+                        });
 
                         //getting current date for progress
                         Calendar cal = Calendar.getInstance();
