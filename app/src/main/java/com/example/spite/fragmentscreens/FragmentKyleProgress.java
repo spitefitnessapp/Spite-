@@ -28,6 +28,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.DefaultLabelFormatter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
