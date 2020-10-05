@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EndWorkout">
+    tools:context=".EndWorkout"
+    android:background="#1F1F21">
 
 
     <Button
         android:id="@+id/endToProgressBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/view_progress"
+        android:background="#1F1F21"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,11 +23,13 @@
 
     <Button
         android:id="@+id/endToMainBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="88dp"
         android:text="@string/home_button_text"
+        android:background="#1F1F21"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -36,7 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:text="@string/logged_time"
-        android:textSize="25sp"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
+        android:background="#1F1F21"
         app:layout_constraintBottom_toTopOf="@+id/UserProgressEndWorkout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.123"
@@ -56,15 +62,13 @@
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toEndOf="@+id/endLoggedTitle"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.732" />
+        app:layout_constraintVertical_bias="0.750" />
 
     <ProgressBar
         android:id="@+id/UserProgressEndWorkout"
         style="@style/CircularDeterminateProgressBarUser"
         android:layout_width="254dp"
         android:layout_height="263dp"
-
-
         android:layout_marginBottom="48dp"
         app:layout_constraintBottom_toTopOf="@+id/endToMainBtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,10 +84,10 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/endLoggedTime"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.455"
         app:layout_constraintStart_toEndOf="@+id/endGoalTitle"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.47" />
+        app:layout_constraintVertical_bias="0.515" />
 
     <TextView
         android:id="@+id/endGoalTitle"
@@ -91,7 +95,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:text="@string/workout_goal"
-        android:textSize="25sp"
+        android:textSize="20sp"
+        android:textColor="@color/green"
         app:layout_constraintBottom_toTopOf="@+id/endLoggedTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.126"

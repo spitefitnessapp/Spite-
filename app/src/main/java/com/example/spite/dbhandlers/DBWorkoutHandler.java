@@ -60,34 +60,31 @@ public class DBWorkoutHandler {
 
         /*Create instance of WeeklyWorkout model*/
         weeklyWorkout = new WeeklyWorkout(userID);
-        Date weeklyWorkoutDate = weeklyWorkout.getDate();
+      
+        /*Create field variables in the document*/
+        saveWeeklyWorkout = new HashMap<>();
+        saveWeeklyWorkout.put(DATE_KEY, weeklyWorkout.getDate());
+        saveWeeklyWorkout.put(USERNAME_KEY, weeklyWorkout.getUserID());
 
-        if(isDateInCurrentWeek(weeklyWorkoutDate) == false) {
-            /*Create field variables in the document*/
-            saveWeeklyWorkout = new HashMap<>();
-            saveWeeklyWorkout.put(DATE_KEY, weeklyWorkout.getDate());
-            saveWeeklyWorkout.put(USERNAME_KEY, weeklyWorkout.getUserID());
+        /*Add the document within WeeklyWorkout collection*/
+        weeklyWorkoutRef = db
+                .collection("User").document(userID)
+                .collection("WeeklyWorkout").document(weeklyWorkout.getDateString());
 
-            /*Add the document within WeeklyWorkout collection*/
-            weeklyWorkoutRef = db
-                    .collection("User").document(userID)
-                    .collection("WeeklyWorkout").document(weeklyWorkout.getDateString());
-
-            /*Testing to see whether method has succeeded*/
-            weeklyWorkoutRef.set(saveWeeklyWorkout)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d("Weekly Workout Ref:", "Successfully added weekly workout");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("Weekly Workout Ref:", e.toString());
-                        }
-                    });
-        }
+        /*Testing to see whether method has succeeded*/
+        weeklyWorkoutRef.set(saveWeeklyWorkout)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Weekly Workout Ref:", "Successfully added weekly workout");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Weekly Workout Ref:", e.toString());
+                    }
+                });
     }
 
 
@@ -213,16 +210,14 @@ public class DBWorkoutHandler {
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                     @Override
                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                        String recentDay = "";
+                                        String dailyWorkoutID = "";
                                         long dailyTimeLogged = 0;
 
                                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                                             DailyWorkout recentDayObject = documentSnapshot.toObject(DailyWorkout.class);
 
-                                            String date = recentDayObject.getDateString() + "-" + recentDayObject.getDay();
-                                            long time = recentDayObject.getDailyTimeLogged();
-                                            recentDay = date;
-                                            dailyTimeLogged = time;
+                                            dailyWorkoutID = recentDayObject.getDailyWorkoutID();
+                                            dailyTimeLogged = recentDayObject.getDailyTimeLogged();
                                         }
 
                                         /*Create the WorkoutLog within the DailyWorkout doc with recentDay string*/
@@ -239,11 +234,11 @@ public class DBWorkoutHandler {
                                         workoutLogRef = db
                                                 .collection("User").document(userID)
                                                 .collection("WeeklyWorkout").document(finalRecentWeekDate)
-                                                .collection("DailyWorkout").document(recentDay)
+                                                .collection("DailyWorkout").document(dailyWorkoutID)
                                                 .collection("WorkoutLog").document(workoutLog.getTime());
 
                                         /*Testing to see whether method has succeeded*/
-                                        final String finalRecentDay = recentDay;
+                                        final String finalDailyWorkoutID = dailyWorkoutID;
                                         final long finalDailyTimeLogged = dailyTimeLogged;
                                         workoutLogRef.set(saveWorkoutLog)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -251,7 +246,7 @@ public class DBWorkoutHandler {
                                                     public void onSuccess(Void aVoid) {
                                                         Log.d("Workout Log Ref:", "Successfully added workout log");
                                                         /*Updating DailyWorkout's dailyTimeLogged after the successful creation of a WorkoutLog*/
-                                                        updateDailyTimeLogged(userID, finalRecentWeekDate, finalRecentDay, finalDailyTimeLogged, timeLogged);
+                                                        updateDailyTimeLogged(userID, finalRecentWeekDate, finalDailyWorkoutID, finalDailyTimeLogged, timeLogged);
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {

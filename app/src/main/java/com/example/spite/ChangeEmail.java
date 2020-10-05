@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ChangeEmail extends AppCompatActivity {
 
-    Button chngEMtoMainBtn = null;
+    private ImageButton toSettingsBtn;
     Button chngEmailBtn = null;
     EditText newEmailET = null;
     EditText currentEmail = null;
@@ -42,7 +43,7 @@ public class ChangeEmail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_email);
 
-        chngEMtoMainBtn = (Button) findViewById(R.id.chngEMtoMainBtn);
+        toSettingsBtn = findViewById(R.id.toSettingsBtn);
         chngEmailBtn = (Button) findViewById(R.id.changeEmail);
         currentEmail = (EditText) findViewById(R.id.currentEmail);
         newEmailET = (EditText) findViewById(R.id.newEmail);
@@ -69,6 +70,8 @@ public class ChangeEmail extends AppCompatActivity {
                     if (newEmail.equals(confirmEmail))
                     {
                         changeEmail(confirmEmail);
+                        Intent intent = new Intent(ChangeEmail.this, Settings.class);
+                        ChangeEmail.this.startActivity(intent);
                     }
                     else
                     {
@@ -85,10 +88,10 @@ public class ChangeEmail extends AppCompatActivity {
             }
         });
 
-        chngEMtoMainBtn.setOnClickListener(new View.OnClickListener() {
+        toSettingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChangeEmail.this, MainActivity.class);
+                Intent intent = new Intent(ChangeEmail.this, Settings.class);
                 ChangeEmail.this.startActivity(intent);
 
             }

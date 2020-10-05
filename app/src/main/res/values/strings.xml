@@ -30,7 +30,7 @@
     <string name="change_password">Change Password</string>
     <string name="change_email">Change Email</string>
     <string name="logout">Logout</string>
-    <string name="settings_title">Settings: (fragment?)</string>
+    <string name="settings_title">Settings</string>
     <string name="view_progress">View Progress</string>
     <string name="check_kyle_prog_button">Check On Kyle</string>
     <string name="workout_in_progress">Workout in Progress</string>
@@ -49,6 +49,7 @@
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="notification_settings">Notification Settings</string>
     <string name="you">You</string>
+    <string name="enter_your_email">Enter your Email</string>
 
 
 </resources>

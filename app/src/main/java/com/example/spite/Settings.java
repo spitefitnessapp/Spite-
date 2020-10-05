@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -18,12 +19,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Settings extends AppCompatActivity {
 
-    Button chngEmail = null;
-    //Button chngPassword = null;
-    Button chngKyle = null;
-    Button notificationbtn = null;
-    Button logout = null;
-    Button settingToMainBtn = null;
+    private Button chngEmail;
+    private Button chngWorkoutGoal;
+    private Button chngKyle;
+    private Button reminderSettings;
+    private Button logout;
+    private ImageButton toProfileBtn;
 
     private boolean logInCheck;
     @Override
@@ -32,11 +33,11 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         chngEmail = findViewById(R.id.chngEmailBtn);
-        // chngPassword = (Button) findViewById(R.id.chngePasswordBtn);
+        chngWorkoutGoal = (Button) findViewById(R.id.chngWorkoutGoal);
         chngKyle = (Button) findViewById(R.id.kyleSettingsBtn);
         logout = (Button) findViewById(R.id.logoutBtn);
-        settingToMainBtn = (Button) findViewById(R.id.settingToMainBtn);
-        notificationbtn = findViewById(R.id.notiSet);
+        toProfileBtn = findViewById(R.id.toProfileBtn);
+        reminderSettings = findViewById(R.id.reminderSettings);
         logout.setEnabled(true);
         Intent intent = getIntent();
         //logInCheck = intent.getBooleanExtra("Logged_in",true);
@@ -72,14 +73,13 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-       /* chngPassword.setOnClickListener(new View.OnClickListener() {
+        chngWorkoutGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Settings.this, ChangePassword.class);
+                Intent intent = new Intent(Settings.this, ChangeWorkoutGoal.class);
                 Settings.this.startActivity(intent);
             }
         });
-        */
 
         chngKyle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,15 +89,16 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        settingToMainBtn.setOnClickListener(new View.OnClickListener() {
+        toProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Settings.this, MainActivity.class);
+                intent.putExtra("TabView", "SettingsToProfile");
                 Settings.this.startActivity(intent);
             }
         });
 
-        notificationbtn.setOnClickListener(new View.OnClickListener(){
+        reminderSettings.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(Settings.this, NotificationSetting.class);
