@@ -49,13 +49,13 @@ public class Login extends AppCompatActivity {
     }
 
     private void SignInOption(){
-        /*TODO: We can add the Logo here using .setLogo()
+        /*TODO: I had issues with this code*/
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
-                .setAvailableProviders(signUpOp).setTheme(R.style.LoginTheme).setLogo(R.drawable.ic_baseline_arrow_back_24).build(),REQUEST_CODE);
-         */
+                .setAvailableProviders(signUpOp).setTheme(R.style.LoginTheme).setLogo(R.drawable.spite_logo).build(),REQUEST_CODE);
 
+        /*Used this code instead to make my stuff work
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
-                .setAvailableProviders(signUpOp).setLogo(R.drawable.spite_logo).build(),REQUEST_CODE);
+                .setAvailableProviders(signUpOp).setLogo(R.drawable.spite_logo).build(),REQUEST_CODE);*/
     }
 
     @Override
