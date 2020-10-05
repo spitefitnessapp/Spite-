@@ -54,7 +54,7 @@ public class FragmentProgress extends Fragment {
     private String USER_UID = user.getUid();
     private final String USERNAME_KEY = "username";
     private final String GOAL_KEY = "goal";
-    private final String PROGRESS_KEY = "timeLogged";
+    private final String PROGRESS_KEY = "dailyTimeLogged";
 
     private double goal = 0.0;
 
@@ -107,8 +107,27 @@ public class FragmentProgress extends Fragment {
                 userSeries.setTitle("Prog");
                 graph.getLegendRenderer().setVisible(true);
                 graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-                graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
-                graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+                //graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
+                //graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+                graph.getGridLabelRenderer().setGridColor(Color.WHITE);
+                graph.getGridLabelRenderer().setHighlightZeroLines(false);
+
+                //Below two lines change the label color
+                graph.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
+                graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.WHITE);
+                graph.getGridLabelRenderer().reloadStyles();
+
+
+                //sets X axis label
+                graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
+                    @Override
+                    public String formatLabel( double value, boolean isValueX ){
+                        if(isValueX){
+                            return "Day " + super.formatLabel(value, isValueX);
+                        }
+                        return super.formatLabel(value, isValueX);
+                    }
+                });
 
                 //getting current date for progress
                 Calendar cal = Calendar.getInstance();
