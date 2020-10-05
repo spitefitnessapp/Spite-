@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class Settings extends AppCompatActivity {
 
     private Button chngEmail;
+    private Button chngWorkoutGoal;
     private Button chngKyle;
     private Button reminderSettings;
     private Button logout;
@@ -32,7 +33,7 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         chngEmail = findViewById(R.id.chngEmailBtn);
-        // chngPassword = (Button) findViewById(R.id.chngePasswordBtn);
+        chngWorkoutGoal = (Button) findViewById(R.id.chngWorkoutGoal);
         chngKyle = (Button) findViewById(R.id.kyleSettingsBtn);
         logout = (Button) findViewById(R.id.logoutBtn);
         toMainBtn = findViewById(R.id.toMainBtn);
@@ -72,14 +73,13 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-       /* chngPassword.setOnClickListener(new View.OnClickListener() {
+        chngWorkoutGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Settings.this, ChangePassword.class);
+                Intent intent = new Intent(Settings.this, ChangeWorkoutGoal.class);
                 Settings.this.startActivity(intent);
             }
         });
-        */
 
         chngKyle.setOnClickListener(new View.OnClickListener() {
             @Override

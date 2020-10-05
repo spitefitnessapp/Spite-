@@ -90,13 +90,13 @@
                 style="?android:attr/borderlessButtonStyle"/>
 
             <Button
-                android:id="@+id/chngePasswordBtn"
+                android:id="@+id/chngWorkoutGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="18dp"
                 android:paddingRight="18dp"
                 android:background="@drawable/selector_settings_grey"
-                android:text="@string/change_password"
+                android:text="Change Workout Goal"
                 android:textAllCaps="false"
                 android:textAlignment="viewStart"
                 android:textSize="16sp"

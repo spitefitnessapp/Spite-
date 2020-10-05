@@ -35,6 +35,7 @@ public class FragmentProfile extends Fragment {
     private TextView goalTV;
     private TextView newGoalTV ;
     private TextView currentGoalNumTV;
+    private TextView timeFrame;
     private EditText userGoalET; //cannot use decimal point.
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -43,7 +44,7 @@ public class FragmentProfile extends Fragment {
     private final String USERNAME_KEY = "username";
 
     private double goal = 0.0;
-    private String goalTimeFrame = "per week.";
+    private String goalTimeFrame = "Daily Workout Goal";
 
     //Display fragment with layout res file fragment_profile
     @Nullable
@@ -60,9 +61,11 @@ public class FragmentProfile extends Fragment {
         confirmChangeBtn = requireView().findViewById(R.id.confirmGoalChangeBtn);
         userGoalET = requireView().findViewById(R.id.userGoalTimeView);
         userNameTV = requireView().findViewById(R.id.userName);
-        goalTV = requireView().findViewById(R.id.workoutGoalTV);
+        //goalTV = requireView().findViewById(R.id.workoutGoalTV);
         newGoalTV = requireView().findViewById(R.id.newGoalTV);
+        timeFrame = requireView().findViewById(R.id.timeFrame);
         currentGoalNumTV = requireView().findViewById(R.id.currentGoalTV);
+        timeFrame.setText(goalTimeFrame);
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +91,7 @@ public class FragmentProfile extends Fragment {
                 String username = documentSnapshot.getString(USERNAME_KEY);
                 double goal = documentSnapshot.getDouble(GOAL_KEY);
                 userNameTV.setText(username);
-                currentGoalNumTV.setText(" " + goal + " minutes " + goalTimeFrame);
+                currentGoalNumTV.setText(" " + goal + " min ");
             }
         });
 

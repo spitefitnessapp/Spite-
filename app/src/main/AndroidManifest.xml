@@ -32,7 +32,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".EndWorkout" />
         <activity android:name=".KyleSettings" />
-        <activity android:name=".ChangePassword" />
+        <activity android:name=".ChangeWorkoutGoal" />
         <activity android:name=".ChangeEmail" />
         <activity android:name=".Settings" />
         <activity android:name=".CurrentWorkout" />
