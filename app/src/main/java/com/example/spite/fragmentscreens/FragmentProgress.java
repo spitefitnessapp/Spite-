@@ -54,7 +54,7 @@ public class FragmentProgress extends Fragment {
     private String USER_UID = user.getUid();
     private final String USERNAME_KEY = "username";
     private final String GOAL_KEY = "goal";
-    private final String PROGRESS_KEY = "timeLogged";
+    private final String PROGRESS_KEY = "dailyTimeLogged";
 
     private double goal = 0.0;
 
