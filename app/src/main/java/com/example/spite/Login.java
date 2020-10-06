@@ -74,10 +74,9 @@ public class Login extends AppCompatActivity {
                 else
                 {
                     Toast.makeText(this, "Welcome back to Spite!", Toast.LENGTH_SHORT).show();
-
+                    startActivity(new Intent(this, MainActivity.class));
                 }
 
-                startActivity(new Intent(this, MainActivity.class));
                 this.finish();
 
             } else {
