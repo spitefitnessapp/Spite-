@@ -27,16 +27,26 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".NotificationSetting"/>
-        <activity android:name=".Register" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".EndWorkout" />
-        <activity android:name=".KyleSettings" />
-        <activity android:name=".ChangePassword" />
-        <activity android:name=".ChangeEmail" />
-        <activity android:name=".Settings" />
-        <activity android:name=".CurrentWorkout" />
-        <activity android:name=".Login">
+        <activity android:name=".NotificationSetting"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Register"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".EndWorkout"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".KyleSettings"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ChangePassword"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ChangeEmail"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Settings"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CurrentWorkout"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
