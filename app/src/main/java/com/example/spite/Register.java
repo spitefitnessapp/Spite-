@@ -71,9 +71,6 @@ public class Register extends AppCompatActivity {
         User use = new User(USER_UID, username, user.getEmail(), "password", goal, kyleName, "user01");
         dbh.addUser(db, use);
 
-        dbWorkoutHandler.createWeeklyWorkout(USER_UID);
-        dbWorkoutHandler.createDailyWorkout(USER_UID);
-
         CollectionReference userCR = db.collection("User");
         userCR.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

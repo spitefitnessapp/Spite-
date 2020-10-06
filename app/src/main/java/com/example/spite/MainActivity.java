@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
         /*Get the time from one week from now on a Monday 12:00AM to turn into milliseconds*/
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 1);
