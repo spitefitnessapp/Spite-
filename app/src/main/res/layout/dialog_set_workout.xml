@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#38383C"
+        android:background="@color/offWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -28,6 +28,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/set_workout_time"
+            android:textColor="@color/background"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -40,13 +41,13 @@
                 android:id="@+id/setWorkoutHr"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@color/offWhite" />
+                android:background="@color/offWhite" />
 
             <NumberPicker
                 android:id="@+id/setWorkoutMin"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@color/offWhite" />
+                android:background="@color/offWhite" />
 
         </LinearLayout>
 
