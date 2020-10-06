@@ -36,7 +36,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.jjoe64.graphview.DefaultLabelFormatter;
+import com.jjoe64.graphview.LabelFormatter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -131,261 +131,291 @@ public class FragmentProgress extends Fragment {
                     }
                 });
 
-                //getting current date for progress
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, -6);
-                Date date = cal.getTime();
-                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                String strDate = dateFormat.format(date);
-                DateFormat dayFormat = new SimpleDateFormat("EEE");
-                String day = dayFormat.format(date);
-                final String title = strDate+day;
-                Log.d("MAD", "Title -6 passed in is: " + title);
+
+                /*Query the database to find the most recently created WeeklyWorkout doc for the specified user*/
+                Task<QuerySnapshot> mostRecentWeek = db.collection("User").document(USER_UID)
+                        .collection("WeeklyWorkout")
+                        .orderBy("date", Query.Direction.DESCENDING)
+                        .limit(1)
+                        .get()
+
+                        /*On success, we store the date of the most recent week and proceed to find the most recent DailyWorkout doc*/
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                String recentWeekDate = "";
+
+                                /*Go through the queries to retrieve the Date string of the most recent week*/
+                                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                    WeeklyWorkout recentWeek = documentSnapshot.toObject(WeeklyWorkout.class);
+
+                                    final String weekDate = recentWeek.getDateString();
 
 
-                DocumentReference docRef6 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document("21-09-2020")
-                        .collection("DailyWorkout").document(title);
-                docRef6.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                Log.d("MAD", "docRef6 docSnap data");
-                                double progress = document.getDouble(PROGRESS_KEY);
-                                Log.d("MAD", "Progress is: " + progress );
-                                userSeries.appendData( new DataPoint( 0, progress ), true, 7, false);
-
-                            } else {
-                                Log.d("MAD", "D6: Access previous week");
-                                userSeries.appendData( new DataPoint( 0, 0 ), true, 7, false);
-                            }
-
-                            Calendar cal = Calendar.getInstance();
-                            cal.add(Calendar.DATE, -5);
-                            Date date = cal.getTime();
-                            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                            String strDate = dateFormat.format(date);
-                            DateFormat dayFormat = new SimpleDateFormat("EEE");
-                            String day = dayFormat.format(date);
-                            final String title = strDate+day;
-                            Log.d("MAD", "Title -5 passed in is: " + title);
+                                    //getting current date for progress
+                                    Calendar cal = Calendar.getInstance();
+                                    cal.add(Calendar.DATE, -6);
+                                    Date date = cal.getTime();
+                                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                    String strDate = dateFormat.format(date);
+                                    DateFormat dayFormat = new SimpleDateFormat("EEE");
+                                    String day = dayFormat.format(date);
+                                    final String title = strDate + day;
+                                    Log.d("MAD", "Title -6 passed in is: " + title);
 
 
-                            DocumentReference docRef5 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document("21-09-2020")
-                                    .collection("DailyWorkout").document(title);
-                            docRef5.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot document = task.getResult();
-                                        if (document.exists()) {
-                                            Log.d("MAD", "docRef5 docSnap data");
-                                            double progress = document.getDouble(PROGRESS_KEY);
-                                            Log.d("MAD", "Progress is " + progress );
-                                            userSeries.appendData( new DataPoint( 1, progress ), true, 7, false);
-
-                                        } else {
-                                            Log.d("MAD", "D5: Access previous week");
-                                            userSeries.appendData( new DataPoint( 1, 0 ), true, 7, false);
-                                        }
-
-                                        Calendar cal = Calendar.getInstance();
-                                        cal.add(Calendar.DATE, -4);
-                                        Date date = cal.getTime();
-                                        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                                        String strDate = dateFormat.format(date);
-                                        DateFormat dayFormat = new SimpleDateFormat("EEE");
-                                        String day = dayFormat.format(date);
-                                        final String title = strDate+day;
-                                        Log.d("MAD", "Title -4 passed in is: " + title);
-
-
-                                        DocumentReference docRef4 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document("21-09-2020")
-                                                .collection("DailyWorkout").document(title);
-                                        docRef4.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    DocumentSnapshot document = task.getResult();
-                                                    if (document.exists()) {
-                                                        Log.d("MAD", "docRef4 docSnap data");
-                                                        double progress = document.getDouble(PROGRESS_KEY);
-                                                        Log.d("MAD", "Progress is " + progress );
-                                                        userSeries.appendData( new DataPoint( 2, progress ), true, 7, false);
-
-                                                    } else {
-                                                        Log.d("MAD", "D4: Access previous week");
-                                                        userSeries.appendData( new DataPoint( 2, 0 ), true, 7, false);
-                                                    }
-
-                                                    Calendar cal = Calendar.getInstance();
-                                                    cal.add(Calendar.DATE, -3);
-                                                    Date date = cal.getTime();
-                                                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                                                    String strDate = dateFormat.format(date);
-                                                    DateFormat dayFormat = new SimpleDateFormat("EEE");
-                                                    String day = dayFormat.format(date);
-                                                    final String title = strDate+day;
-                                                    Log.d("MAD", "Title -3 passed in is: " + title);
-
-
-                                                    DocumentReference docRef3 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document("21-09-2020")
-                                                            .collection("DailyWorkout").document(title);
-                                                    docRef3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                            if (task.isSuccessful()) {
-                                                                DocumentSnapshot document = task.getResult();
-                                                                if (document.exists()) {
-                                                                    Log.d("MAD", "docRef3 docSnap data");
-                                                                    double progress = document.getDouble(PROGRESS_KEY);
-                                                                    Log.d("MAD", "Progress is " + progress );
-                                                                    userSeries.appendData( new DataPoint( 3, progress ), true, 7, false);
-
-                                                                } else {
-                                                                    Log.d("MAD", "D3: Access previous week");
-                                                                    userSeries.appendData( new DataPoint( 3, 0 ), true, 7, false);
-                                                                }
-
-                                                                Calendar cal = Calendar.getInstance();
-                                                                cal.add(Calendar.DATE, -2);
-                                                                Date date = cal.getTime();
-                                                                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                                                                String strDate = dateFormat.format(date);
-                                                                DateFormat dayFormat = new SimpleDateFormat("EEE");
-                                                                String day = dayFormat.format(date);
-                                                                final String title = strDate+day;
-                                                                Log.d("MAD", "Title -2 passed in is: " + title);
-
-
-                                                                DocumentReference docRef2 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document("21-09-2020")
-                                                                        .collection("DailyWorkout").document(title);
-                                                                docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                    @Override
-                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                        if (task.isSuccessful()) {
-                                                                            DocumentSnapshot document = task.getResult();
-                                                                            if (document.exists()) {
-                                                                                Log.d("MAD", "docRef2 docSnap data");
-                                                                                double progress = document.getDouble(PROGRESS_KEY);
-                                                                                Log.d("MAD", "Progress is " + progress );
-                                                                                userSeries.appendData( new DataPoint( 4, progress ), true, 7, false);
-
-                                                                            } else {
-                                                                                Log.d("MAD", "D2: Access previous week");
-                                                                                userSeries.appendData( new DataPoint( 4, 0 ), true, 7, false);
-                                                                            }
-
-                                                                            Calendar cal = Calendar.getInstance();
-                                                                            cal.add(Calendar.DATE, -1);
-                                                                            Date date = cal.getTime();
-                                                                            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                                                                            String strDate = dateFormat.format(date);
-                                                                            DateFormat dayFormat = new SimpleDateFormat("EEE");
-                                                                            String day = dayFormat.format(date);
-                                                                            final String title = strDate+day;
-                                                                            Log.d("MAD", "Title -1 passed in is: " + title);
-
-
-                                                                            DocumentReference docRef1 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document("21-09-2020")
-                                                                                    .collection("DailyWorkout").document(title);
-                                                                            docRef1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                                @Override
-                                                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                                    if (task.isSuccessful()) {
-                                                                                        DocumentSnapshot document = task.getResult();
-                                                                                        if (document.exists()) {
-                                                                                            Log.d("MAD", "docRef1 docSnap data");
-                                                                                            double progress = document.getDouble(PROGRESS_KEY);
-                                                                                            Log.d("MAD", "Progress is " + progress );
-                                                                                            userSeries.appendData( new DataPoint( 5, progress ), true, 7, false);
-
-                                                                                        } else {
-                                                                                            Log.d("MAD", "D1: Access previous week");
-                                                                                            userSeries.appendData( new DataPoint( 5, 0 ), true, 7, false);
-                                                                                        }
-
-                                                                                        Calendar cal = Calendar.getInstance();
-                                                                                        Date date = cal.getTime();
-                                                                                        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                                                                                        String strDate = dateFormat.format(date);
-                                                                                        DateFormat dayFormat = new SimpleDateFormat("EEE");
-                                                                                        String day = dayFormat.format(date);
-                                                                                        final String title = strDate+day;
-                                                                                        Log.d("MAD", "Title -0 passed in is: " + title);
-
-
-                                                                                        DocumentReference docRef0 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document("21-09-2020")
-                                                                                                .collection("DailyWorkout").document(title);
-                                                                                        docRef0.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                                            @Override
-                                                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                                                if (task.isSuccessful()) {
-                                                                                                    DocumentSnapshot document = task.getResult();
-                                                                                                    if (document.exists()) {
-                                                                                                        Log.d("MAD", "docRef0 docSnap data TODAY");
-                                                                                                        double progress = document.getDouble(PROGRESS_KEY);
-                                                                                                        Log.d("MAD", "Progress is " + progress );
-                                                                                                        userSeries.appendData( new DataPoint( 6, progress ), true, 7, false);
-
-                                                                                                    } else {
-                                                                                                        Log.d("MAD", "D0: TODAY");
-                                                                                                        userSeries.appendData( new DataPoint( 6, 0 ), true, 7, false);
-                                                                                                    }
-                                                                                                    //add userSeries to the graph
-                                                                                                    graph.addSeries(userSeries);
-
-                                                                                                } else {
-                                                                                                    //end of docRef0
-                                                                                                    Log.d("MAD", "get failed with ", task.getException());
-                                                                                                }
-                                                                                            }
-                                                                                        });
-
-                                                                                    } else {
-                                                                                        //end of docRef1
-                                                                                        Log.d("MAD", "get failed with ", task.getException());
-                                                                                    }
-                                                                                }
-                                                                            });
-
-                                                                        } else {
-                                                                            //end of docRef2
-                                                                            Log.d("MAD", "get failed with ", task.getException());
-                                                                        }
-                                                                    }
-                                                                });
-
-                                                            } else {
-                                                                //end of docRef3
-                                                                Log.d("MAD", "get failed with ", task.getException());
-                                                            }
-                                                        }
-                                                    });
+                                    DocumentReference docRef6 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                            .collection("DailyWorkout").document(title);
+                                    docRef6.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                if (document.exists()) {
+                                                    Log.d("MAD", "docRef6 docSnap data");
+                                                    double progress = document.getDouble(PROGRESS_KEY);
+                                                    Log.d("MAD", "Progress is: " + progress);
+                                                    userSeries.appendData(new DataPoint(0, progress), true, 7, false);
 
                                                 } else {
-                                                    //end of docRef4
-                                                    Log.d("MAD", "get failed with ", task.getException());
+                                                    Log.d("MAD", "D6: Access previous week");
+                                                    userSeries.appendData(new DataPoint(0, 0), true, 7, false);
                                                 }
+
+                                                Calendar cal = Calendar.getInstance();
+                                                cal.add(Calendar.DATE, -5);
+                                                Date date = cal.getTime();
+                                                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                String strDate = dateFormat.format(date);
+                                                DateFormat dayFormat = new SimpleDateFormat("EEE");
+                                                String day = dayFormat.format(date);
+                                                final String title = strDate + day;
+                                                Log.d("MAD", "Title -5 passed in is: " + title);
+
+
+                                                DocumentReference docRef5 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                                        .collection("DailyWorkout").document(title);
+                                                docRef5.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+                                                                Log.d("MAD", "docRef5 docSnap data");
+                                                                double progress = document.getDouble(PROGRESS_KEY);
+                                                                Log.d("MAD", "Progress is " + progress);
+                                                                userSeries.appendData(new DataPoint(1, progress), true, 7, false);
+
+                                                            } else {
+                                                                Log.d("MAD", "D5: Access previous week");
+                                                                userSeries.appendData(new DataPoint(1, 0), true, 7, false);
+                                                            }
+
+                                                            Calendar cal = Calendar.getInstance();
+                                                            cal.add(Calendar.DATE, -4);
+                                                            Date date = cal.getTime();
+                                                            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                            String strDate = dateFormat.format(date);
+                                                            DateFormat dayFormat = new SimpleDateFormat("EEE");
+                                                            String day = dayFormat.format(date);
+                                                            final String title = strDate + day;
+                                                            Log.d("MAD", "Title -4 passed in is: " + title);
+
+
+                                                            DocumentReference docRef4 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                                                    .collection("DailyWorkout").document(title);
+                                                            docRef4.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        DocumentSnapshot document = task.getResult();
+                                                                        if (document.exists()) {
+                                                                            Log.d("MAD", "docRef4 docSnap data");
+                                                                            double progress = document.getDouble(PROGRESS_KEY);
+                                                                            Log.d("MAD", "Progress is " + progress);
+                                                                            userSeries.appendData(new DataPoint(2, progress), true, 7, false);
+
+                                                                        } else {
+                                                                            Log.d("MAD", "D4: Access previous week");
+                                                                            userSeries.appendData(new DataPoint(2, 0), true, 7, false);
+                                                                        }
+
+                                                                        Calendar cal = Calendar.getInstance();
+                                                                        cal.add(Calendar.DATE, -3);
+                                                                        Date date = cal.getTime();
+                                                                        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                                        String strDate = dateFormat.format(date);
+                                                                        DateFormat dayFormat = new SimpleDateFormat("EEE");
+                                                                        String day = dayFormat.format(date);
+                                                                        final String title = strDate + day;
+                                                                        Log.d("MAD", "Title -3 passed in is: " + title);
+
+
+                                                                        DocumentReference docRef3 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                                                                .collection("DailyWorkout").document(title);
+                                                                        docRef3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                if (task.isSuccessful()) {
+                                                                                    DocumentSnapshot document = task.getResult();
+                                                                                    if (document.exists()) {
+                                                                                        Log.d("MAD", "docRef3 docSnap data");
+                                                                                        double progress = document.getDouble(PROGRESS_KEY);
+                                                                                        Log.d("MAD", "Progress is " + progress);
+                                                                                        userSeries.appendData(new DataPoint(3, progress), true, 7, false);
+
+                                                                                    } else {
+                                                                                        Log.d("MAD", "D3: Access previous week");
+                                                                                        userSeries.appendData(new DataPoint(3, 0), true, 7, false);
+                                                                                    }
+
+                                                                                    Calendar cal = Calendar.getInstance();
+                                                                                    cal.add(Calendar.DATE, -2);
+                                                                                    Date date = cal.getTime();
+                                                                                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                                                    String strDate = dateFormat.format(date);
+                                                                                    DateFormat dayFormat = new SimpleDateFormat("EEE");
+                                                                                    String day = dayFormat.format(date);
+                                                                                    final String title = strDate + day;
+                                                                                    Log.d("MAD", "Title -2 passed in is: " + title);
+
+
+                                                                                    DocumentReference docRef2 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                                                                            .collection("DailyWorkout").document(title);
+                                                                                    docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                                        @Override
+                                                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                            if (task.isSuccessful()) {
+                                                                                                DocumentSnapshot document = task.getResult();
+                                                                                                if (document.exists()) {
+                                                                                                    Log.d("MAD", "docRef2 docSnap data");
+                                                                                                    double progress = document.getDouble(PROGRESS_KEY);
+                                                                                                    Log.d("MAD", "Progress is " + progress);
+                                                                                                    userSeries.appendData(new DataPoint(4, progress), true, 7, false);
+
+                                                                                                } else {
+                                                                                                    Log.d("MAD", "D2: Access previous week");
+                                                                                                    userSeries.appendData(new DataPoint(4, 0), true, 7, false);
+                                                                                                }
+
+                                                                                                Calendar cal = Calendar.getInstance();
+                                                                                                cal.add(Calendar.DATE, -1);
+                                                                                                Date date = cal.getTime();
+                                                                                                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                                                                String strDate = dateFormat.format(date);
+                                                                                                DateFormat dayFormat = new SimpleDateFormat("EEE");
+                                                                                                String day = dayFormat.format(date);
+                                                                                                final String title = strDate + day;
+                                                                                                Log.d("MAD", "Title -1 passed in is: " + title);
+
+
+                                                                                                DocumentReference docRef1 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                                                                                        .collection("DailyWorkout").document(title);
+                                                                                                docRef1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                                                    @Override
+                                                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                                        if (task.isSuccessful()) {
+                                                                                                            DocumentSnapshot document = task.getResult();
+                                                                                                            if (document.exists()) {
+                                                                                                                Log.d("MAD", "docRef1 docSnap data");
+                                                                                                                double progress = document.getDouble(PROGRESS_KEY);
+                                                                                                                Log.d("MAD", "Progress is " + progress);
+                                                                                                                userSeries.appendData(new DataPoint(5, progress), true, 7, false);
+
+                                                                                                            } else {
+                                                                                                                Log.d("MAD", "D1: Access previous week");
+                                                                                                                userSeries.appendData(new DataPoint(5, 0), true, 7, false);
+                                                                                                            }
+
+                                                                                                            Calendar cal = Calendar.getInstance();
+                                                                                                            Date date = cal.getTime();
+                                                                                                            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                                                                            String strDate = dateFormat.format(date);
+                                                                                                            DateFormat dayFormat = new SimpleDateFormat("EEE");
+                                                                                                            String day = dayFormat.format(date);
+                                                                                                            final String title = strDate + day;
+                                                                                                            Log.d("MAD", "Title -0 passed in is: " + title);
+
+
+                                                                                                            DocumentReference docRef0 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                                                                                                    .collection("DailyWorkout").document(title);
+                                                                                                            docRef0.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                                                                @Override
+                                                                                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                                                    if (task.isSuccessful()) {
+                                                                                                                        DocumentSnapshot document = task.getResult();
+                                                                                                                        if (document.exists()) {
+                                                                                                                            Log.d("MAD", "docRef0 docSnap data TODAY");
+                                                                                                                            double progress = document.getDouble(PROGRESS_KEY);
+                                                                                                                            Log.d("MAD", "Progress is " + progress);
+                                                                                                                            userSeries.appendData(new DataPoint(6, progress), true, 7, false);
+
+                                                                                                                        } else {
+                                                                                                                            Log.d("MAD", "D0: TODAY");
+                                                                                                                            userSeries.appendData(new DataPoint(6, 0), true, 7, false);
+                                                                                                                        }
+                                                                                                                        //add userSeries to the graph
+                                                                                                                        graph.addSeries(userSeries);
+
+                                                                                                                    } else {
+                                                                                                                        //end of docRef0
+                                                                                                                        Log.d("MAD", "get failed with ", task.getException());
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            });
+
+                                                                                                        } else {
+                                                                                                            //end of docRef1
+                                                                                                            Log.d("MAD", "get failed with ", task.getException());
+                                                                                                        }
+                                                                                                    }
+                                                                                                });
+
+                                                                                            } else {
+                                                                                                //end of docRef2
+                                                                                                Log.d("MAD", "get failed with ", task.getException());
+                                                                                            }
+                                                                                        }
+                                                                                    });
+
+                                                                                } else {
+                                                                                    //end of docRef3
+                                                                                    Log.d("MAD", "get failed with ", task.getException());
+                                                                                }
+                                                                            }
+                                                                        });
+
+                                                                    } else {
+                                                                        //end of docRef4
+                                                                        Log.d("MAD", "get failed with ", task.getException());
+                                                                    }
+                                                                }
+                                                            });
+
+                                                        } else {
+                                                            //end of docRef5
+                                                            Log.d("MAD", "get failed with ", task.getException());
+                                                        }
+                                                    }
+                                                });
+
+                                            } else {
+                                                //end of docRef6
+                                                Log.d("MAD", "get failed with ", task.getException());
                                             }
-                                        });
 
-                                    } else {
-                                        //end of docRef5
-                                        Log.d("MAD", "get failed with ", task.getException());
-                                    }
-                                }
-                            });
+                                        }
+                                    });
+                                }                    }
+                        })
 
-                        } else {
-                            //end of docRef6
-                            Log.d("MAD", "get failed with ", task.getException());
-                        }
-
-                    }
-                });
-
+                        /*On failure, we catch the error*/
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("Recent Week: ", e.toString());
+                            }
+                        });
             } //out of first documentSnapshot
         });
     }
