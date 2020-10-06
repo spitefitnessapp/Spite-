@@ -9,7 +9,6 @@ import java.util.Map;
 public class WeeklyWorkout{
     String userID;
     Date date;
-    Map<String, DailyWorkout> dailyWorkouts;
 
     public WeeklyWorkout(){
         //Public no-arg constructor needed
@@ -18,6 +17,11 @@ public class WeeklyWorkout{
     public WeeklyWorkout(String userID){
         this.userID = userID;
         setDate();
+    }
+
+    public WeeklyWorkout(String userID, Date date){
+        this.userID = userID;
+        this.date = date;
     }
 
     public String getUserID(){
@@ -38,16 +42,4 @@ public class WeeklyWorkout{
         Calendar cal = Calendar.getInstance();
         this.date = cal.getTime();
     }
-
-    public Map<String, DailyWorkout> getDailyWorkouts(){
-        return dailyWorkouts;
-    }
-
-    public void addDailyWorkout(DailyWorkout newDay){
-        //If newWorkout is from the same username and is after the set date time.
-        if(dailyWorkouts.size() != 7) {
-            dailyWorkouts.put(newDay.getDay(), newDay);
-        }
-    }
-
 }

@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DailyWorkout {
-    private String dailyWorkoutID;
+    private String dailyWorkoutId;
     private String userID;
     private String day;
     private Date date;
@@ -22,11 +22,12 @@ public class DailyWorkout {
         this.dailyTimeLogged = 0;
         setDate();
         setDay();
-
-        this.dailyWorkoutID = getDateString() + day;
+        this.dailyWorkoutId = getDateString() + day;
     }
 
-    public String getDailyWorkoutID() {return dailyWorkoutID;}
+    public String getDailyWorkoutId(){
+        return dailyWorkoutId;
+    }
 
     public String getUserID(){
         return userID;
@@ -46,8 +47,7 @@ public class DailyWorkout {
         return strDate;
     }
 
-    public long getDailyTimeLogged(){
-
+    public double getDailyTimeLogged(){
         return dailyTimeLogged;
     }
 
