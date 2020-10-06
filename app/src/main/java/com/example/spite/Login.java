@@ -49,9 +49,9 @@ public class Login extends AppCompatActivity {
     }
 
     private void SignInOption(){
+        /*Used this code instead to make my stuff work*/
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
-                .setAvailableProviders(signUpOp).setTheme(R.style.LoginTheme).setLogo(R.drawable.spite_logo).build(),REQUEST_CODE);
-        //We can add the Logo here using .setLogo();
+                .setAvailableProviders(signUpOp).setLogo(R.drawable.spite_logo).build(),REQUEST_CODE);
     }
 
     @Override
@@ -74,10 +74,9 @@ public class Login extends AppCompatActivity {
                 else
                 {
                     Toast.makeText(this, "Welcome back to Spite!", Toast.LENGTH_SHORT).show();
-
+                    startActivity(new Intent(this, MainActivity.class));
                 }
 
-                startActivity(new Intent(this, MainActivity.class));
                 this.finish();
 
             } else {

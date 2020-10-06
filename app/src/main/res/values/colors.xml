@@ -3,7 +3,18 @@
     <color name="colorPrimary">#F53a50</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FFFFFF</color>
+    <color name="offWhite">#dfdfdf</color>
     <color name="green">#02caa2</color>
     <color name="background">#1f1f21</color>
     <color name="grey">#38383c</color>
+    <color name="red">#f53a50</color>
+    <color name="grey_button_bg_normal">#1f1f21</color>
+    <color name="grey_button_bg_pressed">#2b2b2e</color>
+    <color name="grey_button_bg_selected">#2b2b2e</color>
+    <color name="green_button_bg_normal">#02caa2</color>
+    <color name="green_button_bg_pressed">#00ffcc</color>
+    <color name="green_button_bg_selected">#00ffcc</color>
+    <color name="red_button_bg_normal">#f53a50</color>
+    <color name="red_button_bg_pressed">#ff566a</color>
+    <color name="red_button_bg_selected">#ff566a</color>
 </resources>

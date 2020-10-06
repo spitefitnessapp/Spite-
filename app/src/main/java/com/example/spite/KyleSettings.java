@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.spite.dbhandlers.UserDBHandler;
@@ -32,7 +33,7 @@ public class KyleSettings extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private UserDBHandler dbh = new UserDBHandler();
-    Button toMainBtn = null;
+    private ImageButton toSettingsBtn;
     Button updateKyleNameBtn = null;
     EditText newKyleNameET = null;
     TextView renameAntag = null;
@@ -47,10 +48,9 @@ public class KyleSettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kyle_settings);
 
-        toMainBtn = (Button) findViewById(R.id.chngKyleToMainBtn);
+        toSettingsBtn = findViewById(R.id.toSettingsBtn);
         updateKyleNameBtn = (Button) findViewById(R.id.changeKyleBtn);
         newKyleNameET = (EditText) findViewById(R.id.newKyleName);
-        renameAntag = (TextView) findViewById(R.id.kyles);
         antagCurrentName = (TextView) findViewById(R.id.kyleName);
 
         //resetKyle();
@@ -72,15 +72,16 @@ public class KyleSettings extends AppCompatActivity {
             public void onClick(View view) {
                 updateKyle();
                 antagCurrentName.setText(kyleName);
-
+                Intent intent = new Intent(KyleSettings.this, Settings.class);
+                KyleSettings.this.startActivity(intent);
             }
         });
 
         //return to Home
-        toMainBtn.setOnClickListener(new View.OnClickListener() {
+        toSettingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(KyleSettings.this, MainActivity.class);
+                Intent intent = new Intent(KyleSettings.this, Settings.class);
                 KyleSettings.this.startActivity(intent);
             }
         });

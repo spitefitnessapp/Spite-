@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,13 +29,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class FragmentProfile extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Button profToMainBtn;
-    private Button profToSetBtn;
+    private ImageButton settingsBtn;
     private Button confirmChangeBtn;
     private TextView userNameTV;
     private TextView goalTV;
     private TextView newGoalTV ;
     private TextView currentGoalNumTV;
+    private TextView timeFrame;
     private EditText userGoalET; //cannot use decimal point.
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -43,7 +44,7 @@ public class FragmentProfile extends Fragment {
     private final String USERNAME_KEY = "username";
 
     private double goal = 0.0;
-    private String goalTimeFrame = "per week.";
+    private String goalTimeFrame = "Daily Workout Goal";
 
     //Display fragment with layout res file fragment_profile
     @Nullable
@@ -56,35 +57,19 @@ public class FragmentProfile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        profToMainBtn = requireView().findViewById(R.id.profileToMainBtn);
-        profToSetBtn = requireView().findViewById(R.id.profToSettBtn);
+        settingsBtn = requireView().findViewById(R.id.settingsBtn);
         confirmChangeBtn = requireView().findViewById(R.id.confirmGoalChangeBtn);
         userGoalET = requireView().findViewById(R.id.userGoalTimeView);
         userNameTV = requireView().findViewById(R.id.userName);
-        goalTV = requireView().findViewById(R.id.workoutGoalTV);
-        newGoalTV = requireView().findViewById(R.id.newGoalTV);
+        timeFrame = requireView().findViewById(R.id.timeFrame);
         currentGoalNumTV = requireView().findViewById(R.id.currentGoalTV);
+        timeFrame.setText(goalTimeFrame);
 
-        profToMainBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                FragmentProfile.this.startActivity(intent);
-            }
-        });
-
-        profToSetBtn.setOnClickListener(new View.OnClickListener() {
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), Settings.class);
                 FragmentProfile.this.startActivity(intent);
-            }
-        });
-
-        confirmChangeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            changeWorkoutGoal();
             }
         });
 
@@ -97,36 +82,9 @@ public class FragmentProfile extends Fragment {
                 String username = documentSnapshot.getString(USERNAME_KEY);
                 double goal = documentSnapshot.getDouble(GOAL_KEY);
                 userNameTV.setText(username);
-                currentGoalNumTV.setText(" " + goal + " minutes " + goalTimeFrame);
+                currentGoalNumTV.setText(" " + goal + " min ");
             }
         });
-
-    }
-
-    //Method to change the user's weekly workout goal
-    private void changeWorkoutGoal()
-    {
-        String g = userGoalET.getText().toString();
-        goal = Double.parseDouble(g);
-        currentGoalNumTV.setText(goal + " minutes.");
-
-        DocumentReference mDocRef = db.collection("User").document(USER_UID);
-
-        mDocRef
-                .update(GOAL_KEY, goal)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("MAD", "goal successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("MAD", "Error updating goal", e);
-                    }
-                });
-
 
     }
 }

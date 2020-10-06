@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1F1F21"
-    tools:context=".KyleSettings">
+    tools:context=".ChangeWorkoutGoal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,12 +30,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/renameAntagonistTitle"
+                android:id="@+id/changeEmailTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="20dp"
-                android:text="Change the name of your antagonist:"
-                android:textAlignment="center"
+                android:text="Change your workout goal"
                 android:textSize="20sp" />
 
             <LinearLayout
@@ -45,25 +44,15 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp">
 
-                <TextView
-                    android:id="@+id/kyleName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="20dp"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/current_antag_name"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="25sp" />
-
                 <EditText
-                    android:id="@+id/newKyleName"
+                    android:id="@+id/userGoalTimeView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints="@string/current_antag_name"
+                    android:autofillHints=""
                     android:ems="10"
                     app:backgroundTint="@color/grey"
-                    android:hint="New Antagonist Name"
-                    android:inputType="textEmailAddress"
+                    android:hint="Minutes per Day"
+                    android:inputType="time"
                     android:textColor="@color/colorAccent"
                     android:textColorHint="@color/offWhite"
                     android:textSize="15sp" />
@@ -76,26 +65,25 @@
                     android:paddingTop="50dp">
 
                     <Button
-                        android:id="@+id/changeKyleBtn"
+                        android:id="@+id/confirmGoalChangeBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:paddingLeft="60dp"
-                        android:paddingRight="60dp"
-                        android:background="@drawable/selector_settings_red"
+                        android:paddingLeft="40dp"
+                        android:paddingRight="40dp"
+                        android:background="@drawable/selector_settings_green"
                         android:textColor="@color/background"
-                        android:text="@string/update"
+                        android:text="Confirm"
                         android:textAllCaps="false"
                         android:letterSpacing="0.075"
                         android:textSize="20sp"
                         style="?android:attr/borderlessButtonStyle"/>
 
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

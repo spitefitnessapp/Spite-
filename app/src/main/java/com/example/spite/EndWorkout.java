@@ -45,7 +45,7 @@ public class EndWorkout extends AppCompatActivity {
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String USER_UID = user.getUid();
-    private final String PROGRESS_KEY = "timeLogged";
+    private final String PROGRESS_KEY = "dailyTimeLogged";
     private final String GOAL_KEY = "goal";
 
     @Override

@@ -22,6 +22,7 @@ public class DailyWorkout {
         this.dailyTimeLogged = 0;
         setDate();
         setDay();
+
         this.dailyWorkoutID = getDateString() + day;
     }
 
@@ -46,6 +47,7 @@ public class DailyWorkout {
     }
 
     public long getDailyTimeLogged(){
+
         return dailyTimeLogged;
     }
 

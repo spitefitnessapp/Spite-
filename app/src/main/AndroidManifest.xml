@@ -28,41 +28,42 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".NotificationSetting"
-            android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"/>
         <activity android:name=".Register"
-            android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"/>
         <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"/>
         <activity android:name=".EndWorkout"
-            android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"/>
         <activity android:name=".KyleSettings"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ChangePassword"
-            android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ChangeWorkoutGoal"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".ChangeEmail"
-            android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"/>
         <activity android:name=".Settings"
-            android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"/>
         <activity android:name=".CurrentWorkout"
-            android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"/>
         <activity android:name=".Login"
-            android:screenOrientation="portrait">
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver android:name=".alarmreceivers.DailyReceiver" />
         <receiver android:name=".alarmreceivers.WeeklyReceiver" >
         </receiver>
+
         <service android:name=".CloudMsg"
             android:exported="false">
             <intent-filter>
-                    <action android:name="come.google.firebase.MESSAGING_EVENT" />
+                <action android:name="come.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-
-    </service>
+        </service>
 
     </application>
 

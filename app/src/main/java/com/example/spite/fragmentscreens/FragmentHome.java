@@ -79,7 +79,7 @@ public class FragmentHome extends Fragment {
     private String USER_UID = user.getUid();
     private static final String GOAL_KEY = "goal";
     private static final String KYLE_UID_KEY = "kyleUID";
-    private static final String dailyTimeLogged = "timeLogged";
+    private static final String dailyTimeLogged = "dailyTimeLogged";
     private static final String KYLE_NAME_KEY = "kyle";
 
     //Display fragment with layout res file fragment_home
