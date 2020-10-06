@@ -49,9 +49,8 @@ public class Login extends AppCompatActivity {
     }
 
     private void SignInOption(){
-        /*Used this code instead to make my stuff work*/
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
-                .setAvailableProviders(signUpOp).setLogo(R.drawable.spite_logo).build(),REQUEST_CODE);
+                .setAvailableProviders(signUpOp).setTheme(R.style.LoginTheme).setLogo(R.drawable.spite_logo).build(),REQUEST_CODE);
     }
 
     @Override
