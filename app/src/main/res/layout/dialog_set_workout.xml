@@ -40,13 +40,13 @@
                 android:id="@+id/setWorkoutHr"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/offWhite" />
 
             <NumberPicker
                 android:id="@+id/setWorkoutMin"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/offWhite" />
 
         </LinearLayout>
 

@@ -116,10 +116,19 @@ public class FragmentHome extends Fragment {
         mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                double docGoal = 0;
+                String docKyleID = "";
+                String docKyleName= "";
 
-                final double goal = documentSnapshot.getDouble(GOAL_KEY);
-                final String kyleID = documentSnapshot.getString(KYLE_UID_KEY);
-                final String kyleName = documentSnapshot.getString(KYLE_NAME_KEY);
+                if(documentSnapshot.getDouble(GOAL_KEY) != null) {
+                     docGoal = documentSnapshot.getDouble(GOAL_KEY);
+                     docKyleID = documentSnapshot.getString(KYLE_UID_KEY);
+                     docKyleName = documentSnapshot.getString(KYLE_NAME_KEY);
+                }
+
+                final double goal = docGoal;
+                final String kyleID = docKyleID;
+                final String kyleName = docKyleName;
 
                 kyleMainTV.setText(kyleName);
 
