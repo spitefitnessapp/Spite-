@@ -20,6 +20,15 @@ public class DailyReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        dbWorkoutHandler.createDailyWorkout(uid);
+        boolean alarmUp = (PendingIntent.getBroadcast(context, 0,
+                new Intent("com.my.package.MY_UNIQUE_ACTION"),
+                PendingIntent.FLAG_NO_CREATE) != null);
+        if (alarmUp)
+        {
+            Log.d("myTag", "Alarm is already active");
+        }
+        else{
+            dbWorkoutHandler.createDailyWorkout(uid);
+        }
     }
 }
