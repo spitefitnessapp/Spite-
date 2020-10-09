@@ -1,5 +1,3 @@
-//Currently displays values from hardcoded week, 21-09-2020. Searches for doc titles based on current date.
-//Attempt to feed in current week as a doc title causes problems when needing to go into previous week
 
 package com.example.spite.fragmentscreens;
 
@@ -17,8 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.spite.R;
-import com.example.spite.models.DailyWorkout;
-import com.example.spite.models.WeeklyWorkout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -109,8 +105,6 @@ public class FragmentProgress extends Fragment {
                 userSeries.setTitle("Prog");
                 graph.getLegendRenderer().setVisible(true);
                 graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-                //graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
-                //graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
                 graph.getGridLabelRenderer().setGridColor(Color.WHITE);
                 graph.getGridLabelRenderer().setHighlightZeroLines(false);
 
@@ -132,31 +126,11 @@ public class FragmentProgress extends Fragment {
                 });
 
 
-                /*Query the database to find the most recently created WeeklyWorkout doc for the specified user*/
-                Task<QuerySnapshot> mostRecentWeek = db.collection("User").document(USER_UID)
-                        .collection("WeeklyWorkout")
-                        .orderBy("date", Query.Direction.DESCENDING)
-                        .limit(1)
-                        .get()
-
-                        /*On success, we store the date of the most recent week and proceed to find the most recent DailyWorkout doc*/
-                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                String recentWeekDate = "";
-
-                                /*Go through the queries to retrieve the Date string of the most recent week*/
-                                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                                    WeeklyWorkout recentWeek = documentSnapshot.toObject(WeeklyWorkout.class);
-
-                                    final String weekDate = recentWeek.getDateString();
-
-
                                     //getting current date for progress
                                     Calendar cal = Calendar.getInstance();
                                     cal.add(Calendar.DATE, -6);
                                     Date date = cal.getTime();
-                                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                    DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
                                     String strDate = dateFormat.format(date);
                                     DateFormat dayFormat = new SimpleDateFormat("EEE");
                                     String day = dayFormat.format(date);
@@ -164,7 +138,7 @@ public class FragmentProgress extends Fragment {
                                     Log.d("MAD", "Title -6 passed in is: " + title);
 
 
-                                    DocumentReference docRef6 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                    DocumentReference docRef6 = db.collection("User").document(USER_UID)
                                             .collection("DailyWorkout").document(title);
                                     docRef6.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                         @Override
@@ -185,7 +159,7 @@ public class FragmentProgress extends Fragment {
                                                 Calendar cal = Calendar.getInstance();
                                                 cal.add(Calendar.DATE, -5);
                                                 Date date = cal.getTime();
-                                                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
                                                 String strDate = dateFormat.format(date);
                                                 DateFormat dayFormat = new SimpleDateFormat("EEE");
                                                 String day = dayFormat.format(date);
@@ -193,7 +167,7 @@ public class FragmentProgress extends Fragment {
                                                 Log.d("MAD", "Title -5 passed in is: " + title);
 
 
-                                                DocumentReference docRef5 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                                DocumentReference docRef5 = db.collection("User").document(USER_UID)
                                                         .collection("DailyWorkout").document(title);
                                                 docRef5.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                     @Override
@@ -214,7 +188,7 @@ public class FragmentProgress extends Fragment {
                                                             Calendar cal = Calendar.getInstance();
                                                             cal.add(Calendar.DATE, -4);
                                                             Date date = cal.getTime();
-                                                            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                            DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
                                                             String strDate = dateFormat.format(date);
                                                             DateFormat dayFormat = new SimpleDateFormat("EEE");
                                                             String day = dayFormat.format(date);
@@ -222,7 +196,7 @@ public class FragmentProgress extends Fragment {
                                                             Log.d("MAD", "Title -4 passed in is: " + title);
 
 
-                                                            DocumentReference docRef4 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                                            DocumentReference docRef4 = db.collection("User").document(USER_UID)
                                                                     .collection("DailyWorkout").document(title);
                                                             docRef4.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                                 @Override
@@ -243,7 +217,7 @@ public class FragmentProgress extends Fragment {
                                                                         Calendar cal = Calendar.getInstance();
                                                                         cal.add(Calendar.DATE, -3);
                                                                         Date date = cal.getTime();
-                                                                        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                                        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
                                                                         String strDate = dateFormat.format(date);
                                                                         DateFormat dayFormat = new SimpleDateFormat("EEE");
                                                                         String day = dayFormat.format(date);
@@ -251,7 +225,7 @@ public class FragmentProgress extends Fragment {
                                                                         Log.d("MAD", "Title -3 passed in is: " + title);
 
 
-                                                                        DocumentReference docRef3 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                                                        DocumentReference docRef3 = db.collection("User").document(USER_UID)
                                                                                 .collection("DailyWorkout").document(title);
                                                                         docRef3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                                             @Override
@@ -272,7 +246,7 @@ public class FragmentProgress extends Fragment {
                                                                                     Calendar cal = Calendar.getInstance();
                                                                                     cal.add(Calendar.DATE, -2);
                                                                                     Date date = cal.getTime();
-                                                                                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                                                    DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
                                                                                     String strDate = dateFormat.format(date);
                                                                                     DateFormat dayFormat = new SimpleDateFormat("EEE");
                                                                                     String day = dayFormat.format(date);
@@ -280,7 +254,7 @@ public class FragmentProgress extends Fragment {
                                                                                     Log.d("MAD", "Title -2 passed in is: " + title);
 
 
-                                                                                    DocumentReference docRef2 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                                                                    DocumentReference docRef2 = db.collection("User").document(USER_UID)
                                                                                             .collection("DailyWorkout").document(title);
                                                                                     docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                                                         @Override
@@ -301,7 +275,7 @@ public class FragmentProgress extends Fragment {
                                                                                                 Calendar cal = Calendar.getInstance();
                                                                                                 cal.add(Calendar.DATE, -1);
                                                                                                 Date date = cal.getTime();
-                                                                                                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                                                                DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
                                                                                                 String strDate = dateFormat.format(date);
                                                                                                 DateFormat dayFormat = new SimpleDateFormat("EEE");
                                                                                                 String day = dayFormat.format(date);
@@ -309,7 +283,7 @@ public class FragmentProgress extends Fragment {
                                                                                                 Log.d("MAD", "Title -1 passed in is: " + title);
 
 
-                                                                                                DocumentReference docRef1 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                                                                                DocumentReference docRef1 = db.collection("User").document(USER_UID)
                                                                                                         .collection("DailyWorkout").document(title);
                                                                                                 docRef1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                                                                     @Override
@@ -329,7 +303,7 @@ public class FragmentProgress extends Fragment {
 
                                                                                                             Calendar cal = Calendar.getInstance();
                                                                                                             Date date = cal.getTime();
-                                                                                                            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                                                                            DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
                                                                                                             String strDate = dateFormat.format(date);
                                                                                                             DateFormat dayFormat = new SimpleDateFormat("EEE");
                                                                                                             String day = dayFormat.format(date);
@@ -337,7 +311,7 @@ public class FragmentProgress extends Fragment {
                                                                                                             Log.d("MAD", "Title -0 passed in is: " + title);
 
 
-                                                                                                            DocumentReference docRef0 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(weekDate)
+                                                                                                            DocumentReference docRef0 = db.collection("User").document(USER_UID)
                                                                                                                     .collection("DailyWorkout").document(title);
                                                                                                             docRef0.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                                                                                 @Override
@@ -403,19 +377,8 @@ public class FragmentProgress extends Fragment {
                                                 //end of docRef6
                                                 Log.d("MAD", "get failed with ", task.getException());
                                             }
-
                                         }
                                     });
-                                }                    }
-                        })
-
-                        /*On failure, we catch the error*/
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d("Recent Week: ", e.toString());
-                            }
-                        });
             } //out of first documentSnapshot
         });
     }
