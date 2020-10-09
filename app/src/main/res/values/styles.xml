@@ -22,7 +22,7 @@
     <style name="LoginTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="fontFamily">@font/login_font</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">@drawable/loginbackground</item>
 
     </style>
