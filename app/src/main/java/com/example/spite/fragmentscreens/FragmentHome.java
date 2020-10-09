@@ -25,8 +25,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.spite.CurrentWorkout;
 import com.example.spite.R;
-import com.example.spite.models.DailyWorkout;
-import com.example.spite.models.WeeklyWorkout;
 import com.example.spite.models.WorkoutLog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -132,29 +130,16 @@ public class FragmentHome extends Fragment {
 
                 kyleMainTV.setText(kyleName);
 
-                db.collection("User").document(USER_UID).collection("WeeklyWorkout")
-                        .orderBy("date", Query.Direction.DESCENDING)
-                        .limit(1)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d("HERE", document.getId() + " => " + document.getData());
-                                        final String thisWeek = document.getId();
                                         Calendar cal = Calendar.getInstance();
-
                                         Date date = cal.getTime();
-                                        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
                                         String strDate = dateFormat.format(date);
                                         DateFormat dayFormat = new SimpleDateFormat("EEE");
                                         String day = dayFormat.format(date);
                                         final String title = strDate+day;
                                         Log.d("MAD", "Title passed in is: " + title);
 
-                                        DocumentReference docRef0 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(thisWeek)
+                                        DocumentReference docRef0 = db.collection("User").document(USER_UID)
                                                 .collection("DailyWorkout").document(title);
                                         docRef0.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                             @Override
@@ -192,7 +177,7 @@ public class FragmentHome extends Fragment {
                                                 final double kGoal = documentSnapshot.getDouble(GOAL_KEY);
 
 
-                                                DocumentReference docRefk = db.collection("User").document(kyleID).collection("WeeklyWorkout").document(thisWeek)
+                                                DocumentReference docRefk = db.collection("User").document(kyleID)
                                                         .collection("DailyWorkout").document(title);
                                                 docRefk.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                     @Override
@@ -223,12 +208,6 @@ public class FragmentHome extends Fragment {
                                                 });//end of docRefk
                                             }
                                         });//end of kDocRef
-                                    }
-                                } else {
-                                    Log.d("HERE", "Error getting documents: ", task.getException());
-                                }
-                            }
-                        }); //end of Query for weekly workout Title
             }
 
         });//end of mDocRef

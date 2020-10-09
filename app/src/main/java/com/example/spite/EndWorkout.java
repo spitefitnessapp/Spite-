@@ -100,29 +100,16 @@ public class EndWorkout extends AppCompatActivity {
                 final double goal = documentSnapshot.getDouble(GOAL_KEY);
                 userEndPB.setProgress( (int) goal );
 
-                db.collection("User").document(USER_UID).collection("WeeklyWorkout")
-                        .orderBy("date", Query.Direction.DESCENDING)
-                        .limit(1)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d("HERE", document.getId() + " => " + document.getData());
-                                        final String thisWeek = document.getId();
                                         Calendar cal = Calendar.getInstance();
-
                                         Date date = cal.getTime();
-                                        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
                                         String strDate = dateFormat.format(date);
                                         DateFormat dayFormat = new SimpleDateFormat("EEE");
                                         String day = dayFormat.format(date);
                                         final String title = strDate+day;
                                         Log.d("MAD", "Title passed in is: " + title);
 
-                                        DocumentReference docRef0 = db.collection("User").document(USER_UID).collection("WeeklyWorkout").document(thisWeek)
+                                        DocumentReference docRef0 = db.collection("User").document(USER_UID)
                                                 .collection("DailyWorkout").document(title);
                                         docRef0.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                             @Override
@@ -150,13 +137,6 @@ public class EndWorkout extends AppCompatActivity {
                                             }
 
                                         });
-
-                                    }
-                                } else {
-                                    Log.d("HERE", "Error getting documents: ", task.getException());
-                                }
-                            }
-                        }); //end of Query for weekly workout Title
             }
 
         });//end of mDocRef
