@@ -57,7 +57,6 @@ public class Login extends AppCompatActivity {
         else{
             SignInOption();
         }
-        SignInOption();
     }
 
     private void SignInOption(){
@@ -77,7 +76,6 @@ public class Login extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 //Get Users
                 //String email = user.getEmail();
-                Toast.makeText(this, "" + user.getEmail(), Toast.LENGTH_SHORT).show();
                 if(response.isNewUser())
                 {
                     Toast.makeText(this, "Welcome to Spite!", Toast.LENGTH_SHORT).show();
