@@ -42,7 +42,7 @@ public class DailyWorkout {
     }
 
     public String getDateString(){
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         String strDate = dateFormat.format(date);
         return strDate;
     }
