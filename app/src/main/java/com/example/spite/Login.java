@@ -8,12 +8,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +33,7 @@ import java.util.List;
 public class Login extends AppCompatActivity {
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
-    private FirebaseUser user;
+    private FirebaseUser user = auth.getCurrentUser();
     private static final int REQUEST_CODE = 101;
     private static final String USER_UID = "userID";
     List<AuthUI.IdpConfig> signUpOp;
@@ -38,19 +49,22 @@ public class Login extends AppCompatActivity {
         );
         user = auth.getCurrentUser();
        //Checks to see if user is already signed in if yes then app ones to home screen if not to the sign in screen
-        if(user != null)
+       if(user != null)
         {
             Intent resumeActivity = new Intent(this, MainActivity.class);
             startActivity(resumeActivity);
         }
-        else {
+        else{
             SignInOption();
         }
     }
 
     private void SignInOption(){
+        /*Used this code instead to make my stuff work*/
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
-                .setAvailableProviders(signUpOp).setTheme(R.style.LoginTheme).setLogo(R.drawable.spite_logo).build(),REQUEST_CODE);
+                .setAvailableProviders(signUpOp)
+                .setTheme(R.style.LoginTheme).setLogo(R.drawable.spite_logo)
+                .build(),REQUEST_CODE);
     }
 
     @Override
@@ -61,10 +75,8 @@ public class Login extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if (resultCode == RESULT_OK) {
                 //Get Users
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 //String email = user.getEmail();
-                Toast.makeText(this, "" + user.getEmail(), Toast.LENGTH_SHORT).show();
-                if(user.getMetadata().getCreationTimestamp() == user.getMetadata().getLastSignInTimestamp())
+                if(response.isNewUser())
                 {
                     Toast.makeText(this, "Welcome to Spite!", Toast.LENGTH_SHORT).show();
                     Intent toRegister = new Intent(this, Register.class);
@@ -84,9 +96,5 @@ public class Login extends AppCompatActivity {
             }
         }
     }
-
-
-
-
-
 }
+

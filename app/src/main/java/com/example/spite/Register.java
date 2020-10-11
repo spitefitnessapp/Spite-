@@ -102,7 +102,6 @@ public class Register extends AppCompatActivity {
                             done = true;
                         }
                     }
-
                 } else {
                     Log.d("MAD", "Error getting documents: ", task.getException());
                 }
