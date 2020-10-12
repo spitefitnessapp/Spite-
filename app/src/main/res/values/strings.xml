@@ -50,6 +50,8 @@
     <string name="notification_settings">Notification Settings</string>
     <string name="you">You</string>
     <string name="enter_your_email">Enter your Email</string>
+    <string name="daily_goal_minutes">Daily goal (minutes)</string>
+
 
 
 </resources>
